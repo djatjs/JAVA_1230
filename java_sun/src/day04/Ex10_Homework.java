@@ -1,5 +1,7 @@
 package day04;
 
+import java.awt.desktop.ScreenSleepEvent;
+import java.net.Socket;
 import java.util.Scanner;
 
 public class Ex10_Homework {
@@ -32,15 +34,20 @@ public class Ex10_Homework {
 		
 		Scanner scan = new Scanner(System.in);
 		char menu;
+		int best_score = Integer.MAX_VALUE;
 		do {// 메뉴 뺑뺑이
+			
 			printMenu();
 			menu = scan.next().charAt(0);
 			// 메뉴 1번 누르면
 			if(menu =='1') {
-				gameMenu();
+				int higt_score = gameMenu();
+				if(higt_score <best_score) {
+					best_score = higt_score;
+				}
 			}
 			else if (menu =='2'){
-				
+				viewScore(best_score);
 			}
 		}while(menu != '3');
 		System.out.println("프로그램을 종료합니다.");
@@ -56,8 +63,8 @@ public class Ex10_Homework {
 		System.out.println("메뉴 선택 : ");
 	}
 	
-	// 게임 진행 메소드 (일단 카운트는 세긴하는데 어떻게 반환하지.. void로 해야 sysout이런거 할텐데)
-	public static void gameMenu() {
+	// 게임 진행 메소드 
+	public static int gameMenu() {
 		Scanner scan = new Scanner(System.in);
 		final int MIN = 1, MAX = 100;
 		int num = (int)(Math.random() * (MAX - MIN + 1) + MIN);
@@ -65,7 +72,7 @@ public class Ex10_Homework {
 		while(true) {
 			System.out.print("입력 : ");
 			int input = scan.nextInt();
-			count +=1;
+			count ++;
 			if (input == num) {
 				System.out.println("정답! 도전 횟수 : "+ count);
 				break;
@@ -78,12 +85,16 @@ public class Ex10_Homework {
 				System.out.println("Up!");
 				continue;
 			}
-		}
+		} 
+		return count;
 	}
 	
 	// 게임 최고 기록 확인
-	public static void viewScore() {
-		
+	public static void viewScore(int score) {
+		int score1 = score;
+		System.out.printf("최고기록 : %d회 (엔터로 가려면 아무 키를 입력하세요)", score1);
+		Scanner scan = new Scanner(System.in);
+        scan.nextLine(); // 엔터 입력 대기
 	}
 	
 }
