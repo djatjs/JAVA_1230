@@ -1,11 +1,11 @@
-package day04;
+package day05;
 
-import java.awt.desktop.ScreenSleepEvent;
-import java.net.Socket;
 import java.util.Scanner;
 
-public class Ex10_Homework {
-
+public class Ex01and02_Day04Homework {
+	// 스캐너 여기서 미리 설정해둠
+	static Scanner scan = new Scanner(System.in);
+	
 	public static void main(String[] args) {
 		/* 다음과 같이 실행되도록 프로그램을 작성하세요
 		 * 
@@ -32,7 +32,6 @@ public class Ex10_Homework {
 		 * 프로그램을 종료합니다.
 		 * */
 		
-		Scanner scan = new Scanner(System.in);
 		char menu;
 		int best_score = 0;
 		do {// 메뉴 뺑뺑이
@@ -40,10 +39,8 @@ public class Ex10_Homework {
 			menu = scan.next().charAt(0);
 			// 메뉴 1번 누르면
 			if(menu =='1') {
-				int higt_score = gameMenu();
-				if(higt_score <best_score || best_score ==0) {
-					best_score = higt_score;
-				}
+				int game_score = gameMenu();
+				best_score = recordGame(game_score, best_score);
 			}
 			else if (menu =='2'){
 				viewScore(best_score);
@@ -64,7 +61,6 @@ public class Ex10_Homework {
 	
 	// 게임 진행 메소드 
 	public static int gameMenu() {
-		Scanner scan = new Scanner(System.in);
 		final int MIN = 1, MAX = 100;
 		int num = (int)(Math.random() * (MAX - MIN + 1) + MIN);
 		int count =0;
@@ -86,17 +82,24 @@ public class Ex10_Homework {
 		return count;
 	}
 	
+	// 게임 기록 비교
+	public static int recordGame(int gameScore, int bestScore) {
+		if(gameScore <bestScore || bestScore ==0) {
+			bestScore = gameScore;
+		}
+		return bestScore;
+	}
+	
 	// 게임 최고 기록 확인
 	public static void viewScore(int score) {
 		int score1 = score;
 		if(score1 == 0) {
-			System.out.println("아직 게임을 플레이하지 않았습니다. (메뉴로 가려면 엔터를 입력하세요)");
+			System.out.print("아직 게임을 플레이하지 않았습니다. (메뉴로 가려면 엔터를 입력하세요)");
 		}
 		else {
 			System.out.printf("최고기록 : %d회 (메뉴로 가려면 엔터를 입력하세요)", score1);
 		}
-		Scanner scan = new Scanner(System.in);
         scan.nextLine(); // 엔터 입력 대기
 	}
-	
+
 }
