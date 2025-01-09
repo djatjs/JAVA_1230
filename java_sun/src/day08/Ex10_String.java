@@ -1,5 +1,6 @@
 package day08;
 
+import javax.net.ssl.CertPathTrustManagerParameters;
 
 public class Ex10_String {
 
@@ -50,8 +51,16 @@ public class Ex10_String {
 		String str8="\n\n\n                  abc \n\n\n";
 		System.out.println(str8.trim());
 		
+		//String.valueOf(기본형 값) : 기본형값을 문자열로 만듬.
 		String str9=String.valueOf(1);
 		System.out.println(str9);
-	}
+		
+		//split(구분자) : 구분자를 기준으로 문자열을 추출하여 배열로 반환
+		String fruits = "바나나,사과,딸기";
+		String fruitList[] = fruit.split(",");
+		for (String fruit : fruitList) {
+			System.out.println(fruit);
+		}
+		}
 
 }
