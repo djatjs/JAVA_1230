@@ -57,7 +57,7 @@ public class Ex10_String {
 		
 		//split(구분자) : 구분자를 기준으로 문자열을 추출하여 배열로 반환
 		String fruits = "바나나,사과,딸기";
-		String fruitList[] = fruit.split(",");
+		String fruitList[] = fruits.split(",");
 		for (String fruit : fruitList) {
 			System.out.println(fruit);
 		}
