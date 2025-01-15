@@ -2,6 +2,7 @@ package day10;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -115,6 +116,13 @@ public class Ex13_Phone {
 		String name = scan.nextLine();
 		System.out.print("전화번호 : ");
 		String phoneNum = scan.nextLine();
+		
+		//정규표현식 체크 : 000-0000-0000
+		String regex = "^\\d{2,3}(-\\d{4}){2}$";
+		if(!Pattern.matches(regex, phoneNum)) {
+			System.out.println("올바른 전화번호가 아닙니다.");
+			return;
+		}
 		//저장
 		Phone phoneObj = new Phone(name, phoneNum);
 		phoneList.add(phoneObj);
@@ -136,7 +144,18 @@ public class Ex13_Phone {
 @Data
 @AllArgsConstructor
 class Phone{
-	String name;
-	String phoneNum;
+	private String name;
+	private String phoneNum;
 	
+	@Override
+	public String toString() {
+		return name + " : " + phoneNum;
+	}
+
+	public void update(String newName, String phoneNumber) {
+		this.name = newName;
+		this.phoneNum = phoneNumber;
+		
+	}
 }
+
