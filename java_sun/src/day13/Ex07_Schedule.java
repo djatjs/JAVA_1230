@@ -237,7 +237,7 @@ public class Ex07_Schedule {
 		
 	}
 	//4.조회
-	private static void searchSchedule() {
+	private static void searchSchedule()  {
 		
 		printSearchMenu();
 		
@@ -247,7 +247,7 @@ public class Ex07_Schedule {
 		runSearchMenu(menu);
 		
 	}
-
+	//4.조회 양식
 	private static void printSearchMenu() {
 		System.out.print(
 				"------------------\n" + 
@@ -256,7 +256,7 @@ public class Ex07_Schedule {
 				"------------------\n" + 
 				"메뉴 선택 : ");
 	}
-
+	//4.조회 기능
 	private static void runSearchMenu(int menu) {
 		switch(menu) {
 		case 1:
@@ -269,7 +269,7 @@ public class Ex07_Schedule {
 			System.out.println("올바른 메뉴가 아닙니다.");
 		}
 	}
-
+	//4-1.월 조회
 	private static void searchMonth() {
 		//날짜
 		System.out.print("날짜(yyyy-MM) : ");
@@ -288,7 +288,7 @@ public class Ex07_Schedule {
 		tmpList.stream().forEach(s->System.out.println(s));
 		
 	}
-
+	//4-2.일 조회
 	private static void searchDay() {
 		//날짜
 		System.out.print("날짜(yyyy-MM-dd) : ");
