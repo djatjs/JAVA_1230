@@ -16,7 +16,6 @@ import lombok.Data;
 
 public class Ex09_ObjectStream2 {
 	
-	static String fileName = "src/day12/car.txt";
 	static Scanner scan = new Scanner(System.in);
 	static ArrayList<Car> carList = new ArrayList<Car>();
 	
@@ -34,24 +33,20 @@ public class Ex09_ObjectStream2 {
 		 * */
 		
 		int menu=0;
+		final int EXIT = 3;
+		String fileName = "src/day12/car.txt";
 		
-		//여기서 열어야될거같은데. 일단 열고봐
-		try(FileOutputStream fos = new FileOutputStream(fileName);
-        		ObjectOutputStream oos = new ObjectOutputStream(fos);
-				FileInputStream fis = new FileInputStream(fileName);
-        		ObjectInputStream ois = new ObjectInputStream(fis)){
+		//load(fileName, carList);
+		do {
+			printMenu();
+			menu=scan.nextInt();
+			scan.nextLine();
 			
-			do {
-				printMenu();
-				menu = scan.nextInt();
-				runMenu(menu);
-			}while(menu!=3);
-			oos.writeObject(carList);
-			//여기서 닫아야될거같은데
-		} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-		}
+			runMenu(menu);
+		}while(menu != EXIT);
+		
+		//save(fileName, carList);
+		
 		
 	}
 	private static void runMenu(int menu) {
