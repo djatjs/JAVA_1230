@@ -16,7 +16,7 @@ import lombok.Data;
 
 public class Ex09_ObjectStream2 {
 	
-	static String fileName = "src/day12/car_stream.txt";
+	static String fileName = "src/day12/car.txt";
 	static Scanner scan = new Scanner(System.in);
 	static ArrayList<Car> carList = new ArrayList<Car>();
 	
