@@ -50,9 +50,7 @@ public class Ex08_ObjectStream {
 @AllArgsConstructor
 class Point implements Serializable {
 	
-	//SerialVersionUID는 클래스 상수로 저장된 값을 읽어올 때 사용.
-	//클래스 이름이 같더라도 SerialVersionUID 값이 다르면 파일에서 읽어와서 객체에 저장하지 않음
-	private static final long serialVersionUID = 74508181797758427L;
+	private static final long serialVersionUID = 0;
 	
 	private int x,y;
 
