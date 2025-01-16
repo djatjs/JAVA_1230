@@ -53,11 +53,6 @@ public class Ex09_ObjectStream2 {
 				e.printStackTrace();
 		}
 		
-			
-			
-			
-		
-		
 	}
 	private static void runMenu(int menu) {
 		
@@ -110,9 +105,7 @@ public class Ex09_ObjectStream2 {
 @Data
 @AllArgsConstructor
 class Car implements Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1455289863100321662L;
 	private String name;
 	private String brand;
