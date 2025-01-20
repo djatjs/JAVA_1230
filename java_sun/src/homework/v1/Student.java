@@ -1,5 +1,6 @@
 package homework.v1;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,8 +11,9 @@ import lombok.Data;
 //getter, setter, toString, equals등을 제공
 @Data
 @AllArgsConstructor
-public class Student {
+public class Student implements Serializable {
 
+	private static final long serialVersionUID = 2267297665460352943L;
 	private int grade, classNum, num;
 	private String name="";
 	
@@ -32,6 +34,8 @@ public class Student {
 		return classNum == other.classNum && grade == other.grade && Objects.equals(num, other.num);
 	}
 	
+
+	
 	
 	
 	//학생 추가용 생성자
@@ -49,8 +53,20 @@ public class Student {
 			this.num = num;
 			list = new ArrayList<SubjectScore>();
 		}
-
-
+		
+	
+	public void print() {
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+		System.out.println(grade + "학년 " + classNum + "반 " + num + "번 " + name);
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+		if(list.size()==0) {
+			System.out.println("등록된 성적이 없습니다.");
+			System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+			return;
+		}for(SubjectScore score : list) {
+			System.out.println(score);
+		}
+	}
 
 	@Override
 	public String toString() {

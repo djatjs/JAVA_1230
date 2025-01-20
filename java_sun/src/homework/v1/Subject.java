@@ -1,5 +1,6 @@
 package homework.v1;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import lombok.AllArgsConstructor;
@@ -7,8 +8,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Subject {
+public class Subject implements Serializable{
 
+	private static final long serialVersionUID = -7622521791400060367L;
 	public int grade;
 	public int semester;
 	public String name;

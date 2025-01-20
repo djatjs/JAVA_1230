@@ -1,5 +1,6 @@
 package homework.v1;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import lombok.AllArgsConstructor;
@@ -7,13 +8,19 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SubjectScore {
+public class SubjectScore implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1180172222802401824L;
 	private Subject subject;
 	private int score;
+	
+	
 	@Override
 	public String toString() {
-		return subject + " 점수 : " + score;
+		return subject + " " + score + "점";
 	}
 	
 	@Override
@@ -31,6 +38,7 @@ public class SubjectScore {
 	public SubjectScore(Subject tmpSubject) {
 		this.subject = tmpSubject;
 	}
+	
 	
 
 	

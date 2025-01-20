@@ -1,24 +1,25 @@
-package homework.v2;
+package homework.v1;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 //getter, setter, toString, equals등을 제공
 @Data
-@AllArgsConstructor
-public class Student implements Serializable {
-
-	private static final long serialVersionUID = 2267297665460352943L;
+@RequiredArgsConstructor
+public class Student2 {
+	@NonNull
 	private int grade, classNum, num;
+	@NonNull
 	private String name="";
 	
 	//학생 개인의 성적을 담고 있는 배열
-	public List<SubjectScore> list;
+	public List<SubjectScore> list = new ArrayList<SubjectScore>();
 	
 	
 	//equals를 오버라이딩, 학년, 반, 번호를 이용
@@ -30,28 +31,11 @@ public class Student implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Student other = (Student) obj;
+		Student2 other = (Student2) obj;
 		return classNum == other.classNum && grade == other.grade && Objects.equals(num, other.num);
 	}
 	
-
 	
-	//학생 추가용 생성자
-	public Student (int grade, int classNum, int num, String name) {
-		this.grade =grade;
-		this.classNum = classNum;
-		this.num = num;
-		this.name = name;
-		list = new ArrayList<SubjectScore>();
-	}
-	//학생 수정용 생성자
-		public Student (int grade, int classNum, int num) {
-			this.grade =grade;
-			this.classNum = classNum;
-			this.num = num;
-			list = new ArrayList<SubjectScore>();
-		}
-		
 	
 	public void print() {
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
@@ -80,32 +64,7 @@ public class Student implements Serializable {
 		return false;
 		
 	}
-	//따라하기
-	public boolean updateScore(Subject subject, SubjectScore subjectScore) {
-		if(subject == null || subjectScore == null) {
-			return false;
-		}
-		//등록된 성적이 아니면
-		if(!list.contains(new SubjectScore(subject, 0))) {
-			return false;
-		}
-		//같은 과목을 수정하면
-		if(subject.equals(subjectScore.getSubject())) {
-			list.remove(subjectScore);
-			list.add(subjectScore);
-			return true;
-		}
-		//다른 과목을 수정하면
-		//새 성적이 등록된 성적인지 확인
-		if(list.contains(subjectScore)) {
-			return false;
-		}
-		list.remove(new SubjectScore(subject, 0));
-		list.add(subjectScore);
-		return true;
-	}
-	
-	//내 코드
+
 	public boolean updateScore(SubjectScore newSubjectScore) {
 		if(list.contains(newSubjectScore)) {
 			list.remove(newSubjectScore);
@@ -130,16 +89,6 @@ public class Student implements Serializable {
 			return;
 		}
 		System.out.println(list.get(index));	
-	}
-	public void update(Student newStd) {
-		if(newStd == null) {
-			return;
-		}
-		
-		grade = newStd.grade;
-		classNum = newStd.classNum;
-		num = newStd.num;
-		name = newStd.name;
 	}
 	
 }
