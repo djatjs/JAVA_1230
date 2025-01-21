@@ -62,7 +62,7 @@ public class Ex16_List {
 		
 		boolean res = list2.contains(new Point(1, 3));
 		System.out.println(res);
-		
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		//1번지에 있는 좌표 정보를 가져와서 2,3으로 수정하기
 		Point p = list2.get(1);
 		p.x=2;
