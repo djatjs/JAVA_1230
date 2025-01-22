@@ -1,4 +1,4 @@
-package day15.socket5;
+package day16;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,44 +7,51 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 
 
-public class Ex06_Server {
-
+public class Ex01_Server {
+	static Scanner scan=new Scanner(System.in);
 	public static void main(String[] args) {
-		/* 학생 관리하는 프로그램을 구현하고, 프로그램에서 관리하는 정보를 서버에 기록하는 예제
-		 * */
-		String filename = "src/day15/socket5/student.txt";
-		List<Student> list = (List<Student>) load(filename);
-		if(list==null) {
-			list=new ArrayList<Student>();
-		}
 		
 		int port = 5001;
 		
+		//불러오기용
+		String fileName = "src/day16/post.txt";
+		List<Post> list = (List<Post>) load(fileName);
+
+		if (list != null && !list.isEmpty()) {
+		    int lastIndex = list.size() - 1;
+		    Post lastPost = list.get(lastIndex);
+		    int lastNum = lastPost.getNum();
+		    Post.setCount(lastNum);
+		} else {
+		    Post.setCount(0);
+		}
+		
+		
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 			while(true) {
-				save(filename, list);
+				save(fileName, list);
+				//서버가 대기하다 연결 요청이 오면 소켓 객체를 생성
+				//1. 서버 대기 2. 연결 요청 수락 3. 소켓 객체 생성
 				Socket socket = serverSocket.accept();
-				System.out.println("[연결 성공]");
+				System.out.println("[연결 완료]");
 				
-				Server server = new Server(list,socket);
-				server.run();
+				//소켓을 활용한 클라이언트와의 실제 작업은 서버 클래스에 구현 예정이므로 소켓 객체를 넘겨줌
+				Server server = new Server(socket,list);
+				server.run();				
 			}
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}finally {
 			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
-
 	}
+	
 	private static void save(String fileName, Object obj) {
 		try(FileOutputStream fos = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fos)){
@@ -71,6 +78,4 @@ public class Ex06_Server {
 		}
 		return null;
 	}
-	
-
 }

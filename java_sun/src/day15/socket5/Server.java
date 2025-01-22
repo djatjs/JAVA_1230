@@ -50,7 +50,7 @@ public class Server {
 			delete(ois, oos);
 			break;
 		case 4: 
-			search();
+			search(ois, oos);
 			break;
 		default:
 		}
@@ -71,10 +71,11 @@ public class Server {
 			else { 
 				list.add(std);
 			}
+			//추가 여부를 클라이언트에게 전송
 			oos.writeBoolean(res);
 			oos.flush();
 			
-			System.out.println(list);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,18 +85,91 @@ public class Server {
 	}
 
 	private void update(ObjectInputStream ois, ObjectOutputStream oos) {
-		// TODO Auto-generated method stub
+		try {
+			//학생 기본 정보를 클라이언트에게서 받음
+			Student std = (Student) ois.readObject();
+			
+			//수정할 학생 정보를 클라이언트에게서 받음
+			Student newStd = (Student) ois.readObject();
+			
+			//학생이 없으면 false를 저장
+			boolean res = true;
+			if(!list.contains(std)) {
+				res = false;
+			}
+			//학생과 수정할 학생이 다르고 수정할 학생이 있으면 false를 저장 (다른 학생으로 수정하려는데 이미 등록되어 있다면)
+			else if(!std.equals(newStd) && list.contains(newStd)) {
+				res = false;
+			}
+			//기존 학생 정보를 가져와서 수정하고 true 저장
+			else {
+				int index = list.indexOf(std);
+				list.remove(std);
+				list.add(newStd);
+				sort();
+			}
+			//클라이언트에게 res 보냄
+			oos.writeBoolean(res);
+			oos.flush();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
+	
 
 	private void delete(ObjectInputStream ois, ObjectOutputStream oos) {
-		// TODO Auto-generated method stub
+		try {
+			//클라이언트로부터 삭제할 학생 정보 받음
+			Student std = (Student) ois.readObject();
+			
+			//삭제 결과를 클라이언트에게 전송
+			boolean res = list.remove(std);
+			oos.writeBoolean(res);
+			oos.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 
-	private void search() {
-		// TODO Auto-generated method stub
+	private void search(ObjectInputStream ois, ObjectOutputStream oos) {
+		try {
+			//클라이언트가 보내준 학생 정보를 받아옴
+			Student receiveStd = (Student) ois.readObject();
+			
+			//받은 학생 정보를 이용해서 일치하는 학생 정보를 가져옴
+			Student std = null;
+			int index = list.indexOf(receiveStd);
+			
+			if(index != -1) {
+				std = list.get(index);
+			}
+			//일치하는 학생 정보(없을 수도 있음)를 클라이언트에게 전송
+			oos.writeObject(std);
+			oos.flush();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
+	
+	//정렬;;
+		private void sort() {
+			list.sort((o1,o2)->{
+				if(o1.getGrade() != o2.getGrade()) {
+					return o1.getGrade() - o2.getGrade();
+				}
+				if(o1.getClassNum() != o2.getClassNum()) {
+					return o1.getClassNum() - o2.getClassNum();
+				}
+				return o1.getNum() - o2.getNum();
+			});
+			System.out.println(list);
+		}
 	
 }
