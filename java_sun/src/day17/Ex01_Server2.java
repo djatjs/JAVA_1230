@@ -99,27 +99,10 @@ public class Ex01_Server2 {
 			System.out.println("[서버 : 스코어 전달받는중 ...]");
 			int score = ois.readInt();
 			System.out.println("[받은 스코어: " + score + "]");
-			boolean res = false;
-			//조건에 안맞으면 false로 두기
-			Date date = new Date(); //시간도 비교해야됨.. //왜 이런 짓을 하냐.. 상위권에 도달한 유저에게는 특별한 메시지를 주고싶어서.
 			
-			//리스트 크기가 5이하라면 바로 순위권
-			if(list.size()<5) {
-				res= true;
-			}else {
-				// 리스트를 순회하며 점수나 날짜가 기준에 맞는지 확인
-				for(Game tmp : list) {
-					//횟수가 낮다는건 순위안에 든다는것. 처음엔 false로 될 수 있음. 근데 리스트 돌면서 끝까지 갈 땐 true로 될 수도 있다는거.  
-					// 점수가 더 낮거나, 날짜가 더 이전이면 순위권 가능
-					if (tmp.getScore() > score || 
-						    (tmp.getScore() == score && date.before(tmp.getDate()))) { 
-						res= true;
-					}//끝까지 false라면 그냥 버리도록하자.
-
-				}
-			}
-
 			// 5위 안에 들면 이니셜 보내라는 신호로 res=true 전송, 아니면 false전송
+			boolean res = checkRanking(score);
+			
 			if (res) {
 				oos.writeBoolean(res);
 				oos.flush();
@@ -165,6 +148,28 @@ public class Ex01_Server2 {
 
 		// 처리 후 클라이언트가 처리 유무 알 수 있게 res2 반환.
 
+	}
+
+	private static boolean checkRanking(int score) {
+		//조건에 안맞으면 false로 두기
+		Date date = new Date(); //시간도 비교해야됨.. //왜 이런 짓을 하냐.. 상위권에 도달한 유저에게는 특별한 메시지를 주고싶어서.
+		
+		//리스트 크기가 5이하라면 바로 순위권
+		if(list.size()<5) {
+			return true;
+		}else {
+			// 리스트를 순회하며 점수나 날짜가 기준에 맞는지 확인
+			for(Game tmp : list) {
+				//횟수가 낮다는건 순위안에 든다는것. 처음엔 false로 될 수 있음. 근데 리스트 돌면서 끝까지 갈 땐 true로 될 수도 있다는거.  
+				// 점수가 더 낮거나, 날짜가 더 이전이면 순위권 가능
+				if (tmp.getScore() > score || 
+					    (tmp.getScore() == score && date.before(tmp.getDate()))) { 
+					return true;
+				}//끝까지 false라면 그냥 버리도록하자.
+
+			}
+		}
+		return false;
 	}
 
 	private static void ranking() {
