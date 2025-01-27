@@ -202,7 +202,9 @@ public class Ex01_Client {
 			if (res) {
 				System.out.println("입금 완료");
 			} else {
-				System.out.println("입금 실패");
+				if(money <=0) {
+					System.out.println("입금 실패 : 0원보다 큰 금액을 입력하세요.");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -225,7 +227,11 @@ public class Ex01_Client {
 			if (res) {
 				System.out.println("출금 완료");
 			} else {
-				System.out.println("출금 실패");
+				if(money <=0) {
+					System.out.println("출금 실패 : 0원보다 큰 금액을 입력하세요.");
+				}else {
+					System.out.println("출금 실패 : 잔액 부족");
+				}				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
