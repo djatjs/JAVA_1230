@@ -1,20 +1,29 @@
 package day20;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Member {
+	@NonNull
 	private String id;
+	@NonNull
 	private String password;
-	private String type = "회원"; //회원 : 1, 관리자 : 0
+	@NonNull
+	private String type;
+	private List<PurchaseItem> list = new ArrayList<PurchaseItem>();
 	
 	public Member(String id, String password) {
 		this.id = id;
 		this.password = password;
+		this.type ="회원";
 	}
 
 	@Override
@@ -33,6 +42,15 @@ public class Member {
 	public String toString() {
 		return "("+type+")"+ id + "/" + password;
 	}
+
+	public void addPurchaseItem(PurchaseItem pi) {
+		if(pi==null) {
+			return;
+		}
+		list.add(pi);
+	}
+
+
 
 	
 	
