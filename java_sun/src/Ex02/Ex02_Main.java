@@ -252,6 +252,4 @@ public class Ex02_Main {
 			System.out.println(i+1 +". "+user.getSearchHistory().get(i));
 		}
 	}
-	
-
 }

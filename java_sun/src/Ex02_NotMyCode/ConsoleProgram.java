@@ -1,4 +1,4 @@
-package homework.v2;
+package Ex02_NotMyCode;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,7 +6,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public interface ConsoleProgram {
-	
 	void run();
 	
 	default void printMenu() {};
@@ -40,5 +39,4 @@ public interface ConsoleProgram {
 		}
 		
 	}
-
 }
