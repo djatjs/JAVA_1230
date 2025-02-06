@@ -9,6 +9,7 @@ public class Ex07_Class {
 		//클래스 선언. 클래스는 캡슐화에 맞춰 구현하고 게터,세터 작성, 매개변수 있는 생성자 두고, 직렬화/역직렬화 가능하도록 설정
 		Drink drink = new Drink("아이스 아메리카노", 1500);
 		System.out.println(drink.getMenu() +" : "+drink.getPrice());
+		
 	}
 	
 }

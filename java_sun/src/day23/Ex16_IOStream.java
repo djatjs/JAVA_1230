@@ -11,9 +11,9 @@ public class Ex16_IOStream {
 		//FileWriter(파일명) : 기존 파일 지우고 새로 만듬
 		//FileWriter(파일명, boolean) : 참이면 이어쓰기, 거짓이면 새로 만듬
 		try(FileWriter fw = new FileWriter(fileName, true)){
-			fw.write("뭘봐\n");
-			fw.write("뭘 보냐고 ㅡㅡ\n");
-			fw.flush();
+			fw.write(97);
+			fw.write(65);
+			//fw.flush();
 		}catch (Exception e) {
 		}
 		

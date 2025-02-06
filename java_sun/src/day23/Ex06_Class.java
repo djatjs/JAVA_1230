@@ -18,7 +18,14 @@ public class Ex06_Class {
 
 }
 @Data
-class MyStudent{
+ class MyStudent{
 	int grade, classNum, num;
 	String name;
+	
+	public static double PI = 3.14;
+
+	public static double getPI() {
+		return PI;
+	}	
+
 }
