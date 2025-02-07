@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css적용하기</title>
+</head>
+<body>
+    <!--적용 방법
+    1. 요소의 style 속성을 이용
+        - 우선 순위가 가장 높음.
+        - 비추천
+        ex) <a href="" style"속성명:값, 속성명:값"></a>
+    
+    2. style 태그를 이용
+        - 같은 파일에서 head 태그에 style 태그를 추가하여 스타일 적용
+    
+    3. css 파일을 불러서 이용
+        1) link 태그
+        <link href="css파일경로" rel="stylesheet" type="text/css">
+        
+        2) style 태그, 다른 css파일에서 @import 이용
+        <style>
+            @import url("css파일경로");
+        </style>
+    -->
+    <body>
+        <a href="https://naver.com" style="color: brown;">Go To 네이버</a>
+        <a href="https://naver.com" class="a2">Go To 네이버</a>
+        <a href="https://naver.com" class="a3">Go To 네이버</a>
+    </body>
+    <!-- 스타일 태그 사용-->
+    <style>
+        .a2{color:chocolate}
+    </style>
+    <!-- 링크 태그-->
+    <link rel="stylesheet" href="01_css적용하기.css">
+</body>
+</html>

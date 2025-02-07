@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>a 태그</title>
+</head>
+<body id="top">
+    <!-- a 태그 : 
+        1) 기능
+        - 다른 페이지로 이동. 
+        - 같은 페이지에서 특정 위치로 이동
+        - 전화 걸기
+        - 이메일 보내기
+        - 다운로드 하기
+        
+        2)속성
+            - href : 이동할 페이지나 위치, 파일, 전화번호, 이메일이 옴
+            - target : 어떤 창에 페이지를 띄울건지를 선택하는 속성
+                - _self : 기본값, 현재창
+                - _blank : 새창
+                - _parent : 부모창
+                - _top : 최상위 조상창
+            - download : 파일을 다운로드 할 때 사용. 값을 지정하면 저장할 때 지정된 이름으로 파일명을 변경할 수 있음.
+
+    -->
+    <a href="https://naver.com">네이버(현재창)</a> <br>
+    <a href="https://naver.com" target="_blank">네이버(새창)</a> <br>
+    <a href="../img/댕댕이.jpg" download="댕댕s">댕댕이 다운로드</a> <br>
+    <a href="tel:+821712345678">국내 번호 017-1234-5678으로 전화걸기</a> <br>
+    <a href="mailto:sun@aaa.com">메일 보내기</a> <br>
+    <!-- 같은 페이지 내에서 특정 위치로 이동할 때
+    - 이동 하고 싶은 요소에 id 속성을 지정
+    - a 태그 href에 #아이디명을 입력-->
+    <div style = "height : 1000px;"></div>
+    <a href="#top">위로가기</a>
+</body>
+</html>

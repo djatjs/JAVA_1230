@@ -1,0 +1,11 @@
+@charset "utf-8";
+.card{
+    transition: 0.5s ease;
+    cursor : pointer;
+}
+.container:hover > :not(:hover) {
+    opacity: 0.3;
+}
+.card.hover{
+    transition: scale(1,1);
+}
