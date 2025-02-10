@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>display</title>
+    <style>
+        /* display : 요소의 디스플레이 변경
+            1) inline : 현재 위치에서 시작. width/height/margin 변경 불가능
+                - height 대신 line-height를 이용하여 높이 제어가능
+            
+            2) block : 새 라인에서 시작
+                - width/height/margin 변경 가능
+                - width 지정하면 지정한 크기 이외의 나머지 공간은 우측 margin으로 할당
+            
+            3) inline-block : 현재 위치에서 시작
+                - width/height/margin 변경 가능
+            
+            4) none - 요소 감춤
+
+            5) flex, grid 등 다양한 값이 있음. 이들은 나중에*/
+
+            .box1 > span{display: block; height: 50px; width: 300px;}
+            .box2 > div{display: inline; line-height: 50px; width: 300px;}
+            .box3 > div{display: inline-block; height: 50px; width: 300px;}
+            .box4 > div{display: none;}
+
+    </style>
+</head>
+<body>
+    <div class="box box1">
+        <span>1. 어쩔티비 디스플레이 블록으로 할건데 어쩔티비 디스플레이 블록으로 할건데</span>
+        <span>2. 어쩔티비 디스플레이 블록으로 할건데 어쩔티비 디스플레이 블록으로 할건데</span>
+        <span>3. 어쩔티비 디스플레이 블록으로 할건데 어쩔티비 디스플레이 블록으로 할건데</span>
+    </div>
+    <hr>
+    <div class="box box2">
+        <div>1. 어쩔티비 디스플레이 블록으로 할건데 어쩔티비 디스플레이 인라인으로 할건데</div>
+        <div>2. 어쩔티비 디스플레이 블록으로 할건데 어쩔티비 디스플레이 인라인으로 할건데</div>
+        <div>3. 어쩔티비 디스플레이 블록으로 할건데 어쩔티비 디스플레이 인라인으로 할건데</div>
+    </div>
+    <hr>
+    <div class="box box3">
+        <div>1. 어쩔티비 디스플레이 인라인블록으로 할건데 어쩔티비 디스플레이 인라인블록으로 할건데</div>
+        <div>2. 어쩔티비 디스플레이 인라인블록으로 할건데 어쩔티비 디스플레이 인라인블록으로 할건데</div>
+        <div>3. 어쩔티비 디스플레이 인라인블록으로 할건데 어쩔티비 디스플레이 인라인블록으로 할건데</div>
+    </div>
+    <hr>
+    <div class="box box4">
+        <div>1. 어쩔티비 디스플레이 블록으로 할건데 어쩔티비 디스플레이 안보이게 할건데</div>
+        <div>2. 어쩔티비 디스플레이 블록으로 할건데 어쩔티비 디스플레이 안보이게 할건데</div>
+        <div>3. 어쩔티비 디스플레이 블록으로 할건데 어쩔티비 디스플레이 안보이게 할건데</div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>말줄임 예제</title>
+    <style>
+        .box{overflow: hidden;}
+        /* 1줄 말 줄임 */
+        .box1{text-overflow: ellipsis; white-space: nowrap;}
+        /* 2줄 말 줄임 */
+        .box2{ 
+			display: -webkit-box; 
+			-webkit-box-orient: vertical; 
+			-webkit-line-clamp: 2; 
+		}
+    </style>
+</head>
+<body>
+    <div class="box box1">
+        안녕하세요 스위트 걸이에요 처음만난사람들도안녕하세요ㅋ
+        안녕하세요 스위트 걸이에요 처음만난사람들도안녕하세요ㅋ
+    </div>
+    <hr>
+    <div class="box box2">
+        안녕하세요 스위트 걸이에요 처음만난사람들도안녕하세요ㅋ
+        안녕하세요 스위트 걸이에요 처음만난사람들도안녕하세요ㅋ
+    </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>목록</title>
+    <!-- ol, ul 태그 관련 스타일
+    1) list-style-type
+        ul 태그
+            - disc(기본값), circle, square, none 
+    
+    2) list-style-image : 마커를 이미지로 대체함. url 함수로 가져옴
+
+    3) list-style-position : 마커 위치 조절
+
+    4) list-style : 타입, 이미지, 포지션을 한 번에 적용하는 속성
+        - list-style : none으로 마커 제거
+    -->
+    <style>
+    .list{
+        list-style-type: square;
+        /* list-style-image: url(../../img/댕댕이.jpg); */
+    }
+    .list2{
+        list-style-position: inside;
+        list-style: none;
+    }
+
+    </style>
+</head>
+<body>
+    <ul class="list">
+        <li>메뉴1</li>
+        <li>메뉴2</li>
+        <li>메뉴3</li>
+    </ul> 
+    <ul class="list2">
+        <li>메뉴1</li>
+        <li>메뉴2</li>
+        <li>메뉴3</li>
+    </ul>   
+</body>
+</html>

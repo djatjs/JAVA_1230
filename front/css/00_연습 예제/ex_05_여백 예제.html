@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여백 예제</title>
+    <style>
+        /* 테두리 두께 5px
+        red 박스 안에 blue 박스 얘도 두께 같음. 위 아래 여백은 20px
+        테두리 안에 있는 컨텐츠 높이 100 */
+        .box1{padding: 20px; display: inline-block; border: solid  red 5px;}
+        .box1 > .inner-box{width: 100px; height: 100px;border: solid  blue 5px;}
+    </style>
+</head>
+<body>
+    <div class="box1">
+        <!-- <div class="box1"></div> -->
+        <div class="inner-box"></div>
+    </div>
+</body>
+</html>
