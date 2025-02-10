@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선택자 예제</title>
+    <style>
+        /* 모든 메뉴의 글자색(리스트 모양색도)을 빨강으로 수정하도록 선택자 선택 및 적용 */
+        /* * {color: red;} */
+        
+        /* 위에 있는 메뉴1~3의 글자색을 빨강으로 수정 */
+        /* a{color: red;} */
+        /* .menu-link{color : red;} */
+
+        /* nav 태그에서만 */
+        /* nav > .menu-list > .menu-item > .menu-link{color: red;} */
+        /* nav .menu-link{color: red;} */
+
+        /* 모든 메뉴2, 메뉴3의 글자색을 빨강으로 수정 */
+        .menu-item +.menu-item > .menu-link{color:  red;} 
+        /* menu-link 끼리는 형제가 아니므로 item으로 한거임  */
+    </style>
+</head>
+<body>
+    <!-- nav -->
+    <nav>
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="#" class="menu-link">메뉴1</a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">메뉴2</a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">메뉴3</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- div -->
+    <div class="box">
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="#" class="menu-link">메뉴1</a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">메뉴2</a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">메뉴3</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

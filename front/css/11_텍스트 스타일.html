@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>텍스트 관련 스타일</title>
+    <style>
+        /* 색 표현 방법
+        1. 지정된 이름을 사용.
+            - red, blue와 같이 지정된 이름 중 하나 선택 
+        
+        2. 색상을 16진수로 표현
+            - #RRGGBB 
+            - RR, GG, BB는 0~255를 16진수로 표현
+            - R, G, B가 각각 반복되면 줄여 쓸 수 있음.
+              ex) red : #ff0000 ->  #f00, black : #000000 -> #000, white : #ffffff -> #fff
+
+        3. rgb 함수를 이용
+            - rgb(r, g, b)
+            - r, g, b : 0~255dml 10진수
+        
+        4.  rgba 함수를 이용
+            - rgba(r, g, b, 투명도)
+            - rbg 함수에 투명도 추가
+            - 투명도는 0~1, 0은 완전 투명. 1은 불투명
+
+        5. hsl 함수를 이용
+            - 색상, 채도, 명도를 이용
+        
+        6. hsla 함수를 이용
+            - hsl 함수에 투명도를 추가
+        */
+
+        /* 
+        1) text decoration : 글자에 줄을 표시할 때 사용하는 속성
+            - underline : 밑줄
+            - overline : 윗줄
+            - line-through : 취소선
+            - none : 줄 없음
+        */
+        .color1{color: red;}
+        .color2{color: #ff0000;}
+        .color3{color: rgb(255,0,0);}
+        .textdeco1{text-decoration: underline;}
+        .textdeco2{text-decoration: overline;}
+        .textdeco3{text-decoration: line-through;}
+        .textdeco4{text-decoration: none;}
+
+        /* 2) text-transform : 영문자를 표시할 때 사용
+            - none : 적용 X
+            - capitalize : 첫글자를 대문자
+            - uppercase : 모두 대문자로
+            - lowercase : 모두 소문자로
+        */
+        .text-trans{text-transform: capitalize;}
+
+        /* 3) white space : 공백 처리
+            - normal : 여러 공백을 하나로 처리
+            - nowrap : 여러 공백을 하나로 처리. 줄 바꿈 없이 한 줄 표시(줄 바꿈 없이 한 줄 표시)
+            - pre : 여러 공백을 그대로 처리
+            - pre-line : 여러 공백을 하나로 처리. 영역 넘어가면 자동 줄 바꿈
+            - pre-wrap : 여러 공백을 그대로 처리. 영역 넘어가면 자동 줄 바꿈
+        */
+        [class^=white-space]::first-letter{font-size: 30px;}
+        .white-space2{white-space: nowrap;}
+        .white-space3{white-space: pre;}
+        .white-space4{white-space: pre-line;}
+        .white-space5{white-space: pre-wrap;}
+
+        /* 5) 문자 간격
+            - letter-spacing : 글자 간격
+            - word-spacing : 단어 간격
+            
+            - 간격 조절 할 때 음수 가능
+            - 0.xx의 값은 .xx으로 표현 가능
+            */
+        .letter-spaceing{letter-spacing: -.5px;}
+        .word-spacing{word-spacing: 15px;}
+
+        /* text-shadow : 글자에 그림자 적용
+            - none : 적용 X
+            
+        
+        */
+    </style>
+</head>
+<body>
+    <div>
+        <h3 class="color1">색</h3>
+        <h3 class="color2">깔</h3>
+        <h3 class="color3">ㅋ</h3>
+    </div>
+    <div>
+        <h3 class="textdeco1">텍스트 데코</h3>
+        <h3 class="textdeco2">텍스트 데코</h3>
+        <h3 class="textdeco3">텍스트 데코</h3>
+        <h3 class="textdeco4">텍스트 데코</h3>
+    </div>
+    <div><h3 class="text-trans">text-transfrom</h3></div>
+    <div>
+        <div class="white-space1">white-space
+            타이핑시간 팔                                        개아프네
+            한컴 타자 연습인가
+        </div>
+        <div class="white-space2">white-space
+            타이핑시간 팔 개아프네
+            한컴 타자 연습인가
+        </div>
+        <div class="white-space3">white-space
+    타이핑시간 팔 개아프네
+            한컴 타자 연습인가
+        </div>
+        <div class="white-space4">white-space
+            타이핑시간 팔 개아프네
+            한컴 타자 연습인가
+        </div>
+        <div class="white-space5">white-space
+    타이핑시간 팔 개아프네
+            한컴 타자 연습인가
+        </div>
+    </div>
+    <div><h2 class="letter-spcaing">dkdkd kdkdkdk kdkdkdkdk</h2></div>
+    <div><h2 class="word-spcaing">dkdkd kdkdkdk kdkdkdkdk</h2></div>
+</body>
+</html>
