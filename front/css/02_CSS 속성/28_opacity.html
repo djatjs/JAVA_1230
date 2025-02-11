@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    /* opacity : 투명도를 설정하는 속성
+        - 0~1사이의 실수
+        - 0 : 투명 / 1 : 불투명
+        - 부모 요소가 투명도가 적용되면 자식 요소도 같이 적용됨 
+            - 자식 요소의 투명도를 1로 해도 흐릿하게 보임
+    */
+    .box{background-color: grey; padding: 30px; opacity: 0.5;} 
+    .inner-box{background-color: blue; height:100px; opacity: 1;}
+    .box2{background-color: rgba(128, 128, 128, 0.5); padding: 30px; opacity: 1;}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="inner-box">123</div>
+    </div>
+    <div class="box box2">
+        <div class="inner-box">123</div>
+    </div>
+</body>
+</html>

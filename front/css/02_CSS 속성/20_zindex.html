@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>z-index</title>
+    <!-- z-index : 요소가 서로 겹쳤을 때 누구를 위로 보낼지 결정하는 속성. 숫자 클수록 위로 올라감
+        - 숫자 같으면 배치 순서상 아래에 있는 요소가 위로 올라감 -->
+    <style>
+        .container :nth-child(1){top :0px; left : 25px; z-index: 19;}
+        .container :nth-child(2){top :25px; left : 50px; z-index: 18;}
+        .container :nth-child(3){top :50px; left : 75px; z-index: 30;}
+        .box{
+            position: absolute; width: 50px; height: 50px;
+            border: 3px solid black; background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</body>
+</html>
