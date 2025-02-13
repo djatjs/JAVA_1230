@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>메뉴 예제2</title>
+	<style>
+		* { padding: 0; margin: 0;} /* 모든 요소의 기본 패딩과 마진을 0으로 설정 */
+		.menu-list{ list-style: none;} /* 메뉴 리스트의 기본 리스트 스타일 제거 */
+		.menu-list::after{ content: ''; clear: both; display: block;}
+		.menu-item{
+			float: left; padding-right: 30px; position: relative; /* 메뉴 아이템을 왼쪽으로 정렬하고 오른쪽 패딩 추가 */
+		}
+		.menu-link{ color: black; text-decoration: none;} /* 메뉴 링크의 색상을 검정으로 설정하고 밑줄 제거 */
+		.menu-list > li:nth-of-type(1)::after{
+			content: ''; width: 4px; height: 4px; background: red; /* 첫 번째 메뉴 아이템에 빨간 점 추가 */
+			position: absolute; /* 절대 위치 설정 */
+			right: 15px; top:10px; /* 위치 조정 */
+			border-radius: 50%; /* 원형으로 만들기 위해 테두리 반경 설정 */
+		}
+		.menu-list > li:nth-of-type(2)::after{
+			content: ''; width: 1px; height: 16px; background: red; /* 두 번째 메뉴 아이템에 세로선 추가 */
+			position: absolute; /* 절대 위치 설정 */
+			right: 15px; top: 4px; /* 위치 조정 */
+		}
+		.menu-list > li:nth-of-type(3)::after{
+			content: ''; width: 1px; height: 16px; background: red; /* 세 번째 메뉴 아이템에 세로선 추가 */
+			position: absolute; /* 절대 위치 설정 */
+			right: 15px; top: 4px; /* 위치 조정 */
+			transform: skewX(-15deg); /* 선을 기울이기 위해 변형 적용 */
+		}
+	</style>
+</head>
+<body>
+	<nav>
+		<ul class="menu-list"> 
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴1</a> 
+			</li>
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴2</a> 
+			</li>
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴3</a> 
+			</li>
+		</ul>
+	</nav>
+</body>
+</html>

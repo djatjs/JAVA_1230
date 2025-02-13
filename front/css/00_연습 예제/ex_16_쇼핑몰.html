@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{padding: 0; margin: 0; color: black;} 
+        ul, ol{list-style: none;}
+        a{text-decoration: none;}
+        
+        .shopping-list{
+            display: flex; justify-content: space-evenly;
+            flex-wrap: wrap;
+        }
+
+        /* shopping-item 스타일 */
+        .shopping-item{
+            width: 150px;
+        }
+
+        /* shopping-link-img 스타일 */
+        .shopping-link-img{
+            display: block; overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+        }
+        
+        .shopping-img{
+            display: block;
+            transition: transform 0.3s;
+        }
+        
+        .shopping-item:hover .shopping-img{
+            transform: scale(1.03);
+        }
+
+
+        /* shopping-link-title 스타일 */
+        .shopping-link-title:hover{
+            text-decoration: underline;
+        }
+        .shopping-link-title{
+            display: block; margin-top: 10px;
+        }
+
+        /* border */
+        .border{
+            top: 0; left: 0; right: 0; bottom: 0; position: absolute;
+            border: 1px solid red;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul class="shopping-list">
+            <li class="shopping-item">
+                <a href="#" class="shopping-link-img">
+                    <img class="shopping-img" width="150px" height="150" src="../../img/댕댕이.jpg" alt="댕댕">
+                    <i class="border"></i>
+                </a>
+                <br>
+                <a href="#" class="shopping-link-title">
+                    이게 뭐임 <br>
+                    개에반데
+                </a>
+            </li>
+            <li class="shopping-item">
+                <a href="#" class="shopping-link-img">
+                    <img class="shopping-img" width="150px" height="150" src="../../img/댕댕이.jpg" alt="댕댕">
+                    <i class="border"></i>
+                </a>
+                <br>
+                <a href="#" class="shopping-link-title">
+                    이게 뭐임 <br>
+                    몰라
+                </a>
+            </li>
+            <li class="shopping-item">
+                <a href="#" class="shopping-link-img">
+                    <img class="shopping-img" width="150px" height="150" src="../../img/댕댕이.jpg" alt="댕댕">
+                    <i class="border"></i>
+                </a>
+                <br>
+                <a href="#" class="shopping-link-title">
+                    이게 뭐임 <br>
+                    몰라
+                </a>
+            </li>
+            <li class="shopping-item">
+                <a href="#" class="shopping-link-img">
+                    <img class="shopping-img" width="150px" height="150" src="../../img/댕댕이.jpg" alt="댕댕">
+                    <i class="border"></i>
+                </a>
+                <br>
+                <a href="#" class="shopping-link-title">
+                    이게 뭐임 <br>
+                    몰라
+                </a>
+            </li>
+            <li class="shopping-item">
+                <a href="#" class="shopping-link-img">
+                    <img class="shopping-img" width="150px" height="150" src="../../img/댕댕이.jpg" alt="댕댕">
+                    <i class="border"></i>
+                </a>
+                <br>
+                <a href="#" class="shopping-link-title">
+                    이게 뭐임 <br>
+                    몰라
+                </a>
+            </li>
+            <li class="shopping-item">
+                <a href="#" class="shopping-link-img">
+                    <img class="shopping-img" width="150px" height="150" src="../../img/댕댕이.jpg" alt="댕댕">
+                    <i class="border"></i>
+                </a>
+                <br>
+                <a href="#" class="shopping-link-title">
+                    이게 뭐임 <br>
+                    몰라
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>검색창</title> 
+	<style>
+		*{ padding: 0; margin: 0;} 
+		.search-form{
+			width: 500px; position: relative; /* 검색 폼의 너비 설정 및 상대 위치 지정 */
+		}
+		.search-container{
+			border: 3px solid black; border-radius: 10px; /* 검색 컨테이너의 테두리 및 모서리 둥글게 설정 */
+			padding: 15px; /* 내부 여백 설정 */
+		}
+		.search-input{
+			width: 350px; height: 20px; font-size: 16px; /* 검색 입력창의 너비, 높이 및 글자 크기 설정 */
+			border: 0; outline: 0; line-height: 20px; display: block; /* 테두리 및 아웃라인 제거, 줄 높이 설정 */
+		}
+		.search-btn{
+			width: 56px; height: 56px; /* 검색 버튼의 너비와 높이 설정 */
+			position: absolute; top: 0; right: 0; /* 버튼을 검색 컨테이너의 오른쪽 상단에 위치시킴 */
+			border: 3px solid black; /* 버튼의 테두리 설정 */
+			border-radius: 0 10px 10px 0; /* 버튼의 오른쪽 모서리 둥글게 설정 */
+			background-color: #fff; /* 버튼 배경색을 흰색으로 설정 */
+			cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+		}
+	</style>
+</head>
+<body>
+	<form action="" class="search-form"> <!-- 검색 폼 시작 -->
+		<div class="search-container"> <!-- 검색 컨테이너 시작 -->
+			<input type="text" class="search-input" name="search"> <!-- 검색 입력창 -->
+			<button type="submit" class="search-btn">검색</button> <!-- 검색 버튼 -->
+		</div>
+	</form>
+</body>
+</html>

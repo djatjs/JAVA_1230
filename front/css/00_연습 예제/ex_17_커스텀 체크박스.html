@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [name=hobby]{display: none;}
+        [name=hobby] + label{
+           padding-left: 20px; position: relative;
+           line-height: 20px; cursor: pointer;
+        }
+        [name=hobby] + label::before{
+            content: ""; width: 16px; height: 16px; position: absolute;
+            left: 3px; top: 3px; background-image: url(../../img/checkbox_off.png);
+        }
+        [name=hobby]:checked + label::before{
+            background-image: url(../../img/checkbox_on.png);
+        }
+    </style>
+</head>
+<body>
+    <h1>취미</h1>
+     <div class="hobby-box">
+        <input type="checkbox" name="hobby" id="data1">
+        <label for="data1">운동</label>
+        <input type="checkbox" name="hobby" id="data2">
+        <label for="data2">독서</label>
+        <input type="checkbox" name="hobby" id="data3">
+        <label for="data3">음악 감상</label>
+     </div>
+</body>
+</html>
