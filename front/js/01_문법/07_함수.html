@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        함수 vs 메소드
+            - 함수 : 객체의 호출 없이 사용
+            - 메소드 : 객체를 이용해서 호출
+
+        함수 선언 방법
+        #자바
+            - 리턴타입 함수명(자료형 변수명){
+                실행문;
+            }
+
+        #자바스크립트
+            1. 함수 선언식
+            - 함수 선언 위치에 상관 없이 호출이 가능 => 호이스팅
+            - function 함수명(매개변수명1, 매개변수명2, ...){
+                실행문;
+            }
+
+            2. 함수 표현식
+            - 함수를 선언한 후 호출해야 됨. 선언하기 전에 호출하면 에러가 발생.
+            - 화살표 함수를 적용할 수 있음.
+            - var 함수명 = function(매개변수명1, 매개변수명2, ...){
+                실행문;
+            }
+        */
+        // 1. 함수 선언식
+        hello(); //호이스팅으로 인해 함수 선언 위치에 상관없이 호출 가능
+        function hello(){
+            document.write('hello (함수 선언식)<br>');
+        }
+
+        // 2. 함수 표현식
+        //hi(); //함수 표현식은 선언 후 호출해야 됨. 선언하기 전에 호출하면 에러 발생
+        var hi = function(){
+            document.write('hi (함수 표현식)<br>');
+        }
+        
+        //var hello2; //undefined 상태
+        //hello2(); //이 위치에 있으면 실행이 안됨. hello2는 undefined 상태이기 때문에
+        //hello2 = function(){ document.write('hello2 (함수 표현식)<br>'); }
+        var hello2 = function(){
+            document.write('hello2 (함수 표현식)<br>');
+        }
+        hello2();
+
+        /*
+        3. 화살표 함수 : 
+            - 함수를 함수 표현식으로 정의할 때 조금 더 간단하게 사용 가능
+            - 자바의 람다식과 비슷.
+                -차이점
+                    - -> 대신에 => 사용.
+                    - 자바에서는 함수형 인터페이스를 구현한 구현 클래스의 객체가 필요할 때 사용하지만
+                    - js에서는 조건 없이 함수를 만들 때 사용 가능
+        */ 
+        //문자열을 화면에 출력하는 함수
+        var print = (str) =>{
+            document.write(`${str}<br>`);
+        } //매개변수가 있는 함수로 선언함
+        print('화살표 함수');
+
+        /*
+        즉시 실행함수 : 함수를 호출하지 않고 바로 실행하는 함수. 전역 변수가 바뀌는 것을 방지
+        */
+        (function(){
+            document.write('즉시 실행 함수. 따로 호출하지 않았음<hr>');
+        })();
+        
+        /*
+        나머지 매개변수. 자바에서 가변 매개변수
+            - 함수 호출시 넘겨준 인수들을 배열로 저장해서 관리
+            - consol.log() : 나머지 매개변수 활용
+            function 함수명 (... 변수명){}
+        */
+        document.write(`sum(1,2,3)= ${sum(1,2,3)} <br>`);
+        function sum(... args){
+            var sum =0;
+            for(val of args){
+                sum+=val;
+            }
+            return sum;
+        }
+        document.write(`sum(1,2,3,4,5)= ${sum(1,2,3,4,5)} <hr>`);
+        
+        /*
+        함수에 정의된 매개변수의 개수보다 많거나 적은 값들을 넘겨줬을 때
+            - 자바에서는 정의된 매개변수와 호출할 때 넘겨준 매개변수가 다르면 에러가 발생
+            - js에서는 일단 실행이 됨
+                - 적게 넣어주면 나머지 값들은 undefined로 들어감
+                - 많이 넣어주면 사용하지 않음. 또는 arguments 객체를 이용하면 사용 가능(비추천)
+        */
+       function printA(a,b,c){
+        document.write(`${a},${b},${c} <br>`);
+       }
+       printA(1,2); //적은 경우
+       printA(1,2,3); //정상인 경우
+       printA(1,2,3,4,5); // 많은 경우
+
+       /*
+       arguments 객체
+        - 함수에서 넘겨준 인수들을 관리하는 객체
+        - 배열처럼 사용하지만 배열은 아님
+        - 비추천
+        - 화살표 함수 사용 불가
+
+       매개변수 : 함수 선언할 때 사용하는 변수
+       인수 : 함수 호출할 때 넘겨주는 값
+       */
+      
+       function sum2(){
+			var sum = 0;
+			for(i = 0; i < arguments.length; i++){
+				sum += arguments[i];
+			}
+			return sum;
+		}
+        
+       document.write(`sum2(1,2,3)= ${sum2(1,2,3)} <br>`);
+       document.write(`sum2(1,2,3,4,5)= ${sum2(1,2,3,4,5)} <hr>`);
+
+        /*
+        콜백 함수
+            - 함수의 매개변수로 들어가는 함수
+            - 주로 화살표함수를 이용해서 활용하는 경우가 많음
+        */
+        function checkAdult(age, adultFuc, notAdultFuc){
+            if(age>=20){
+                adultFuc();
+            }else{
+                notAdultFuc();
+            }
+        }
+        checkAdult(25, ()=>{
+            document.write("성인입니다.<br>");
+        }, ()=>{
+            document.write("미성년자입니다.<br>");
+        });
+
+        checkAdult(25, ()=>{
+            document.write("성인은 술과 담배를 구매할 수 있습니다.<br>");
+        }, ()=>{
+            document.write("미성년자는 술과 담배를 구매할 수 없습니다.<br>");
+        });
+
+        function adultFuc(){
+            document.write("성인입니다.<hr>");
+        }
+        function notAdultFuc(){
+            document.write("미성년자입니다.<hr>");
+        }
+        checkAdult(10, adultFuc, notAdultFuc);
+
+        /*
+        매개변수 초기화
+        */
+        function greet(name="sun"){
+            document.write(`Hello, ${name} <br>`)
+        }
+        greet('홍길동');
+        greet(); //undefined가 들어감 //매개변수 설정시 그 값이 들어감
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

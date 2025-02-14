@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        입력창를 통해 단을 입력받고, 입력받은 단에 대한 구구단을 출력하는 코드를 작성
+        단, 입력이 정상적이지 않을 때 2단을 출력하도록 작성
+        */
+        var dan = prompt('단을 입력하세요');
+        function gugudan(dan){
+            dan = dan || 2;
+            dan = +dan;
+            if(isNaN(dan)){
+                dan=2;
+            }
+            for(i=1; i<=9; i++){
+                document.write(`${dan} * ${i} = ${dan * i}<br>`);
+            }
+        }
+        gugudan(dan); 
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
