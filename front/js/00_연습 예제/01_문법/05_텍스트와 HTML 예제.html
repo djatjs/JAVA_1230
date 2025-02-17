@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button type="button" class="next-btn" onclick="addNum(-1)"> << </button>
+    <span>
+        <span class="current-page">1</span>
+        <span>/</span>
+        <span class="max-page">6</span>
+    </span>
+    <button type="button" class="next-btn" onclick="addNum(1)"> >> </button>
+
+    <script>
+        const wlrma = document.querySelector('.current-page')
+        const akwlakr = document.querySelector('.max-page')
+        function addNum(amount){
+            //현재 페이지 값 가져옴
+            var page = wlrma.textContent
+            //최대 페이지도
+            var maxPage = akwlakr.textContent
+            //현재 페이지에 amount 더한 값 현재 페이지에 저장
+            page = +page + amount
+            //현재가 1보다 작으면 최대 페이지로 수정
+            if(page < 1){
+                page = maxPage
+            }
+            //현재가 최대보다 크면 1로 수정
+            if(page>maxPage){
+                page =1
+            }
+            //새로 계산된 현재 페이지를 현재 페이지 위치에 텍스트로 수정.
+            wlrma.textContent = page;
+        }
+    </script>
+</body>
+</html>
