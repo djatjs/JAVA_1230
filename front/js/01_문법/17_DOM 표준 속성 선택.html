@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="https://www.naver.com/" target="_blank">검색 사이트로 이동</a>
+    <hr>
+    <button onclick="chageGoogle()" >구글로</button>
+    <button onclick="chageNaver()">네이버로</button>
+    <button onclick="chageDaum()">다음으로</button>
+    <hr>
+    <input type="text" name="id" id="id">
+    <div value="내용">내용</div>
+    <br>
+    <button onclick="getValue()">텍스트 가져오기</button>
+
+    <script>
+        /*
+        표준 속성 가져오기/볁경하기
+            - 노드.표준속성을 통해 가져오거나 변경
+            - 표준 속성은 태그마다 다름
+        */
+        const a = document.getElementsByTagName('a')[0];
+        const text = document.querySelector('input[type=text]');
+        const box = document.querySelector('div');
+         // a 태그의 표준 속성 href를 지정된 문자열로 변경
+        function chageGoogle(){
+            a.href="https://www.google.com/" //속성 내용을 바꿔버림
+        }
+        function chageNaver(){
+            a.href="https://www.naver.com/" 
+        }
+        function chageDaum(){
+            a.href="https://www.daum.net/" 
+        }
+
+        function getValue(){
+            //input 태그는 표준 속성인 value울 잘 가져오는데 div는 value가 표준 속성이 아니여서 못가져옴(undefined)
+            var v1 = text.value;
+            var v2 = box.value;
+            alert(`텍스트에서 가져온 값 : ${v1}\n박스에서 가져온 값 : ${v2}`)
+        }
+    </script>
+</body>
+</html>

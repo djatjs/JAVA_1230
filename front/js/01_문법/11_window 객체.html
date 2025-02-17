@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>개추</title>
     <style>
         .btn-up{
             position: fixed;
@@ -25,10 +25,12 @@
     <hr>
     <button type="button" onclick="intervalSecond()">1초 마다 실행</button>
     <button type="button" onclick="StopSecond()">1초 마다 실행 중지</button>
+    <hr>
     <script>
     /*
     window 객체 : 브라우저의 최상위 객체
         - window 객체 메소드들은 window를 생략하고 사용 가능
+        - 새창이 열릴 때마다 window 객체가 생성됨
             - window.alert() => alert()
         
         - 메소드
@@ -115,7 +117,29 @@
         count=0;
         console.log("1초마다 실행이 중지 되었습니다")
     }
+    /*
+    window 객체의 대표적인 함수들
+    - onload : 윈도우 객체가 로딩이 완료되면 실행하는 메소드
+        - onload 메소드가 여러개 정의되면 마지막 메소드만 적용됨.
+    */
+
+    // btn1.onclick = ()=>{
+    //     alert("버튼1");
+    // } //버튼이 배치되기 전에 나와서 동작 X
+
+    window.onload = ()=>{
+        //윈도우가 다 로딩 되고 btn3인 요소에 이벤트를 등록하기 때문에 정상적으로 실행됨
+        btn3.onclick = ()=>{
+        alert("버튼3");
+        }
+    }
+
     </script>
-    
+    <button id="btn1">버튼1</button>
+    <button id="btn2">버튼2</button>
+    <button id="btn3">버튼3</button>
+    <script>
+        btn2.onclick = ()=>{alert("버튼2")}
+    </script>
 </body>
 </html>

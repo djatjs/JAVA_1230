@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button type="button">-</button>
+    <input type="text" readonly value="0">
+    <button type="button">+</button>
+    <script>
+        var minus = document.getElementsByTagName("button")[0]
+        var plus = document.getElementsByTagName("button")[1]
+        var num = document.querySelector('input[type=text]')
+
+        plus.onclick = ()=>{
+            num.value++;
+        }
+        minus.onclick = ()=>{
+            num.value--;
+        }
+    </script>
+
+    <button type="button" onclick="addNum(-1)">-</button>
+    <input type="text" id="num" readonly value="0">
+    <button type="button" onclick="addNum(1)">+</button>
+
+    <script>
+        const numE1 = document.getElementById('num');
+
+        function addNum(amount) {
+            var num = numE1.value;
+            num = +num + amount; // 문자열을 숫자로 변환 후 더하기
+            numE1.value = num; // 결과를 다시 입력 필드에 설정
+        }
+    </script>
+
+</body>
+</html>
