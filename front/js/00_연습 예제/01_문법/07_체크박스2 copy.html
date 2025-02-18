@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            height: 50px; padding:  10px; border: 3px solid black;
+            margin-bottom:  10px; font-size: 30px; line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <div class="hobby-container">
+        <label>
+            <input type="checkbox" name="hobby" value="운동">운동
+        </label>
+        <label>
+            <input type="checkbox" name="hobby" value="독서">독서
+        </label>
+        <label>
+            <input type="checkbox" name="hobby" value="음악감상">음악감상
+        </label>
+        <label>
+            <input type="checkbox" name="hobby" value="여행">여행
+        </label>
+    </div>
+    <script>
+        const box = document.querySelector('.box')
+        const hobbies = document.querySelectorAll('[name=hobby]')
+        
+        let hobbyArray =[]
+
+        hobbies.forEach(hobbyCheckbox =>{
+            // hobbyCheckbox.onchange = ()=>{
+            //     //체크되었으면
+            //     if(hobbyCheckbox.checked){
+            //         //텍스트 가져옴
+            //         let text = `<span class="hobby-item"> ${hobbyCheckbox.value} </span>`
+            //         //박스에 넣음
+            //         box.innerHTML += text;
+            //     }else{
+            //         // 체크 해제된 경우 박스에서 삭제
+            //         const hobbyItems = box.querySelectorAll('.hobby-item');
+            //         hobbyItems.forEach(item => {
+            //             if (item.textContent.trim() === hobbyCheckbox.value) {
+            //                 item.remove();
+            //             }
+            //         });
+
+            //     }
+            // }
+
+            hobbyCheckbox.onchange = ()=>{
+                //현재 체크박스의 checked 가져옴
+                let checked = hobbyCheckbox.checked
+
+                //현재 체크박스의 value 가져옴
+                let value = hobbyCheckbox.value
+
+                //check가 true이면 배열에 추가
+                if(checked){
+                    hobbyArray.push(value);
+                }
+                //false면 배열에서 위치찾아 제거
+                else{
+                    let index = hobbyArray.indexOf(value)
+                    hobbyArray.splice(index,1)
+                }
+                drawBox(hobbyArray)
+            }
+        })
+        function drawBox(arr) {
+            // 배열에 있는 각 원소의 값에 ,를 붙여 하나의 문자열로 만들기(join)
+            let res = arr.join(', ');
+            // 문자열을 box 안에 텍스트로 수정
+            box.innerText = res;
+        }
+    </script>
+</body>
+</html>

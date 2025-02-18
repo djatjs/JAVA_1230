@@ -1,0 +1,18 @@
+@charset "utf-8";
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma Geneva, Verdanam sans-serif;
+}
+
+body{
+    background: linear-gradient(to top, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.5) 50%), url(../img/배경.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+/* https://www.youtube.com/watch?v=l1qWqgWSZiM */
+.nav{
+
+}

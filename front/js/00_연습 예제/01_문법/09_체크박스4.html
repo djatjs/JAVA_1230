@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box-container{
+            display: flex; justify-content: space-between; margin-bottom: 10px;
+        }
+        .box{
+            height: 50px; border: 3px solid black;
+            font-size: 20px; line-height: 50px; width: 30%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="box-container">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <div class="hobby-container">
+        <label>
+            <input type="checkbox" name="hobby" value="운동">운동
+        </label>
+        <label>
+            <input type="checkbox" name="hobby" value="독서">독서
+        </label>
+        <label>
+            <input type="checkbox" name="hobby" value="음악감상">음악감상
+        </label>
+        <label>
+            <input type="checkbox" name="hobby" value="여행">여행
+        </label>
+    </div>
+    <script>
+        const boxes = document.querySelectorAll('.box')
+        const hobbies = document.querySelectorAll('[name=hobby]')
+        
+        let hobbyArray =[]
+
+        hobbies.forEach(hobbyCheckbox =>{
+            hobbyCheckbox.onchange = ()=>{
+                //현재 체크박스의 checked 가져옴
+                let checked = hobbyCheckbox.checked
+
+                //현재 체크박스의 value 가져옴
+                let value = hobbyCheckbox.value
+
+                //check가 true이면 배열에 추가
+                if(checked){
+                    if(!arrayPush(hobbyArray,value,boxes.length)){
+                        alert('이미 꽉찼는데요')
+                        hobbyCheckbox.checked = false;
+                    }
+                }
+                //false면 배열에서 위치찾아 제거
+                else{
+                    let index = hobbyArray.indexOf(value)
+                    hobbyArray.splice(index,1)
+                }
+                drawBox(hobbyArray)
+            }
+        })
+        console.log(boxes[0])
+        
+        function drawBox(arr) {
+            clearBox(boxes)
+            // 배열을 forEach로 꺼내서 번지에 맞는 박스를 선택해서 해당 박스에 텍스트를 배열 값으로 수정
+            arr.forEach((v,i)=>{
+                //console.log(`${i+1}번째 상자에 넣을 값 : ${v} \n\n`);
+                boxes[i].innerText = v;
+            });
+            
+        }
+        function arrayPush(arr, value, maxcount){
+            if(arr.length >= maxcount){
+                return false;
+            }
+            arr.push(value);
+            return true;
+        }
+        function clearBox(arr){
+            arr.forEach(box => box.innerText = '');
+        }
+    </script>
+</body>
+</html>

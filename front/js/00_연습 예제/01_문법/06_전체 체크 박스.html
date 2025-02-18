@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="form">
+        <input type="checkbox" id="check-all"> 전체 <hr>
+        <input type="checkbox" id="check-item">1 <br>
+        <input type="checkbox" id="check-item">2 <br>
+        <input type="checkbox" id="check-item">3 <br>
+        <input type="checkbox" id="check-item">4 <br> 
+    </form>
+    <script>
+        //요소 가져옴
+        const checkAll = document.querySelector('#check-all');
+        const checkList = document.querySelectorAll('#check-item')
+
+        // alert(checkList.length)
+
+
+        //전체 체크박스 이벤트
+        checkAll.onchange = () => {
+            let checked = checkAll.checked
+            checkList.forEach(item => {
+                item.checked = checked; // 전체 체크박스 상태에 따라 체크
+            });
+        };
+
+        checkList.forEach(item => {
+            item.onchange = ()=>{
+                // var status = item.checked
+                const same = document.querySelectorAll('#check-item:checked')
+                if(same.length == checkList.length){
+                    checkAll.checked = true
+                }else{
+                    checkAll.checked = false
+                }
+            }
+        })
+        
+
+
+    </script>
+</body>
+</html>
