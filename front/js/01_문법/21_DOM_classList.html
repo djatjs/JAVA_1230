@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            height: 200px; border: 3px solid black; box-sizing: border-box;
+            margin-bottom: 10px; line-height: 200px; text-align: center;
+        }
+        .bg-yellow{background-color: yellow;}
+        .bd-red{border: 3px solid red;}
+        .fs-30{font-size: 30px;}
+        .bg-gray{background-color: gray;}
+        button{margin-bottom: 10px;}
+    </style>
+</head>
+<body>
+    <div class="box">박스</div>
+    <button type="button" id="btn1">배경 : 노랑</button>
+    <button type="button" id="btn2">테두리 변경</button>
+    <button type="button" id="btn3">글자 크기 변경</button>
+    <br>
+    <button type="button" id="btn4">배경 초기화</button>
+    <button type="button" id="btn5">테두리 초기화</button>
+    <button type="button" id="btn6">글자 크기 초기화</button>
+    <br>
+    <button type="button" id="btn7">배경 : 노랑 토글</button>
+    <button type="button" id="btn8">테두리 변경 토글</button>
+    <button type="button" id="btn9">글자 크기 변경 토글</button>
+    <button type="button" id="btn10">배경 : 노랑 → 회색</button>
+    <script>
+        /*
+        요소.classList : 요소의 클래스 정보를 가져옴
+
+        요소.classList.add(클래스1) : 요소의 클래스에 클래스 1을 추가(있으면 추가 안함)
+
+        요소.classList.remove(클래스1) : 요소의 클래스에 클래스 1이 있으면 삭제
+
+        요소.classList.toggle(클래스1) : 요소의 클래스에 클래스 1이 있으면 삭제. 없으면 추가
+
+        요소.classList.contains(클래스1) : 요소의 클래스에 클래스 1이 있는지 알려줌
+
+        요소.classList.replace(클래스1, 클래스2) : 요소의 클래스에 클래스1을 클래스2로 수정
+
+        요소.classList.item(번지) : 요소의 클래스에 번지번째 있는 클래스를 가져옴
+            
+        */
+
+       //<div class="box">박스</div>에 클래스에 따라 붙음
+       //<div class="box bg-yellow bd-red fs-30">박스</div> 이런식으로
+
+        const box = document.querySelector('.box')
+        const btn1 = document.querySelector('#btn1')
+        const btn2 = document.querySelector('#btn2')
+        const btn3 = document.querySelector('#btn3')
+        const btn4 = document.querySelector('#btn4')
+        const btn5 = document.querySelector('#btn5')
+        const btn6 = document.querySelector('#btn6')
+        const btn7 = document.querySelector('#btn7')
+        const btn8 = document.querySelector('#btn8')
+        const btn9 = document.querySelector('#btn9')
+        const btn10 = document.querySelector('#btn10')
+        //add
+        btn1.onclick = ()=>{
+            box.classList.add("bg-yellow")
+        }
+        btn2.onclick = ()=>{
+            box.classList.add("bd-red")
+        }
+        btn3.onclick = ()=>{
+            box.classList.add("fs-30")
+        }  
+        //remove
+        btn4.onclick = ()=>{
+            box.classList.remove("bg-yellow")
+        }
+        btn5.onclick = ()=>{
+            box.classList.remove("bd-red")
+        }
+        btn6.onclick = ()=>{
+            box.classList.remove("fs-30")
+        }  
+        //toggle
+        btn7.onclick = ()=>{
+            box.classList.toggle("bg-yellow")
+        }
+        btn8.onclick = ()=>{
+            box.classList.toggle("bd-red")
+        }
+        btn9.onclick = ()=>{
+            box.classList.toggle("fs-30")
+        } 
+        btn10.onclick = ()=>{
+            if(box.classList.contains('bg-yellow')){
+                box.classList.replace("bg-yellow","bg-gray")
+            }
+        } 
+    </script>
+</body>
+</html>

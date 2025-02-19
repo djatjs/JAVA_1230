@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{padding: 0; margin: 0;}
+        .menu-list{
+            list-style: none;
+            display: flex;
+            height: 50px;
+        }
+        .menu-item{
+            width: 100%;
+            border: 3px solid black;
+            line-height: 50px;
+        }
+        .menu-link{
+            color:  black;
+            text-decoration: none;
+            height: 100%;
+            text-align: center;
+            display: block;
+        }
+        .menu-item+.menu-item{border-left: 0px;}
+        button{min-width: 150px;}
+        nav{margin-bottom: 15px;}
+        .box{height: 300px; border: 3px solid black;}
+        .display-none{
+            display: none;
+        }
+        .bg-yellow{background-color: yellow;}
+    </style>
+</head>
+<body>
+    <nav>
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="#" class="menu-link">메뉴1</a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">메뉴2</a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">메뉴3</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="box box1">내용1</div>
+        <div class="box box2">내용2</div>
+        <div class="box box3">내용3</div>
+    </div>
+    
+    <script>
+        /*
+        메뉴1을 클릭하면 내용1이 보이고 내용2,3이 감춰짐
+        메뉴2을 클릭하면 내용2이 보이고 내용1,3이 감춰짐
+        메뉴3을 클릭하면 내용3이 보이고 내용1,2가 감춰짐
+        */
+
+
+        const menuLink1 = document.querySelector('.menu-list :nth-child(1)')
+        const menuLink2 = document.querySelector('.menu-list :nth-child(2)')
+        const menuLink3 = document.querySelector('.menu-list :nth-child(3)')
+
+        const box1 = document.querySelector('.box1')
+        const box2 = document.querySelector('.box2')
+        const box3 = document.querySelector('.box3')
+
+        menuLink1.onclick = ()=>{
+            setMenuLinkBackground(menuLink1)
+            // menuLink1.style.backgroundColor = "yellow"
+            // menuLink2.style.backgroundColor = "white"
+            // menuLink3.style.backgroundColor = "white"
+
+            box1.style.display = "block"
+            box2.style.display = "none"
+            box3.style.display = "none"
+
+        }
+        menuLink2.onclick = ()=>{
+            setMenuLinkBackground(menuLink2)
+            // menuLink1.style.backgroundColor = "white"
+            // menuLink2.style.backgroundColor = "yellow"
+            // menuLink3.style.backgroundColor = "white"
+
+            box1.style.display = "none"
+            box2.style.display = "block"
+            box3.style.display = "none"
+        }
+        menuLink3.onclick = ()=>{
+            setMenuLinkBackground(menuLink3)
+            // menuLink1.style.backgroundColor = "white"
+            // menuLink2.style.backgroundColor = "white"
+            // menuLink3.style.backgroundColor = "yellow"
+
+            box1.style.display = "none"
+            box2.style.display = "none"
+            box3.style.display = "block"
+
+        }
+        function clearMenuLinkBackground(){
+            menuLink1.classList.remove('bg-yellow');
+            menuLink2.classList.remove('bg-yellow');
+            menuLink3.classList.remove('bg-yellow');
+        }
+        function setMenuLinkBackground(menuLink){
+            clearMenuLinkBackground()
+            menuLink.classList.add('bg-yellow')
+        }
+    </script>
+</body>
+</html>

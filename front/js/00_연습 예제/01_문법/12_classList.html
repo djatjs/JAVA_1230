@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            height: 300px; border: 3px solid black; margin-top: 10px;
+            visibility: visible;
+        }
+        .visibility-none{
+            visibility:hidden;
+        }
+        .display-none{
+            display: none;
+        }
+        button{min-width: 150px;}
+
+    </style>
+</head>
+<body>
+    <button type="button" id="btn1">버튼(영역 유지)</button>
+    <button type="button" id="btn2">버튼(영역 숨기기)</button>
+    <div class="box"></div>
+    <hr>
+    <div>영역관리</div>
+
+    <script>
+        /*
+        버튼을 클릭하면 박스가 사라지고 다시 클릭하면 박스가 나타나도록 작성하기
+        */
+        const box = document.querySelector('.box')
+        const btn1 = document.querySelector('#btn1')
+        const btn2 = document.querySelector('#btn2')
+
+        btn1.onclick = ()=>{
+            box.classList.toggle('visibility-none')
+        }
+        btn2.onclick = ()=>{
+            box.classList.toggle('display-none')
+        }
+    </script>
+</body>
+</html>

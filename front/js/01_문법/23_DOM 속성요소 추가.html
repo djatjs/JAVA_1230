@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box"></div>
+    <script>
+        /*
+        속성노드 = document.createAttribute("속성명")
+            - 속성 노드를 생성해서 반환
+        
+        속성노드.value = 값
+            - 속성 노드의 값을 지정
+        
+        요소노드.setAttributeNode(속성노드)
+            - 요소 노드에 속성 노드를 추가
+        
+        */
+
+        const box = document.querySelector('.box');
+
+        //이미지 태그 생성해서 .box에 추가
+        let img = document.createElement("img");
+        
+        //속성 생성 및 값 지정
+        let src = document.createAttribute("src");
+        let alt = document.createAttribute("alt");
+        let height = document.createAttribute("height");
+
+        src.value = "../../img/댕댕이.jpg";
+        alt.value = "댕댕";
+        height.value = "200";
+
+        //이미지 태그에 속성 추가
+        img.setAttributeNode(src);
+        img.setAttributeNode(alt);
+        img.setAttributeNode(height);
+
+        box.append(img);
+
+        // 
+        function createNode(tag, attributes, text){
+            let element = document.createElement(tag);
+            if(text){
+                let textNode = document.createTextNode(text);
+                element.append(textNode);
+            }
+
+            if(!attributes){
+                return element
+            }
+            //속성 정보가 객체로 오지 않으면
+            if(typeof attributes !="object"){
+                return element
+            }
+            for(attr in attributes){
+                let attrNode = document.createAttribute(attr);
+                attrNode.value = attributes[attr];
+                element.setAttributeNode(attrNode)
+            }
+
+            return element;
+        }
+        let attributes ={
+            src : '../../img/댕댕이.jpg',
+            alt : '댕댕',
+            height : 200
+        }
+        let img2 = createNode("img",attributes)
+        box.append(img2)
+        
+
+        let div = createNode("div",{
+            "data-target" : "ㅋ"
+        }, "내가 우습냐?")
+        box.append(div)
+        
+        
+    </script>
+</body>
+</html>
