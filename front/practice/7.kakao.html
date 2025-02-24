@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kakao Clone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        header{
+            display: flex;
+            justify-content: space-between;
+            background-color: #f7f7f7;
+            padding: 20px;
+        }
+        nav ul{
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        nav a{
+            text-decoration: none;
+            color: black;
+        }
+        nav a:hover{
+            color: #007aff;
+        }
+        main{
+            margin: 20px;
+            
+        }
+        .hero{
+            background-color: #e0e0e0;
+            text-align: center;
+            padding: 40px;
+        }
+        .service-box{
+            display: flex;
+            width: 100%;
+            gap: 10px;
+        }
+        .service-item{
+            flex: 1;
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .service-item:hover{
+            background-color: #d0d0d0;
+        }
+        .image-container{
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 250px;
+            justify-items: stretch;
+            animation: animation 12s linear infinite;
+        }
+        .image-container img{
+            width: 200px; height: 270px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid #a5b1c2;
+        }
+        @keyframes animation{
+            to{
+                translate: calc(-1*250px);
+            }
+        }
+        footer{
+            background-color: #f7f7f7;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="logo">Kakao</h1>
+        <nav>
+            <ul>
+                <li> <a href="#">서비스</a></li>
+                <li> <a href="#">회사소개</a></li>
+                <li> <a href="#">고객센터</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>환영합니다!</h1>
+            <p>Kakao의 다양한 서비스를 만나보세요</p>
+        </section>
+        <section class="area-story">
+            <h1>카카오와 카카오 그룹이 축적해 온 이야기들</h1>
+            <div class="image-container">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+                <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+            </div>
+        </section>
+        <section class="services">
+            <h1>주요서비스</h1>
+            <div class="service-box">
+                <div class="service-item">
+                    <span>카카오톡</span>
+                    <a href="#"><img width="30px" height="30px" src="../practice/kakao.png" alt=""
+                        style="border-radius: 5px;"></a>
+                    
+                </div>
+                <div class="service-item">카카오스토리</div>
+            </div>
+            <div class="service-box">
+                <div class="service-item">카카오게임</div>
+                <div class="service-item">카카오쇼핑</div>
+            </div>
+        </section>
+        
+    </main>
+    <footer>
+        <p>&copy; 2025 Kakao Corp. All rights reserved</p>
+    </footer>
+    <script>
+        const btn = document.querySelector('.hero');
+        btn.onclick=()=>{
+            alert("안녕하세요! Kakao에 오신 것을 환영합니다.")
+        }
+    </script>
+</body>
+</html>

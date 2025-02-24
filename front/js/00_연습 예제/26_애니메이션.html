@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+</head>
+<body>
+    <h1 id="h1">클릭</h1>
+    <script>
+        //h1태그 클릭하면 animate__animated animate__bounce가 추가되서 바운스 되도록 작성
+        const h1 = document.getElementById("h1");
+        h1.onclick =()=>{
+            h1.classList.remove("animate__animated", "animate__bounce")
+            setTimeout(function(){
+                h1.classList.add("animate__animated", "animate__bounce")
+            },10) //너무 빨리처리되서 안되는것처럼 보이니까 이렇게 한거
+        }
+    </script>
+</body>
+</html>

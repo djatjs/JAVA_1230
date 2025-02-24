@@ -77,8 +77,8 @@
 		const ulPreviousSibling = ul.previousElementSibling;
 		const ulNextSibling = ul.nextElementSibling;
 
-		ulPreviousSibling.style.color = "red";
-		ulNextSibling.style.color = "skyblue";
+		ulPreviousSibling.style.color = "red"; 	//ul 전에 있는 요소 : a태그(로고)
+		ulNextSibling.style.color = "skyblue";	//ul 뒤에 있는 요소 : a태그(로그아웃)
 
 		/*
 		요소.closest("선택자");
@@ -86,7 +86,7 @@
 			- 없으면 null을 반환
 		*/
 		const link = document.querySelector(".link");
-		link.closest(".box").style.borderColor = "red";
+		link.closest(".box").style.borderColor = "red"; //content box
 		/*
 		요소.querySelector("선택자")
 		  - 요소의 자손들 중 선택자와 일치하는 첫번째 요소

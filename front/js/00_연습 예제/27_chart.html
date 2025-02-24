@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <div>
+        <canvas id="chart"></canvas>
+    </div>
+    <script>
+        const ctx = document.getElementById('chart');
+        let data = [100, 90, 50 ,95, 20]
+        let labels = ['고길동','홍길동','또치','둘리','희동이']
+      
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: '학생들 성적',
+              data: data,
+              borderWidth: 1
+            }],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+       
+</body>
+</html>

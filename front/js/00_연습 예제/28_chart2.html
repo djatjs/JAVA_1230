@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+  <div>
+    <form onsubmit="return addScore()"> <!-- summit으로 서버로 전송하면 return true일때 새로고침-->
+      <input type="text" name="name" id="name" placeholder="이름을 입력하세요">
+      <input type="text" name="score" id="score" placeholder="성적을 입력하세요">
+      <button id="btn" type="submit">추가</button>
+    </form>
+  </div>
+    <div>
+        <canvas id="chart"></canvas>
+    </div>
+    <script>
+      const name = document.querySelector('#name')
+      const score = document.querySelector('#score')
+      const button = document.querySelector('button')
+      
+      function addScore(){
+        if(!name.value){
+          alert('이름을 입력하세요')
+          name.focus();
+          return false;
+        }
+        if(!score.value || !/^\d+$/.test(score.value)){
+          alert('성적은 숫자로 입력하세요')
+          score.focus();
+          return false;
+        }
+        labels.push(name.value);
+        data.push(score.value);
+
+        name.value = '';
+        score.value ='';
+
+        mychart.update();
+        return false;
+      }
+
+      const ctx = document.getElementById('chart');
+      let data = []
+      let labels = []
+    
+      let mychart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '학생들 성적',
+            data: data,
+            borderWidth: 1
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+      
+    </script>
+       
+</body>
+</html>

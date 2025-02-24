@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #a5b1c2;
+        }
+        .carouse1{
+            overflow: hidden;
+            width: 1000px;
+            background-color: #1e272e;
+            padding-top: 60px;
+            border-radius: 5px;
+            box-shadow: 20px 35px 35px rgba(0, 0, 0, 0.5);
+
+        }
+        .image-container{
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 250px;
+            justify-items: stretch;
+            animation: animation 12s linear infinite;
+        }
+        .image-container img{
+            width: 200px; height: 270px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid #a5b1c2;
+        }
+        @keyframes animation{
+            to{
+                translate: calc(-1*250px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="carouse1">
+        <div class="image-container">
+            <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+            <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+            <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+            <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+            <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+            <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+            <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+            <img width="150px" height="150px" src="../img/댕댕이.jpg" alt="댕댕">
+        </div>
+    </div>
+</body>
+</html>
