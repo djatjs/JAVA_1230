@@ -82,6 +82,65 @@
             text-align: center;
             padding: 20px;
         }
+        /* 전체 레이아웃 */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        /* 왼쪽 고객센터 리스트 */
+        .help-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 35%;
+        }
+
+        .help-item {
+            display: flex;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 12px;
+            border-radius: 12px;
+            height: 80px;
+            
+        }
+        .help-item a{
+            font-size: 12px;
+            
+        }
+
+        /* .help-item img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            
+        } */
+
+        /* 가운데 카카오 홍보 박스 */
+        .promo-box {
+            width: 35%; height: 300px;
+            background-color: #ffeb3b;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        /* 오른쪽 영업소식 및 데이터 보호 */
+        .info-box {
+            display: grid; 
+            height: 350px;
+            /* gap: 15px; */
+            width: 30%;
+        }
+
+        .news{
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body>
@@ -122,7 +181,6 @@
                     <span>카카오톡</span>
                     <a href="#"><img width="30px" height="30px" src="../practice/kakao.png" alt=""
                         style="border-radius: 5px;"></a>
-                    
                 </div>
                 <div class="service-item">카카오스토리</div>
             </div>
@@ -131,6 +189,58 @@
                 <div class="service-item">카카오쇼핑</div>
             </div>
         </section>
+        <section class="services">
+            <h1>무엇을 도와드릴까요?</h1>
+            <div class="container">
+                <!-- 왼쪽: 고객센터 리스트 -->
+                <div class="help-list">
+                    <div class="help-item">
+                        <div>
+                            <strong>카카오 고객센터</strong><br>
+                            <a href="#">바로가기</a>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div>
+                            <span>다음 고객센터</span>
+                            <a href="#">바로가기</a>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div>
+                            <span>커머스 고객센터</span>
+                            <a href="#">바로가기</a>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- 가운데: 카카오 홍보 박스 -->
+                <div class="promo-box">
+                    <h2>카카오의 다양한 소식을 구독하세요!</h2>
+                    <a href="#">공식 소셜 미디어 바로가기</a>
+                </div>
+        
+                <!-- 오른쪽: 영업소식 및 데이터 보호 -->
+                <div class="info-box">
+                    <div class="news">
+                        <h3>세상만사에 관심이 많다면,<br> 당신은 이미 카카오 크루</h3>
+                        <a href="#">영업소식 →</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="service-box">
+                <div class="service-item">
+                    <span>카카오톡</span>
+                    <a href="#"><img width="30px" height="30px" src="../practice/kakao.png" alt=""
+                        style="border-radius: 5px;"></a>
+                    
+                </div>
+                <div class="service-item">카카오스토리</div>
+            </div>
+        </section>
+        
+        
         
     </main>
     <footer>
