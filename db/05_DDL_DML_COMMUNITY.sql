@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS BOARD(
     b_view int not null default 0
 );
 
-INSERT INTO BOARD(b_title, b_content, b_writer) values("반갑안녕습니다","외않되","마춤뻡파괴자");
+INSERT INTO BOARD(b_title, b_content, b_writer) values("조제하겠습니다","하나둘셋 원투","황정음");
 -- DELETE from community.board WHERE b_num=2;
 
 select
@@ -41,7 +41,7 @@ update community.board
 set
 	b_view = b_view + 1
 where
-	b_num =1;
+	b_num =2;
 # 내용 조회
 select * from community.board where b_num =1;
 
@@ -61,4 +61,16 @@ select * from community.board
 where b_title Like "%안녕%" or b_content Like "%안녕%";
 
 # 번호까지도 초기화 버튼
-truncate table community.board;
+-- truncate table community.board;
+
+
+
+# 최신글을 조회하는 쿼리 => 등록된 날짜가 최근
+select * from community.board
+order by b_day desc;
+select * from community.board
+order by b_num desc;
+
+# 인기글을 조회하는 쿼리 => 조회수가 높은 글이 인기글
+select * from community.board
+order by b_view desc;
