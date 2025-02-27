@@ -364,35 +364,55 @@ FROM SCORE;
 SELECT SC_SCORE, NULLIF(SC_SCORE, (SELECT MAX(SC_SCORE)FROM SCORE)) AS 결과 FROM SCORE;
 
 
-#내장함수 - 문자열
-#1. CHAR_LENGTH(문자열) : 문자열 개수
-SELECT CHAR_LENGTH("너무힘들다") AS CHAR_LENGTH;
-#2. LENGTH(문자열) : 바이트 수
-SELECT LENGTH("너무힘들다") AS LENGTH;
-#3. CONCAT(문자열1, ...) : 문자열을 이어 붙임
-SELECT CONCAT("너무","힘","들다") AS CONCAT;
-#4. FIELD(찾을문자열, 문자열1, ...) : 찾을 문자열의 위치를 찾아 반환
-SELECT FIELD("힘", "너무","힘","들다") AS FIELD;
-#5. INSTR(기준문자열, 부분문자열) : 기준 문자열에서 부분 문자열의 위치를 찾아 반환. 위치는 1부터 시작
-SELECT INSTR("HELLO SQL", "SQL") AS INSTR;
-#6. LOCATE(부분문자열, 기준문자열) : 기준 문자열에서 부분 문자열의 위치를 찾아 반환. 위치는 1부터 시작
-#7. FORMAT(숫자, 소수점자리) : 숫자를 소수점이하 자리까지 표현. 1000단위마다 ,를 추가
-SELECT FORMAT(10000.123456,2) AS FORMAT;
-#8. BIN(숫자), OCT(숫자), HEX(숫자) : 2, 8, 16진수로 변환
-SELECT BIN(255)AS BIN, OCT(255) AS OCT, HEX(255) AS HEX;
-#9. INSERT(기준문자열, 위치, 길이, 삽입할문자열) : 기준문자열의 위치부터 길이만큼 지우고 삽입할 문자열을 끼움
-SELECT INSERT("HELLO SQL", 7, 3, "WORLD") AS `INSERT`;
-#10. LEFT(문자열, 길이), RIGHT(문자열, 길이) : 왼쪽/오른쪽에서 문자열의 길이만큼 반환
-SELECT LEFT("TEXT.TXT", 4) AS `LEFT`, RIGHT("TEXT.TXT", 3) AS `RIGHT`;
-#11. LOWER(문자열), UPPER(문자열) : 소문자로/대문자로
-SELECT LOWER("HELLO SQL") AS `LOWER`, UPPER("hello world") AS `UPPER`;
-#12. LPAD(문자열, 길이, 채울 문자열)/RPAD(문자열, 길이, 채울문자열) : 문자열을 길이만큼 늘리고 빈곳을 채울문자열로 채움
-SELECT LPAD(1,3,"0") AS LPAD, RPAD(1,3,"0") AS RPAD;
-#13. REPEAT(문자열, 횟수) : 문자열을 횟수만큼 반복
-SELECT REPEAT(1,3) AS `REPEAT`;
-#14. REPLACE(문자열, 문자열A, 문자열B) : 문자열에서 문자열A를 문자열B로 바꿈
-SELECT REPLACE("HELLO SQL", "SQL", "WORLD") AS `REPLACE`;
-#15. REVERSE(문자열) : 문자열 순서를 역순으로 반환
-SELECT REVERSE("ABCDEF") AS `REVERSE`;
-#16. SUBSTRING(문자열, 시작위치, 길이) : 문자열에서 시작위치에서 길이만큼 부분문자열을 반환
-SELECT SUBSTRING("HELLO SQL", 7, 3) AS SUBSTRING;
+# 각 학생별 평균을 조회하는 쿼리
+SELECT 학년, 반, 번호, 이름, avg(성적) 평균 FROM STUDENT_SCORE
+group by 학생번호;
+
+# 1학년 1반 반 등수를 조회하는 쿼리(평균). 평균이 같으면 국어, 영어, 수학 순으로 비교하여 등수를 결정. 다 같으면 같은 등수
+# 같은 등수가 나오는 경우, 다음 등수는 같은 등수 수만큼 건너 뜀
+# 1) 테이블 사용
+-- SELECT 학년, 반, 번호, 이름, avg(성적) 평균, RANK() OVER(ORDER BY avg(성적) DESC) 등수 FROM STUDENT_SCORE
+-- WHERE 학년 =1 AND 반 =1
+-- group by 학생번호;
+
+# 2) 그냥 함
+SELECT 
+	ST_GRADE 학년, ST_CLASS 반, ST_NUM 번호, ST_NAME 이름,
+    IFNULL(AVG(SC_SCORE),0) 평균, RANK() OVER(ORDER BY avg(SC_SCORE) DESC) 등수
+FROM SCORE
+RIGHT JOIN STUDENT ON SC_ST_KEY = ST_KEY
+WHERE ST_GRADE =2 
+GROUP BY ST_KEY;
+
+# 3) 서브 쿼리
+SELECT RANK() OVER(ORDER BY 평균 DESC, 국어평균 DESC, 수학평균 DESC, 영어평균 DESC) 등수, T.*
+FROM 
+	(SELECT 
+		ST_GRADE 학년, ST_CLASS 반, ST_NUM 번호, ST_NAME 이름, IFNULL(AVG(SC_SCORE),0) 평균,
+		AVG(CASE WHEN SJ_NAME = '국어' THEN SC_SCORE END) 국어평균,
+		AVG(CASE WHEN SJ_NAME = "수학" THEN SC_SCORE END) 수학평균,
+		AVG(CASE WHEN SJ_NAME = "영어" THEN SC_SCORE END) 영어평균
+	FROM SCORE
+    JOIN SUBJECT ON SC_SJ_NUM = SJ_NUM
+	RIGHT JOIN STUDENT ON SC_ST_KEY = ST_KEY
+	WHERE ST_GRADE =1 AND ST_CLASS =1
+	GROUP BY ST_KEY) AS T;
+    
+
+# 2학년 등수 조회하는 쿼리(평균)
+SELECT RANK() OVER(ORDER BY 평균 DESC) 등수, T.*
+FROM 
+	(SELECT ST_GRADE 학년, ST_CLASS 반, ST_NUM 번호, ST_NAME 이름, IFNULL(AVG(SC_SCORE),0) 평균
+		FROM SCORE
+		RIGHT JOIN STUDENT ON SC_ST_KEY = ST_KEY
+		WHERE ST_GRADE =2
+		GROUP BY ST_KEY) AS T;
+	
+# 2학년들의 1학년 성적 평균을 이용하여 반 등수를 조회하는 쿼리
+SELECT ST_GRADE 학년, ST_CLASS 반,IFNULL(AVG(SC_SCORE),0) 평균 FROM SCORE
+RIGHT JOIN STUDENT ON SC_ST_KEY = ST_KEY
+JOIN SUBJECT ON SC_SJ_NUM = SJ_NUM
+WHERE ST_GRADE=2 AND SJ_GRADE =1
+GROUP BY ST_GRADE, ST_CLASS;
+
+
