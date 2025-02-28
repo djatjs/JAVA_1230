@@ -53,8 +53,8 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL INSERT_SCORE(16,7,70);
-CALL INSERT_SCORE(16,8,120);
+-- CALL INSERT_SCORE(16,7,70);
+-- CALL INSERT_SCORE(16,8,120);
 
 
 # 프로시저 예제
@@ -74,3 +74,188 @@ DELIMITER ;
 SET @VALUE = 3; # VALUE라는 변수 만듦. 3은 뭐.. 안쓰여서 의미없긴함 여기선
 CALL P_TEST1(10, @VALUE);
 SELECT @VALUE;
+
+
+/*
+프로시서에서 사용하는 문법
+1. 변수 선언
+	- 변수는 프로시저 시작 위치에 모아 놔야함. 중간에 선언할 수 없음
+Declare 변수명 자료형 [default 초기값];
+
+2. 검색 결과를 변수에 저장
+변수 = (SELECTE 속성 FROM 테이블명 [WHERE ...]); # sql에서는 이게 비교 연산자. 대입할거면 set을 앞에 붙여야함
+
+3. 조건문 - IF
+IF 조건식 THEN
+	실행문;
+ELSEIF 조건식 THEN
+	실행문;
+ELSE
+	실행문;
+END IF;
+
+4. 조건문 - CASE
+CASE 변수
+	WHEN 값 THEN
+		실행문;
+	WHEN 값 THEN
+		실행문;
+	ELSE
+		실행문;
+END CASE;
+
+5. 반복문 - WHILE
+WHILE 조건식 DO
+	실행문;
+END WHILE;
+
+6. 반복문 - REFEAT
+REFEAT
+	실행문;
+UNTIL 조건식
+END REFEAT;
+
+7. 반복문 - CURSOR
+- 검색 결과를 반복문으로 활용할 때
+DECLARE 변수명A BOOLEAN DEFAULT FALSE;
+DECLARE 커서명 CURSOR FOR SELECT 속성1, ...  FROM 테이블명;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET 변수명A = TRUE;
+OPEN 커서명;
+루프명 : LOOP
+FETCH 커서명 INTO 변수명1, ...;
+
+IF 변수명A THEN
+	LEAVE 루프명;
+END IF;
+반복문 실행문;
+END LOOP;
+CLOSE 커서명;
+*/
+# AVERAGE 테이블에 등록된 학생만큼 1학년 1학기~3학년 2학기 평균 초기 데이터를 추가하는 프로시저 
+
+DROP PROCEDURE IF EXISTS INIT_AVERAGE;
+
+DELIMITER //
+CREATE PROCEDURE INIT_AVERAGE()
+BEGIN
+	DECLARE _COUNT INT;
+    DECLARE _DONE BOOLEAN DEFAULT FALSE;
+    DECLARE _ST_KEY INT;
+    DECLARE _GRADE INT DEFAULT 1;
+    DECLARE _SEMESTER INT DEFAULT 1;
+    
+    DECLARE _CURSOR CURSOR FOR SELECT ST_KEY FROM STUDENT;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET _DONE = TRUE;
+    
+    
+    
+    SET _COUNT = (SELECT COUNT(*) FROM AVERAGE);
+	
+    IF _COUNT = 0 THEN
+		OPEN _CURSOR;
+		CURSOR_LOOP : LOOP 
+			
+			FETCH _CURSOR INTO _ST_KEY;
+			SET _GRADE = 1;
+            IF _DONE THEN
+				LEAVE CURSOR_LOOP;
+			END IF;
+            
+            WHILE _GRADE <= 3 DO
+				REPEAT
+					INSERT AVERAGE(AV_ST_KEY, AV_GRADE, AV_SEMESTER, AV_SUM, AV_COUNT)
+                    VALUES(_ST_KEY, _GRADE, _SEMESTER, 0, 0);
+                    SET _SEMESTER = _SEMESTER + 1;
+                UNTIL _SEMESTER > 2
+                END REPEAT;
+                SET _SEMESTER = 1;
+                SET _GRADE = _GRADE + 1;
+            END WHILE;
+        END LOOP;
+        CLOSE _CURSOR;
+    END IF;
+    
+END //
+DELIMITER ;
+CALL INIT_AVERAGE();
+
+# AVERAGE 테이블에 SUM과 COUNT를 모두 0으로 초기화 
+DROP PROCEDURE IF EXISTS ZERO_SUM_COUNT;
+
+DELIMITER //
+CREATE PROCEDURE ZERO_SUM_COUNT()
+BEGIN
+	UPDATE AVERAGE SET AV_SUM = 0, AV_COUNT = 0;
+END //
+DELIMITER ;
+CALL ZERO_SUM_COUNT();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# SCORE 테이블에 있는 학생 성적 들을 이용하여 AVERAGE 테이블에 SUM과 COUNT를 계산하는 프로시저
+DROP PROCEDURE IF EXISTS CALC_AVERAGE;
+
+DELIMITER //
+CREATE PROCEDURE CALC_AVERAGE()
+BEGIN
+
+    DECLARE _DONE BOOLEAN DEFAULT FALSE;
+    DECLARE _SC_ST_KEY INT;
+    DECLARE _SC_SCORE INT;
+    DECLARE _SJ_GRADE INT;
+    DECLARE _SJ_SEMESTER INT;
+
+    DECLARE _CURSOR CURSOR FOR 
+		SELECT SC_ST_KEY, SC_SCORE, SJ_GRADE, SJ_SEMESTER 
+        FROM SCORE
+        JOIN SUBJECT ON SJ_NUM = SC_SJ_NUM;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET _DONE = TRUE;
+    
+	CALL ZERO_SUM_COUNT();
+	
+		OPEN _CURSOR;
+		CURSOR_LOOP : LOOP 
+			
+			FETCH _CURSOR INTO _SC_ST_KEY, _SC_SCORE, _SJ_GRADE, _SJ_SEMESTER;
+
+            IF _DONE THEN
+				LEAVE CURSOR_LOOP;
+			END IF;
+            
+            UPDATE AVERAGE 
+            SET 
+				AV_SUM = AV_SUM + _SC_SCORE,
+                AV_COUNT = AV_COUNT +1
+			WHERE
+				AV_GRADE = _SJ_GRADE AND AV_SEMESTER = _SJ_SEMESTER AND AV_ST_KEY = _SC_ST_KEY;
+            
+        END LOOP;
+        CLOSE _CURSOR;
+    
+END //
+DELIMITER ;
+CALL CALC_AVERAGE();
+
+# AVERAGE 테이블에 SUM과 COUNT를 모두 0으로 초기화 
+DROP PROCEDURE IF EXISTS ZERO_SUM_COUNT;
+
+DELIMITER //
+CREATE PROCEDURE ZERO_SUM_COUNT()
+BEGIN
+	UPDATE AVERAGE SET AV_SUM = 0, AV_COUNT = 0;
+END //
+DELIMITER ;
+CALL ZERO_SUM_COUNT();
+
+
