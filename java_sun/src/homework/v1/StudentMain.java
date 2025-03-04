@@ -200,7 +200,7 @@ public class StudentMain {
 	private static void insertSubject() {
 		// 학년, 학기, 과목명을 입력
 		Subject tmpSubject = insertSubInfo();
-		//이미 등록된 과목이면 알림 후 종료 => Subject 클래스의 equals를 오버라이딩
+		//이미 등록된 과목이면 알림 후 종료 => SubjectVO 클래스의 equals를 오버라이딩
 		if(subjectList.contains(tmpSubject)) {
 			System.out.println("이미 등록된 과목");
 			return;
@@ -291,7 +291,7 @@ public class StudentMain {
 			System.out.println("등록된 학생이 아님");
 			return;
 		}
-		//학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(Subject)
+		//학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(SubjectVO)
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		Subject tmpSubject = insertSubInfo();
 		
@@ -337,7 +337,7 @@ public class StudentMain {
 			System.out.println("등록된 학생이 아님");
 			return;
 		}
-		//학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(Subject)
+		//학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(SubjectVO)
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		System.out.println("과목 정보 입력");
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
@@ -394,7 +394,7 @@ public class StudentMain {
 			return;
 		}
 						
-		//학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(Subject)
+		//학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(SubjectVO)
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		System.out.println("과목 정보 입력");
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
@@ -469,7 +469,7 @@ public class StudentMain {
 			return;
 		}
 				
-		//학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(Subject)
+		//학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(SubjectVO)
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		System.out.println("조회할 과목 입력");
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");

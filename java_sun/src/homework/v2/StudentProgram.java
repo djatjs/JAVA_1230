@@ -331,7 +331,7 @@ public class StudentProgram implements ConsoleProgram {
 			return;
 		}
 
-		// 학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(Subject)
+		// 학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(SubjectVO)
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		System.out.println("과목 정보 입력");
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
@@ -367,7 +367,7 @@ public class StudentProgram implements ConsoleProgram {
 			return;
 		}
 
-		// 학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(Subject)
+		// 학년, 학기, 과목을 입력하고 입력한 정보로 객체를 생성(SubjectVO)
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		System.out.println("과목 정보 입력");
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
