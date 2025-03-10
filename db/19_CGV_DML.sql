@@ -107,3 +107,57 @@ INSERT INTO `schedule`(SD_DATE, SD_TIME, SD_POS_SEAT, SD_EARLY, SD_MV_NUM, SD_SC
 ("2025-03-11","09:00",15,"Y",1,3),
 ("2025-03-11","11:50",15,"Y",1,3),
 ("2025-03-11","10:00",20,"Y",1,5);
+
+
+# 회원가입하는 쿼리. 아이디 : abc123, 비번 : abc123, 사용자
+insert into `member` (ME_ID, ME_PW) values
+("abc123","abc123");
+
+
+# abc123 회원이 3번 스케쥴(미키 17, 1관 3월 11일 16:20)의 예약 가능한 좌석 A1, A2를 예매했을 때 필요한 쿼리
+insert into ticket(TI_ADULT, TI_TEEN, TI_PRICE, TI_STATE, TI_ME_NUM, TI_SD_NUM) values
+(1,1,27000,"결제", 1, 3);
+insert into ticket_list(TL_TI_NUM, TL_SE_NUM) values
+(1,1),(1,2);
+# 스케줄에 예매 가능 좌석 수 변경
+update schedule
+set SD_POS_SEAT = SD_POS_SEAT -2
+where SD_NUM = 3;
+
+
+# abc123 회원이 1번 스케쥴(미키 17, 4관 3월 11일 13:50)의 예약 가능한 좌석 A1, A2를 예매했을 때 필요한 쿼리
+insert into ticket(TI_ADULT, TI_TEEN, TI_PRICE, TI_STATE, TI_ME_NUM, TI_SD_NUM) 
+values (1,1,27000,"결제", 1, 1);
+insert into ticket_list(TL_TI_NUM, TL_SE_NUM) values (2,38),(2,39);
+update schedule
+set SD_POS_SEAT = SD_POS_SEAT -2
+where SD_NUM = 1;
+
+# abc123 회원이 2번 스케쥴(미키 17, 4관 3월 11일 19:10)의 예약 가능한 좌석 A1, A2를 예매했을 때 필요한 쿼리 
+insert into ticket(TI_ADULT, TI_TEEN, TI_PRICE, TI_STATE, TI_ME_NUM, TI_SD_NUM) values
+(1,1,27000,"결제", 1, 2);
+INSERT INTO TICKET_LIST(TL_TI_NUM, TL_SE_NUM) VALUES(3, 38), (3,39);
+update schedule
+set SD_POS_SEAT = SD_POS_SEAT -2
+where SD_NUM = 2;
+
+# abc123 회원이 2번 스케쥴(미키 17, 4관 3월 11일 19:10)의 예약 가능한 좌석 A3, A4를 예매했을 때 필요한 쿼리 
+INSERT INTO TICKET(TI_ADULT, TI_TEEN, TI_PRICE, TI_ME_NUM, TI_SD_NUM)
+VALUES(1, 1, 27000, 1, 2);
+INSERT INTO TICKET_LIST(TL_TI_NUM, TL_SE_NUM) VALUES(4, 40), (4,41);
+update schedule
+set SD_POS_SEAT = SD_POS_SEAT -2
+where SD_NUM = 2;
+
+
+# abc123 회원이 2번 스케줄에 예약한 A3, A4 좌석을 취소할 때 필요한 쿼리(TI_NUM을 알고 있다는 가정하에 update)
+-- select TI_NUM from ticket
+-- join ticket_list on TL_TI_NUM = TI_NUM
+-- join seat on TL_SE_NUM = SE_NUM
+-- where SE_NAME = "A3" OR SE_NAME = "A4";
+update ticket set TI_STATE = "취소" where TI_NUM =4;
+delete from ticket_list where TL_TI_NUM  = 4;
+update schedule
+set SD_POS_SEAT = SD_POS_SEAT +2
+where SD_NUM = 2;
+    
