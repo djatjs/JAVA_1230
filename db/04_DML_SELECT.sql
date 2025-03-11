@@ -1,3 +1,5 @@
+SET GLOBAL sql_mode = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION';
+
 /*
 SELECT * FORM 테이블명;
 # 테이블에 있는 모든 데이터들을 조회화는 쿼리.

@@ -1,0 +1,37 @@
+## 학과 등록
+# 컴퓨터공학를 등록. 학과코드 : COM, 학과코드번호 : 160, 학과사무실 : KH 1관 401호
+INSERT INTO department(DE_NUM, DE_NAME, DE_OFFICE, DE_NAME_NUM) VALUES
+("COM", "컴퓨터공학", "KH 1관 401호", 160);
+# 디자인공학을 등록. 학과코드 : DEG, 학과코드번호 : 123, 학과사무실 : KH 3관 101호
+INSERT INTO department(DE_NUM, DE_NAME, DE_OFFICE, DE_NAME_NUM) VALUES
+("DEG", "디자인공학", "KH 3관 101호", 123);
+# 기계공학을 등록. 학과코드 : MEC, 학과코드번호 : 456, 학과사무실 : KH 4관 201호
+INSERT INTO department VALUES
+("MEC", "기계공학", "KH 4관 201호", 456, null);
+
+## 교수 등록
+# 이름 : 홍교수, 연락처 : 012-1234-5678, 주민번호 : 600111-1, 취임연도 2000, 전공 : 컴퓨터공학과
+INSERT INTO professor(PR_NUM,PR_NAME,PR_PHONE,PR_RES_NUM,PR_YEAR,PR_DE_NUM) VALUES
+("P2000COM001", "홍교수", "012-1234-5678", "600111-1", 2000, 1);
+
+INSERT INTO professor
+SELECT CONCAT("P", 2000, "160", LPAD(COUNT(PR_NUM),"0")) FROM 
+
+
+
+
+# 이름 : 김교수, 연락처 : 012-1111-5555, 주민번호 : 630101-2, 취임연도 2000, 전공 : 컴퓨터공학과
+INSERT INTO professor(PR_NUM,PR_NAME,PR_PHONE,PR_RES_NUM,PR_YEAR,PR_DE_NUM) VALUES
+("P2000COM002", "김교수", "012-1111-5555", "630101-2", 2000, 1);
+
+# 이름 : 박교수, 연락처 : 012-7788-4455, 주민번호 : 670331-1, 취임연도 2005, 전공 : 디자인공학과
+INSERT INTO professor(PR_NUM,PR_NAME,PR_PHONE,PR_RES_NUM,PR_YEAR,PR_DE_NUM) VALUES
+("P2005DEG001", "박교수", "012-7788-4455", "670331-1", 2005, 2);
+# 이름 : 이교수, 연락처 : 012-7781-4451, 주민번호 : 701231-2, 취임연도 2010, 전공 : 디자인공학과
+INSERT INTO professor(PR_NUM,PR_NAME,PR_PHONE,PR_RES_NUM,PR_YEAR,PR_DE_NUM) VALUES
+("P2010DEG001", "이교수", "012-7781-4451", "701231-2", 2010, 2);
+# 이름 : 최교수, 연락처 : 012-3333-4444, 주민번호 : 650101-1, 취임연도 2005, 전공 : 기계공학과
+# 이름 : 최교수, 연락처 : 012-4567-4444, 주민번호 : 750101-1, 취임연도 2020, 전공 : 기계공학과
+INSERT INTO professor(PR_NUM,PR_NAME,PR_PHONE,PR_RES_NUM,PR_YEAR,PR_DE_NUM) VALUES
+("P2000MEC001", "최교수", "012-3333-4444", "650101-1", 2005, 3),
+("P2000MEC002", "최교수", "012-4567-4444", "750101-1", 2020, 3);
