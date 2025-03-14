@@ -27,4 +27,15 @@ WHERE FP_DE_NUM ="MEC" AND FP_YEAR = YEAR(NOW());
 
 
 
+INSERT INTO menu (ME_CODE, ME_CA_NUM, ME_NAME, ME_PRICE, ME_HOT_ICE, ME_CONTENT) 
+SELECT 
+	CONCAT(LPAD(CA_NUM,6,"0")),
+    CA_NAME,
+    "에스프레소",
+    1300,
+    "H",
+    "쓰디쓴 커피"
+
+
+VALUES (#{menu.meCode}, #{menu.meCaNum}, #{menu.meName}, #{menu.mePrice}, #{menu.meHotIce}, #{menu.meContent})
 

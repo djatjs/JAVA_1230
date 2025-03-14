@@ -12,11 +12,18 @@ insert into coupon(CO_M_ID, CO_COUNT) values
 insert into category(CA_NAME, CA_CODE) values
 ("커피","COF");
 
-# 메뉴 등록
+## 메뉴 등록
 insert into menu(ME_CODE, ME_CA_NUM, ME_NAME, ME_PRICE, ME_CONTENT, ME_THUMB, ME_HOT_ICE) values
 ("COF001",1,"아메리카노",1500, "진한 커피", "coffee.americano.jpg", "I");
 insert into menu(ME_CODE, ME_CA_NUM, ME_NAME, ME_PRICE, ME_CONTENT, ME_THUMB, ME_HOT_ICE) values
 ("COF002",1,"아메리카노",1500, "마음을 녹여주는 커피", "coffee.americano.jpg", "H");
+
+INSERT INTO menu (ME_CODE, ME_CA_NUM, ME_NAME, ME_PRICE, ME_CONTENT, ME_HOT_ICE)
+SELECT 
+    CONCAT("COF", LPAD(COUNT(ME_CODE) + 1, 3, '0')), 4, "바닐라라떼", 3500, "ㅋㅋ", "H"
+FROM menu
+WHERE ME_CODE LIKE "COF%";
+
 
 # USER0001의 장바구니 생성
 insert into cart(CT_M_ID) values
