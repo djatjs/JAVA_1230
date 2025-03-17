@@ -3,6 +3,7 @@ package kr.kh.spring.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.kh.spring.model.dto.PersonDTO;
@@ -57,6 +58,34 @@ public class HomeController {
 		/* 서버에서 화면으로 객체 전송 */
 		model.addAttribute("person", person);
 		return "sample/send";
+	}
+	@GetMapping("/{name}/{age}")
+	//@PathVariable에 들어가는 변수명은 경로상의 이름과 같아야함
+	public String nameAge(@PathVariable("name")String name1, @PathVariable("age")int age1) {
+		System.out.println("화면에서 전송한 이름 : " + name1);
+		System.out.println("화면에서 전송한 나이 : " + age1);
+		return "sample/send";
+	}
+	
+	// 쓸거면 리턴에 redirect:/나 forward:/ 붙여주면됨
+	@GetMapping("/redirect")
+	public String redirect(PersonDTO person) {
+		System.out.println(person);
+		/* redirect 방식
+		 * - url 변경
+		 * - 해당 url를 처리하는 메소드를 호출.
+		 * - request 정보는 전송하지 않음
+		 * */
+		return "redirect:/send";
+	}
+	@GetMapping("/forward")
+	public String forward(PersonDTO person) {
+		System.out.println(person);
+		/* forward 방식
+		 * - 해당 url를 처리하는 메소드를 호출.
+		 * - request 정보도 같이 전송 => 매개변수로 받은 데이터들도 함께 전송
+		 * */
+		return "forward:/send";
 	}
 	
 	
