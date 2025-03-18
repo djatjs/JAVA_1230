@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,8 +44,34 @@
 			<c:if test="${vs.first}">New</c:if> 
 			<c:if test="${vs.last}">Old</c:if> 
 		</li>
-	</c:forEach>
-	
+	</c:forEach>	
 	</ul>
+	<hr>
+	<h1>c:forTokens 예제</h1>
+	<ul>
+		<c:forTokens items="${'사과,바나나,포도,오렌지'}" delims="," var="token" varStatus="vs">
+			<li>${vs.count}.${token}</li>
+		</c:forTokens>
+	</ul>
+	<h1>c:url예제</h1>
+	<c:url var = "url" value="/send">
+		<c:param name="name" value ="abc" />
+		<c:param name="age" value ="20" />
+	</c:url>
+	<p>${url}</p>
+	<hr>
+	<h1>fmt:formatNumber</h1>
+	<fmt:formatNumber value="10000" type="currency"/>
+	<!-- 서버 로컬 정보가 한국으로 되어있어서 아래 setLocale이 반영되지 않음  -->
+	<fmt:setLocale value="en_us"/>	
+	<fmt:formatNumber value="10000" type="currency"/>
+
+	<fmt:setLocale value="jp_jp"/>	
+	<fmt:formatNumber value="10000" type="currency"/>
+	
+	<h1>fmt:formatDate</h1>
+	<fmt:formatDate value="${date}" pattern ="yyyy-MM-dd HH:mm:ss"/> <br>
+	<fmt:formatDate value="${date}" pattern ="yyyy-MM-dd EE요일"/> <br>
+	${date}
 </body>
 </html>
