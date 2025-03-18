@@ -14,7 +14,7 @@ public class BoardController {
 	
 	@GetMapping("/board/list")
 	public String boardList() {
-		System.out.println("등록된 게시물 수 : "+boardSerive.getCount());
+		
 		return "/board/list";
 	}
 }

@@ -1,5 +1,8 @@
 package kr.kh.spring.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +67,7 @@ public class HomeController {
 	public String nameAge(@PathVariable("name")String name1, @PathVariable("age")int age1) {
 		System.out.println("화면에서 전송한 이름 : " + name1);
 		System.out.println("화면에서 전송한 나이 : " + age1);
-		return "sample/send";
+		return "/sample/send";
 	}
 	
 	// 쓸거면 리턴에 redirect:/나 forward:/ 붙여주면됨
@@ -88,5 +91,12 @@ public class HomeController {
 		return "forward:/send";
 	}
 	
-	
+	@GetMapping("/jstl")
+	public String jstl(Model model) {
+		List<String> list = Arrays.asList("사과","바나나","딸기","포도");
+		model.addAttribute("str", "<h1>서버에서 보낸 데이터</h1>");
+		model.addAttribute("age", 19);
+		model.addAttribute("list", list);
+		return "/sample/jstl";
+	}
 }
