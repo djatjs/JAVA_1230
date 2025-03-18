@@ -57,7 +57,7 @@ public class HomeController {
 		System.out.println("화면에서 보낸 이름과 나이 : "+ person);
 		/* 서버에서 화면으로 객체 전송 */
 		model.addAttribute("person", person);
-		return "sample/send";
+		return "/sample/send";
 	}
 	@GetMapping("/{name}/{age}")
 	//@PathVariable에 들어가는 변수명은 경로상의 이름과 같아야함
