@@ -20,16 +20,16 @@
 	      </tr>
 	    </thead>
 	    <tbody>
-    		<c:forEach items="${list}" var="board">
+    		<c:forEach items="${list}" var="board" varStatus="vs">
 		      <tr>
 		        <td>
-		        	<input type="text" value="${board.bo_name}" class ="form-control">
+		        	<input type="text" value="${board.bo_name}" class ="form-control" id="name${vs.count}">
 		        </td>
 		        <td class="text=center box-func">
 		        	<form action="<c:url value="/admin/board/update"/>" method="post" style="display: inline">
 		        		<input type="hidden" name="bo_num" value="${board.bo_num}">
 		        		<input type="hidden" name="bo_name" value="">
-			        	<button type="submit" class="btn btn-outline-warning btn-update">수정</button>
+			        	<button type="submit" class="btn btn-outline-warning btn-update" data-target="#name${vs.count}">수정</button>
 		        	</form>
 		        	<form action="<c:url value="/admin/board/delete"/>" method="post" style="display: inline">
 		        		<input type="hidden" name="bo_num" value="${board.bo_num}">
@@ -56,8 +56,12 @@
 		let uBtns = document.querySelectorAll(".btn-update");
 		uBtns.forEach(btn=>{
 			btn.addEventListener("click", ()=>{
-				let text = btn.closest(".box-func").previousElementSibling.firstElementChild.value;
-				btn.previousElementSibling.value = text;
+				//let text = btn.closest(".box-func").previousElementSibling.firstElementChild.value;
+				let target = btn.dataset.target; //data-target 값을 가져옴
+				let targetObj = document.querySelector(target);
+				let text = targetObj.value;
+				
+				btn.previousElementSibling.value = text;				
 				return;
 			})
 		})
