@@ -43,6 +43,8 @@
 <h1>forward 예제</h1>
 <a href="<c:url value="/forward?name=홍길동&age=10"/>">포워드 예제</a>
 
+
+
 <script type="text/javascript">
 	let name1 = "${name}";
 	console.log(name1);
