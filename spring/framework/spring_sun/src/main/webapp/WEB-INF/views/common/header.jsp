@@ -28,16 +28,24 @@
 	        </c:if>
 	        <c:if test="${user != null}">
 	        	<li class="nav-item">
-		          <a class="nav-link" href="<c:url value="/"/>">로그아웃</a>
+		          <a class="nav-link" href="<c:url value="/logout"/>">로그아웃</a>
 		        </li>
 	        </c:if>
 	        <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">예제</a>
 	          <ul class="dropdown-menu">
-	            <li><a class="dropdown-item" href="<c:url value="/"/>">데이터 전송 예제</a></li>
+	            <li><a class="dropdown-item" href="<c:url value="/example"/>">데이터 전송 예제</a></li>
 	            <li><a class="dropdown-item" href="<c:url value="/jstl"/>">JSTL 예제</a></li>
 	          </ul>
 	        </li>
+	        <%-- <c:if test="${user != null}"> --%>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">관리자</a>
+		          <ul class="dropdown-menu">
+		            <li><a class="dropdown-item" href="<c:url value="/admin/board"/>">게시판</a></li>
+		          </ul>
+		        </li>
+	        <%-- </c:if> --%>
 	      </ul>
 	    </div>
 	  </div>

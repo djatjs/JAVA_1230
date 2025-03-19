@@ -11,4 +11,5 @@
 	<select id="selectMember" resultType="kr.kh.spring.model.vo.MemberVO">
 		select * from member where me_id = #{me_id}
 	</select>
+	
 </mapper>
