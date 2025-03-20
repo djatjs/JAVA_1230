@@ -20,8 +20,8 @@ public class PostSeriveImp  implements PostSerive{
 	MessageService messageService;
 	
 	@Override
-	public List<PostVO> getPostList() {
-		return postDAO.selectPostList();
+	public List<PostVO> getPostList(int po_bo_num) {
+		return postDAO.selectPostList(po_bo_num);
 	}
 
 	@Override
@@ -93,6 +93,32 @@ public class PostSeriveImp  implements PostSerive{
 		
 		
 		return res;
+	}
+
+	@Override
+	public boolean updatePost(PostVO post, MemberVO user) {
+		if(post==null || 
+				post.getPo_title().trim().length()==0 ||
+				post.getPo_content().trim().length()==0) {
+			return false;
+		}
+		if(user == null) {
+			return false;
+		}
+		//작성자인지 확인
+		//게시글 정보 가져옴
+		PostVO dbPost = postDAO.selectPost(post.getPo_num());
+		//게시글의 작성자와 회원이 다르면 false 리턴
+		if(dbPost == null || !dbPost.getPo_me_id().equals(user.getMe_id())) {
+			return false;
+		}
+		boolean res = postDAO.updatePost(post);
+		return res;
+	}
+
+	@Override
+	public void updateView(int po_num) {
+		postDAO.updateView(po_num);
 	}
 
 
