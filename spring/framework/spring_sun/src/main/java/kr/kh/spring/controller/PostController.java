@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.kh.spring.model.vo.BoardVO;
@@ -38,15 +39,43 @@ public class PostController {
 	}
 	
 	@PostMapping("/post/insert")
-	public String postInsertPost(PostVO post) {
+	public String postInsertPost(PostVO post, Model model) {
 		MemberVO user = new MemberVO();
-		user.setMe_id("ADMIN");
+		user.setMe_id("admin");
 		System.out.println(post);
 		if(postSerive.insertPost(post, user)) {
-			
+			model.addAttribute("url", "/post/list");
+			model.addAttribute("msg", "게시글을 등록했습니다.");
 		}else {
-			
+			model.addAttribute("url", "/post/insert");
+			model.addAttribute("msg", "게시글을 등록하지 못했습니다.");
 		}
-		return "redirect:/post/list";
+		return "/msg/msg";
+	}
+	
+	@GetMapping("/post/detail/{po_num}")
+	public String postDetail(@PathVariable("po_num")int po_num, Model model) {
+		//게시글을 가져옴
+		PostVO post = postSerive.getPost(po_num);
+		//화면에 전송
+		model.addAttribute("post", post);
+		return "/post/detail";
+	}
+	
+	@GetMapping("/post/delete/{po_num}")
+	public String postDelete(@PathVariable("po_num")int po_num, Model model) {
+		//로그인한 회원 정보를 가져옴
+		MemberVO user = new MemberVO();
+		user.setMe_id("admin");
+		
+		if(postSerive.deletePost(po_num, user)) {
+			model.addAttribute("url", "/post/list");
+			model.addAttribute("msg", "게시글을 삭제했습니다.");
+		}else {
+			model.addAttribute("url", "/post/detail/"+po_num);
+			model.addAttribute("msg", "게시글을 삭제하지 못했습니다.");
+		}
+
+		return "/msg/msg";
 	}
 }

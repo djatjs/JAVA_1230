@@ -20,6 +20,10 @@ public interface PostSerive {
 
 	boolean insertPost(PostVO post, MemberVO user);
 
+	PostVO getPost(int po_num);
+
+	boolean deletePost(int po_num, MemberVO user);
+
 
 	
 
