@@ -13,6 +13,7 @@
 	    <thead>
 		      <tr>
 		        <th>번호</th>
+		        <th>게시판</th>
 		        <th>제목</th>
 		        <th>작성자</th>
 		        <th>작성일</th>
@@ -23,6 +24,7 @@
 	    		<c:forEach items="${list}" var="post">
 			      <tr>
 			        <td>${post.po_num}</td>
+			        <td>${post.po_bo_name}</td>
 			        <td>
 			        	<a href="#">${post.po_title}</a>
 			        </td>
@@ -39,6 +41,7 @@
 	    			</tr>
 	    		</c:if>
 	    </tbody>
-  </table>
+	</table>
+	<a href="<c:url value="/post/insert"/>" class="btn btn-outline-success">게시글 등록</a>
 </body>
 </html>
