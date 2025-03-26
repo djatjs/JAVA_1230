@@ -10,8 +10,8 @@
 	
 	<annotation-driven />
 
-	
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/download/**" location="file:///D:/uploads/" />
 
 	<!-- 
 	- 기본 뷰 리졸버 
@@ -74,5 +74,15 @@
 		</interceptor>
 	</interceptors>
 	
+	<!-- 업로드 파일 용량 설정 -->
+	<beans:bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 업로드 최대 크기 10Mb -->
+		<beans:property name="maxUploadSize" value="10485760"/>
+	</beans:bean>
+	<!-- 업로드할 파일 경로 -->
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="D:\uploads"/>
+	</beans:bean>
 	
 </beans:beans>

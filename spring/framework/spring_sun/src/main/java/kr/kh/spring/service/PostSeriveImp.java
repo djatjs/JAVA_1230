@@ -2,19 +2,27 @@ package kr.kh.spring.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.spring.dao.PostDAO;
 import kr.kh.spring.model.vo.BoardVO;
+import kr.kh.spring.model.vo.FileVO;
 import kr.kh.spring.model.vo.MemberVO;
 import kr.kh.spring.model.vo.PostVO;
+import kr.kh.spring.utils.UploadFileUtils;
 
 @Service
 public class PostSeriveImp  implements PostSerive{
 
 	@Autowired
 	PostDAO postDAO; //DAO는 어노테이션 안달아도 되는 이유 -> root-context에서 인식하도록 설정함
+	
+	@Resource
+	private String uploadPath;
 	
 	@Autowired
 	MessageService messageService;
@@ -57,7 +65,7 @@ public class PostSeriveImp  implements PostSerive{
 	}
 
 	@Override
-	public boolean insertPost(PostVO post, MemberVO user) {
+	public boolean insertPost(PostVO post, MemberVO user, MultipartFile[] fileList) {
 		if(post==null || 
 				post.getPo_title().trim().length()==0 ||
 				post.getPo_content().trim().length()==0) {
@@ -69,7 +77,29 @@ public class PostSeriveImp  implements PostSerive{
 		post.setPo_me_id(user.getMe_id());
 		boolean res = postDAO.insertPost(post);
 		
-		return res;
+		if(!res) {
+			return false;
+		}
+		//첨부파일 없으면 더이상의 작업이 필요하지 않음
+		if(fileList == null || fileList.length ==0) {
+			return true;
+		}
+		
+		for(MultipartFile file : fileList) {
+			String fi_ori_name = file.getOriginalFilename();
+			//파일명이 없으면
+			if(fi_ori_name == null || fi_ori_name.length() ==0) {
+				continue;
+			}
+			try {
+				String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
+				FileVO filevo = new FileVO(fi_ori_name, fi_name, post.getPo_num());
+				postDAO.insertFile(filevo);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -119,6 +149,11 @@ public class PostSeriveImp  implements PostSerive{
 	@Override
 	public void updateView(int po_num) {
 		postDAO.updateView(po_num);
+	}
+
+	@Override
+	public List<FileVO> getFileList(int po_num) {
+		return postDAO.selectFileList(po_num);
 	}
 
 
