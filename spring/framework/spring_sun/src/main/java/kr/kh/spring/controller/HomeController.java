@@ -151,7 +151,6 @@ public class HomeController {
 	}
 	@PostMapping("/login")
 	public String loginPost(MemberVO member, Model model) {
-		System.out.println(member);
 		//화면에서 보낸 회원 정보와 일치하는 회원 정보를 DB에서 가져옴
 		MemberVO user = memberService.login(member);
 		//가져온 회원 정보를 인터셉터에게 전달

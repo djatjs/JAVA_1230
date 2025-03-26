@@ -36,7 +36,7 @@
 		        </td>
 		        <td>${post.po_me_id}</td>
 		        <td>
-		        	<fmt:formatDate value="${post.po_date}" pattern="yyyy-MM-dd hh:mm:ss"/>
+		        	<fmt:formatDate value="${post.po_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		        </td>
 		        <td>${post.po_view}</td>
 		      </tr>

@@ -30,7 +30,7 @@
 				
 				<div class="form-group mt-3">
 					<label for="title" class="form-label">작성일</label>
-					<input type="text" class="form-control" value="<fmt:formatDate value="${post.po_date}" pattern="yyyy-MM-dd hh:mm:ss"/>" readonly>
+					<input type="text" class="form-control" value="<fmt:formatDate value="${post.po_date}" pattern="yyyy-MM-dd HH:mm"/>" readonly>
 					
 				</div>
 				<div class="form-group mt-3">

@@ -86,20 +86,24 @@ public class PostSeriveImp  implements PostSerive{
 		}
 		
 		for(MultipartFile file : fileList) {
-			String fi_ori_name = file.getOriginalFilename();
-			//파일명이 없으면
-			if(fi_ori_name == null || fi_ori_name.length() ==0) {
-				continue;
-			}
-			try {
-				String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
-				FileVO filevo = new FileVO(fi_ori_name, fi_name, post.getPo_num());
-				postDAO.insertFile(filevo);
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+			uploadFile(file, post.getPo_num());
 		}
 		return true;
+	}
+	
+	private void uploadFile(MultipartFile file, int po_num) {
+		String fi_ori_name = file.getOriginalFilename();
+		//파일명이 없으면
+		if(fi_ori_name == null || fi_ori_name.length() ==0) {
+			return;
+		}
+		try {
+			String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
+			FileVO filevo = new FileVO(fi_ori_name, fi_name, po_num);
+			postDAO.insertFile(filevo);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -119,14 +123,33 @@ public class PostSeriveImp  implements PostSerive{
 			return false;
 		}
 		//게시글 삭제
-		boolean res = postDAO.deletePost(po_num);
+		if(!postDAO.deletePost(po_num)) {
+			return false;
+		}
+		//첨부파일 삭제
+		List<FileVO> fileList = postDAO.selectFileList(po_num);
+		if(fileList == null || fileList.size() == 0) {
+			return true;
+		}
+		for(FileVO fileVo : fileList) {
+			deleteFile(fileVo);
+		}
+		return true;
+	}
+
+	private void deleteFile(FileVO fileVo) {
+		if(fileVo == null) {
+			return;
+		}
+		//실제 첨부파일 삭제
+		UploadFileUtils.deleteFile(uploadPath, fileVo.getFi_name());
 		
-		
-		return res;
+		//db에서 해당 첨부파일 삭제
+		postDAO.deleteFile(fileVo.getFi_num());
 	}
 
 	@Override
-	public boolean updatePost(PostVO post, MemberVO user) {
+	public boolean updatePost(PostVO post, MemberVO user, MultipartFile[] fileList, int[] delNums) {
 		if(post==null || 
 				post.getPo_title().trim().length()==0 ||
 				post.getPo_content().trim().length()==0) {
@@ -142,8 +165,24 @@ public class PostSeriveImp  implements PostSerive{
 		if(dbPost == null || !dbPost.getPo_me_id().equals(user.getMe_id())) {
 			return false;
 		}
-		boolean res = postDAO.updatePost(post);
-		return res;
+		if(!postDAO.updatePost(post)) {
+			return false;
+		}
+		//첨부파일
+		if(fileList == null || fileList.length ==0) {
+			return true;
+		}
+		for(MultipartFile file : fileList) {
+			uploadFile(file, post.getPo_num());
+		}
+		if(delNums == null || delNums.length ==0) {
+			return true;
+		}
+		for(int fi_num : delNums) {
+			FileVO fileVo = postDAO.selectFile(fi_num);
+			deleteFile(fileVo);
+		}
+		return true;
 	}
 
 	@Override

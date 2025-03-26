@@ -92,29 +92,38 @@ public class PostController {
 	
 	@GetMapping("/post/update/{po_num}")
 	public String postUpdate(@PathVariable("po_num")int po_num, Model model, HttpSession session) {
-		List<BoardVO> list = postSerive.getBoardList();
-		model.addAttribute("list", list);
+		
 		//게시글을 가져옴
 		PostVO post = postSerive.getPost(po_num);
 		//작성자인지 확인하는 작업
 		MemberVO user = (MemberVO) session.getAttribute("user");
+		
+		//로그인 안되어 있거나, 없는 게시글이거나 작성자가 아니면
 		if(user == null || post == null || !post.getPo_me_id().equals(user.getMe_id())) {
 			model.addAttribute("url", "/post/detail/"+po_num);
 			model.addAttribute("msg", "작성자가 아니거나 없는 게시글입니다.");
 			return "/msg/msg";
 		}
-		else {
-			//화면에 전송
-			model.addAttribute("post", post);			
-			return "/post/update";
-		}
+		
+		List<BoardVO> list = postSerive.getBoardList();
+		model.addAttribute("list", list);
+		
+		List<FileVO> fileList = postSerive.getFileList(po_num);
+		
+		//화면에 전송
+		model.addAttribute("post", post);
+		model.addAttribute("list", list);	
+		model.addAttribute("fileList", fileList);	
+		return "/post/update";
 	}
 	
 	@PostMapping("/post/update")
-	public String postUpdatePost(PostVO post, Model model, HttpSession session) {
+	public String postUpdatePost(PostVO post, Model model, 
+			HttpSession session, MultipartFile[] fileList, int [] delNums) {
+		
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
-		if(postSerive.updatePost(post, user)) {
+		if(postSerive.updatePost(post, user, fileList, delNums)) {
 			model.addAttribute("msg", "게시글을 수정했습니다.");
 		}else {
 			model.addAttribute("msg", "게시글을 수정하지 못했습니다.");
