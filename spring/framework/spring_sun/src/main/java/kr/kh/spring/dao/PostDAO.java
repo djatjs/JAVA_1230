@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.spring.Pagination.Criteria;
 import kr.kh.spring.model.vo.BoardVO;
 import kr.kh.spring.model.vo.FileVO;
 import kr.kh.spring.model.vo.PostVO;
 
 public interface PostDAO {
 
-	List<PostVO> selectPostList(@Param("po_bo_num")int po_bo_num);
+	List<PostVO> selectPostList(@Param("cri")Criteria cri);
 
 	List<BoardVO> selectBoardList();
 
@@ -37,6 +38,8 @@ public interface PostDAO {
 	void deleteFile(@Param("fi_num")int fi_num);
 
 	FileVO selectFile(@Param("fi_num")int fi_num);
+
+	int selectCountPostList(@Param("cri")Criteria cri);
 
 	
 

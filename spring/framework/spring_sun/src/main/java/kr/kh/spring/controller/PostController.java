@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.spring.Pagination.PageMaker;
+import kr.kh.spring.Pagination.PostCriteria;
 import kr.kh.spring.model.vo.BoardVO;
 import kr.kh.spring.model.vo.FileVO;
 import kr.kh.spring.model.vo.MemberVO;
@@ -25,17 +27,20 @@ public class PostController {
 	private PostSerive postSerive;
 	
 	@GetMapping("/post/list")
-	public String postList(Model model, Integer po_bo_num) {
-		//po_num 값없으면 0, 있으면 그 값으로 두기
-		po_bo_num = po_bo_num == null ? 0 : po_bo_num; 
-		
+	public String postList(Model model,  PostCriteria cri) {
+		cri.setPerPageNum(2);
 		//게시글 목록 전체를 가져옴
-		List<PostVO> list = postSerive.getPostList(po_bo_num);
+		List<PostVO> list = postSerive.getPostList(cri);
+		
 		List<BoardVO> boardList = postSerive.getBoardList();
-		model.addAttribute("boardList", boardList);
-		model.addAttribute("po_bo_num", po_bo_num);
+		
+		
+		PageMaker pm = postSerive.getPageMaker(cri);
 		//화면에 게시글 목록 전송
+		//매퍼의 resultType=kr.kh.spring
+		model.addAttribute("boardList", boardList);
 		model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
 		return "/post/list";
 	}
 	

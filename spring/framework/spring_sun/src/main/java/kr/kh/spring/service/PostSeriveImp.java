@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.spring.Pagination.Criteria;
+import kr.kh.spring.Pagination.PageMaker;
+import kr.kh.spring.Pagination.PostCriteria;
 import kr.kh.spring.dao.PostDAO;
 import kr.kh.spring.model.vo.BoardVO;
 import kr.kh.spring.model.vo.FileVO;
@@ -28,8 +31,8 @@ public class PostSeriveImp  implements PostSerive{
 	MessageService messageService;
 	
 	@Override
-	public List<PostVO> getPostList(int po_bo_num) {
-		return postDAO.selectPostList(po_bo_num);
+	public List<PostVO> getPostList(Criteria cri) {
+		return postDAO.selectPostList(cri);
 	}
 
 	@Override
@@ -193,6 +196,12 @@ public class PostSeriveImp  implements PostSerive{
 	@Override
 	public List<FileVO> getFileList(int po_num) {
 		return postDAO.selectFileList(po_num);
+	}
+
+	@Override
+	public PageMaker getPageMaker(Criteria cri) {
+		int totalCount = postDAO.selectCountPostList(cri);
+		return new PageMaker(3, cri, totalCount);
 	}
 
 
