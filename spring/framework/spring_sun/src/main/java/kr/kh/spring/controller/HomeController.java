@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.spring.model.dto.PersonDTO;
 import kr.kh.spring.model.vo.MemberVO;
@@ -78,23 +80,7 @@ public class HomeController {
 		model.addAttribute("person", person);
 		return "/sample/send";
 	}
-	/*
-	@GetMapping("/send")
-	public String send(Model model, PersonDTO person) {
-		System.out.println("화면에서 보낸 이름과 나이 : " + person);
-		//서버에서 화면으로 객체를 전송
-		model.addAttribute("person", person);
-		return "sample/send";
-	}
 	
-	@PostMapping("/send")
-	public String sendPost(Model model, PersonDTO person) {
-		System.out.println("화면에서 보낸 이름과 나이 : " + person);
-		//서버에서 화면으로 객체를 전송
-		model.addAttribute("person", person);
-		return "sample/send";
-	}
-	*/
 	@GetMapping("/sample/{name}/{age}")
 	public String nameAge(@PathVariable("name")String name1, @PathVariable("age")int age1) {
 		System.out.println("화면에서 전송한 이름 : " + name1);
@@ -168,5 +154,13 @@ public class HomeController {
 		HttpSession session = request.getSession();
 		session.removeAttribute("user");
 		return "redirect:/";
+	}
+	
+	@ResponseBody //리 리졸버 걸처가는거없이 바로 보여줌?
+	@PostMapping("/check/id")
+	//리턴타입 꼭 Object일 필요는 없음. List로 보내고 싶으면 List로 수정해도 상관없음 
+	public boolean checkId(@RequestParam("id") String id){
+		return memberService.checkId(id);
+		
 	}
 }

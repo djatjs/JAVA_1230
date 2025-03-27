@@ -57,14 +57,12 @@ public class MemberServiceImp implements MemberService{
 		return user;
 	}
 
-//	@Override
-//	public boolean login(MemberVO member) {
-//		MemberVO user = memberDao.selectMember(member.getMe_id());
-//		if(user != null) {
-//			return false;
-//		}
-//		System.out.println(member);
-//		return true;
-//	}
+	@Override
+	public boolean checkId(String id) {
+		MemberVO user = memberDao.selectMember(id);
+		return user == null;
+	}
+
+
 
 }
