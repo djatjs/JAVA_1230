@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
 	<style type="text/css">
 		.error, .red{color : red}
+		.green{color : green}
 	</style>
 </head>
 
@@ -20,7 +21,6 @@
 			<input type="text" class="form-control" id="id" name="me_id">
 			<label id="checkId" class="red"></label>
 		</div>
-		<button type="button" class="btn btn-outline-success col-12" id="check">아이디 중복 확인</button>
 		<div class="form-group mt-3">
 			<label for="pw" class="form-label">비번</label>
 			<input type="password" class="form-control" id="pw" name="me_pw">
@@ -69,8 +69,12 @@
 			let str;
 			if(res){
 				str="사용가능한 아이디입니다.";
+				$("#checkId").addClass("green");
+				$("#checkId").removeClass("red");
 			}else{
 				str="이미 사용중인 아이디입니다.";
+				$("#checkId").addClass("red");
+				$("#checkId").removeClass("green");
 			}
 			$("#checkId").text(str);
 			return res;
@@ -87,6 +91,10 @@
                 },
                 me_pw2 : {
                     equalTo : pw
+                },
+                me_email : {
+                	required : true,
+                	email : true
                 }
             },
             messages : {
@@ -100,6 +108,10 @@
                 },
                 me_pw2 : {
                     equalTo : "올바른 비밀번호 입력하시오."
+                },
+                me_email : {
+                	required : "필수 항목입니다.",
+                	email : "이메일 형식이 아닙니다."
                 }
             },
             // 유효성 검사 체크 후 전송하기 직전에 확인하고 싶을 때 사용. return true 전송 
