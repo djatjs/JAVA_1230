@@ -65,7 +65,7 @@
 			</div>
 		</c:if>
 	</div>
-	<h3>댓글</h3>
+	<h3 class="mt-3">댓글</h3>
 	<div class="comment-container">
 		<div class="comment-list">
 			
@@ -80,6 +80,25 @@
 		</div>
 	</div>
 	
+	<!-- 답글 등록 -->
+	<script type="text/javascript">
+		$(document).on("click",".btn-reply",function(e) {
+			//답글 버튼이 처음부터 있던게 아니라서 이벤트를 등록하는 시점에서는 해당 요소가 없음.
+			//그래서 문서에서부터 불러옴
+			let co_num = $(this).data("num");
+			let str= `
+				<form class="input-group mb-3 insert-form mt-2" action="<c:url value="/comment/insert"/>" method="post">
+					<input type="hidden" name="co_ori_num" value="\${co_num}">	
+					<input type="hidden" name="co_po_num" value="${post.po_num}">
+					<textarea rows="" cols="" class="form-control" name="co_content"></textarea>
+				    <button class="btn btn-outline-primary">댓글 등록</button>
+				</form>
+			`
+			$(this).parent().after(str);
+		});
+	</script>
+	
+	<!-- 댓글 목록 조회 -->
 	<script type="text/javascript">
 		function getCommentList(cri) {
 			//ajax로 댓글 리스트 가져와서 화면에 출력
@@ -103,24 +122,47 @@
 			});		
 		}
 		function drawCommentList(list) {
+			
+			if(list.length ==0){
+				$(".comment-list").html(`<div class="text-center mb-3"> 등록된 댓글이 없습니다.</div>`)
+				return;
+			}
+			
 			let str='';
 			for(comment of list){
 				let btns = '';
+				let replyBtn = '';
+				let padding = '';
+				
+				//회원이 댓글/답글 작성자이면 수정/삭제 버튼 추가
 				if(comment.co_me_id == '${user.me_id}'){
 					btns= `
 						<button class="btn btn-outline-warning">수정</button>
 						<button class="btn btn-outline-danger">삭제</button>
 					`;
 				}
+				
+				//댓글이면 답글 버튼 추가
+				if(comment.co_num == comment.co_ori_num){
+					replyBtn=`<button class="btn btn-outline-success btn-reply" data-num="\${comment.co_num}">답글</button>`;
+				}
+				//답글이면 왼쪽 패딩 추가
+				else{
+					padding = 'pl-5';					
+				}
+				
+				
 				str +=`
-					<div class="comment-item form-control mb-3" style="min-height: auto; height: auto;">
-						<div class="comment-wrap">
-							<div class="comment-writer">\${comment.co_me_id}</div>
-							<div class="comment-content">\${comment.co_content}</div>
-						</div>
-						<div class="comment-func mt-2">
-							<button class="btn btn-outline-success">답글</button>
-							\${btns}
+					<div class="\${padding}">
+						<div class="comment-item form-control mb-3 " style="min-height: auto; height: auto;">
+							<div class="comment-wrap">
+								<div class="comment-writer">\${comment.co_me_id}</div>
+								<div class="comment-content">\${comment.co_content}</div>
+							</div>
+							<div class="comment-func mt-2">
+								\${replyBtn}
+								\${btns}
+							</div>
 						</div>
 					</div>
 				`		
@@ -129,27 +171,34 @@
 		}
 		getCommentList();
 	</script>
-	
+	<!-- 댓글 등록 -->
 	<script type="text/javascript">
-		$(".insert-form").submit(function(e) {
+		$(document).on("submit", ".insert-form", function(e) {
 			e.preventDefault();
+			
 			if('${user.me_id}' == ''){
 				if(confirm("로그인이 필요한 서비스입니다. \n로그인 페이지로 이동하겠습니까?")){
 					location.href = "<c:url value="/login"/>";
 				}
 				return false;
 			}
-			let $obj = $("[name=co_content]");
+			let $obj = $(this).find("[name=co_content]");
 			let content = $obj.val().trim();
 			if(content == ''){
 				alert("댓글을 입력하세요.");
 				$obj.focus();
 				return false;
 			}
-			let formData = $(this).serialize();
+			
+			let co_ori_num = $(this).find("[name=co_ori_num]").val();
+			let co_po_num = $(this).find("[name=co_po_num]").val();
+			let co_content = $(this).find("[name=co_content]").val();
+			
+			
 			let obj ={
-					co_po_num : $("[name=co_po_num]").val(),
-					co_content : $("[name=co_content]").val()
+					co_po_num : co_po_num,
+					co_content : co_content,
+					co_ori_num : co_ori_num == 'undefined' ? 0 : co_ori_num
 			}
 			let url = $(this).attr("action");
 			$.ajax({
