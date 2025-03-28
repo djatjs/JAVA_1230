@@ -47,7 +47,6 @@
 						<c:forEach items="${list}" var="file">
 							<a class="form-control" href="<c:url value="/download${file.fi_name}"/>" download="${file.fi_ori_name}">${file.fi_ori_name}</a>
 						</c:forEach>
-						<input type="text" class="form-control" value="${list}" readonly>
 					</div>
 				</c:if>
 			</div>
@@ -74,15 +73,18 @@
 	
 	<!-- 댓글 목록 조회 -->
 	<script type="text/javascript">
+		
+		var cri = {
+				page : 1,
+				search : ${post.po_num}
+		}
 		function getCommentList(cri) {
 			//ajax로 댓글 리스트 가져와서 화면에 출력
 			$.ajax({
 				async : true, //비동기 : true(비동기), false(동기)
 				url : '<c:url value="/comment/list"/>', 
 				type : 'post', 
-				data : JSON.stringify({
-					search : '${post.po_num}'
-				}), 
+				data : JSON.stringify(cri), 
 				contentType : "application/json; charset=utf-8",
 				success : function (data){
 					$(".comment-container").html(data);
@@ -94,7 +96,7 @@
 			});		
 		}
 		
-		getCommentList();
+		getCommentList(cri);
 	</script>
 	
 	

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.spring.Pagination.Criteria;
@@ -23,9 +24,10 @@ import kr.kh.spring.service.CommentService;
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
+
 	@Autowired
 	CommentService commentService;
-	
+
 	@PostMapping("/insert")
 	@ResponseBody
 	public boolean insert(@RequestBody CommentVO comment, HttpSession session) {
@@ -34,24 +36,36 @@ public class CommentController {
 	}
 	
 	@GetMapping("/list2")
-	public String list2(Model model, Criteria cri){
+	public String list2(Model model, Criteria cri) {
 		
-		List<CommentVO> list = commentService.getCommentList(cri);
+		List<CommentVO> list= commentService.getCommentList(cri);
 		PageMaker pm = commentService.getPageMaker(cri);
-		
-		model.addAttribute("pm", pm);
 		model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
 		return "/comment/list";
 	}
-	
 	@PostMapping("/list")
-	public String list(Model model, @RequestBody Criteria cri){
-		
-		List<CommentVO> list = commentService.getCommentList(cri);
+	public String list(Model model,@RequestBody Criteria cri) {
+		cri.setPerPageNum(5);
+		List<CommentVO> list= commentService.getCommentList(cri);
 		PageMaker pm = commentService.getPageMaker(cri);
-		
-		model.addAttribute("pm", pm);
 		model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
 		return "comment/list";
+	}
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public boolean delete(@RequestParam int co_num, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		return commentService.deleteComment(co_num, user);
+	}
+	
+	@PostMapping("/update")
+	@ResponseBody
+	public boolean update(@RequestBody CommentVO comment, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		System.out.println(comment);
+		return commentService.updateComment(comment, user);
 	}
 }
