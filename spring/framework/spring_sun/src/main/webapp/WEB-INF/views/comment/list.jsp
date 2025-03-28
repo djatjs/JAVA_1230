@@ -43,8 +43,9 @@
 	</div>
 
 	
-	<!-- 답글 등록 -->
+	<!-- 답글 클릭 이벤트 -->
 	<script type="text/javascript">
+		$(document).off("click",".btn-reply");
 		$(document).on("click",".btn-reply",function(e) {
 			//답글 버튼이 처음부터 있던게 아니라서 이벤트를 등록하는 시점에서는 해당 요소가 없음.
 			//그래서 문서에서부터 불러옴
@@ -65,9 +66,14 @@
 		});
 	</script>
 	
-	
-	<!-- 댓글 등록 -->
+	<!-- 댓글 삭제 -->
 	<script type="text/javascript">
+		
+	</script>
+	
+	<!-- 댓글/답글 등록 이벤트 -->
+	<script type="text/javascript">
+	$(document).off("submit", ".insert-form");
 		$(document).on("submit", ".insert-form", function(e) {
 			e.preventDefault();
 			
