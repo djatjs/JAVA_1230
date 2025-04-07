@@ -80,7 +80,23 @@ public class HomeController {
 		model.addAttribute("person", person);
 		return "/sample/send";
 	}
+	/*
+	@GetMapping("/send")
+	public String send(Model model, PersonDTO person) {
+		System.out.println("화면에서 보낸 이름과 나이 : " + person);
+		//서버에서 화면으로 객체를 전송
+		model.addAttribute("person", person);
+		return "sample/send";
+	}
 	
+	@PostMapping("/send")
+	public String sendPost(Model model, PersonDTO person) {
+		System.out.println("화면에서 보낸 이름과 나이 : " + person);
+		//서버에서 화면으로 객체를 전송
+		model.addAttribute("person", person);
+		return "sample/send";
+	}
+	*/
 	@GetMapping("/sample/{name}/{age}")
 	public String nameAge(@PathVariable("name")String name1, @PathVariable("age")int age1) {
 		System.out.println("화면에서 전송한 이름 : " + name1);
@@ -117,7 +133,6 @@ public class HomeController {
 		model.addAttribute("date", new Date());
 		return "/sample/jstl";
 	}
-	
 	@GetMapping("/signup")
 	public String signup() {
 		return "/member/signup";
@@ -134,35 +149,55 @@ public class HomeController {
 	}
 	
 	@GetMapping("/login")
-	public String login() {
-		return "/member/login";
-	}
+	public String login(HttpServletRequest request) {
+ 		//이전 URL을 가져옴
+ 		String prevUrl = request.getHeader("Referer");
+ 		//이전 URL이 있고, /login이 아니면 세션에 저장
+ 		if(prevUrl != null && !prevUrl.contains("/login")) {
+ 			request.getSession().setAttribute("prevUrl", prevUrl);
+ 			System.out.println(prevUrl);
+ 		}
+ 		return "/member/login";
+ 	}
 	@PostMapping("/login")
-	public String loginPost(MemberVO member, Model model) {
+	public String loginPost(Model model, MemberVO member) {
 		//화면에서 보낸 회원 정보와 일치하는 회원 정보를 DB에서 가져옴
 		MemberVO user = memberService.login(member);
-		//가져온 회원 정보를 인터셉터에게 전달
-		model.addAttribute("user", user);
 		if(user == null) {
 			return "redirect:/login";
 		}
-		
-		return "redirect:/";
+		user.setAuto(member.isAuto());
+		//가져온 회원 정보를 인터셉터에게 전달
+		model.addAttribute("user", user);
+		return "msg/msg";
 	}
-	
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
-		//세션에 있는 유저를 삭제
+		
+		//세션에 있는 user를 삭제
 		HttpSession session = request.getSession();
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		session.removeAttribute("user");
+		if(user != null) {
+			user.setMe_cookie(null);
+			memberService.updateCookie(user);
+		}
 		return "redirect:/";
 	}
-	
-	@ResponseBody //리 리졸버 걸처가는거없이 바로 보여줌?
+	@ResponseBody
 	@PostMapping("/check/id")
-	//리턴타입 꼭 Object일 필요는 없음. List로 보내고 싶으면 List로 수정해도 상관없음 
 	public boolean checkId(@RequestParam("id") String id){
 		return memberService.checkId(id);
-		
 	}
+	
+	@GetMapping("/find/pw")
+ 	public String findPw() {
+ 		return "/member/pw";
+ 	}
+ 	@ResponseBody
+ 	@PostMapping("/find/pw")
+ 	public boolean findPwPost(@RequestParam String id) {
+ 		
+ 		return memberService.findPw(id);
+ 	}
 }
