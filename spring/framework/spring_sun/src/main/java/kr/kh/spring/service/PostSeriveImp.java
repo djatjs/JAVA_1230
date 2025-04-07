@@ -10,10 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.spring.Pagination.Criteria;
 import kr.kh.spring.Pagination.PageMaker;
-import kr.kh.spring.Pagination.PostCriteria;
 import kr.kh.spring.dao.PostDAO;
 import kr.kh.spring.model.vo.BoardVO;
 import kr.kh.spring.model.vo.FileVO;
+import kr.kh.spring.model.vo.LikeVO;
 import kr.kh.spring.model.vo.MemberVO;
 import kr.kh.spring.model.vo.PostVO;
 import kr.kh.spring.utils.UploadFileUtils;
@@ -204,7 +204,30 @@ public class PostSeriveImp  implements PostSerive{
 		return new PageMaker(3, cri, totalCount);
 	}
 
+	@Override
+ 	public int updateLike(LikeVO like, MemberVO user) {
+ 		if(like == null /*|| user == null*/) {
+ 			return -2;
+ 		}
+ 		
+ 		LikeVO dbLike = postDAO.selectLike(like.getLi_po_num(), user.getMe_id());
+ 		System.out.println(dbLike);
+ 		
+ 		if(dbLike == null) {
+ 			postDAO.insertLike(like.getLi_po_num(), user.getMe_id(), like.getLi_state());
+ 			postDAO.updatePostLike(like.getLi_po_num());
+ 			return like.getLi_state();
+ 		}
+ 		
+ 		// 현재 추천 정보와 이전 추천 정보가 같으면 0, 아니면 추천or비추
+ 		if(like.getLi_state() == dbLike.getLi_state()) {
+ 			like.setLi_state(0);
+ 		}
+ 		postDAO.updateLike(dbLike.getLi_num(), like.getLi_state());
+ 		postDAO.updatePostLike(like.getLi_po_num());
 
+ 		return like.getLi_state();
+ 	}
 
 }
 	

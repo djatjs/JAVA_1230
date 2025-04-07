@@ -10,12 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.spring.Pagination.PageMaker;
 import kr.kh.spring.Pagination.PostCriteria;
 import kr.kh.spring.model.vo.BoardVO;
 import kr.kh.spring.model.vo.FileVO;
+import kr.kh.spring.model.vo.LikeVO;
 import kr.kh.spring.model.vo.MemberVO;
 import kr.kh.spring.model.vo.PostVO;
 import kr.kh.spring.service.PostSerive;
@@ -26,15 +29,15 @@ import lombok.extern.log4j.Log4j;
 public class PostController {
 	
 	@Autowired //@Service가 있어야 됨. -> 서비스 객체 만들어줌
-	private PostSerive postSerive;
+	private PostSerive postService;
 	
 	@GetMapping("/post/list")
 	public String postList(Model model,  PostCriteria cri) {
 		cri.setPerPageNum(2);
 		//게시글 목록 전체를 가져옴
-		List<PostVO> list = postSerive.getPostList(cri);
-		List<BoardVO> boardList = postSerive.getBoardList();
-		PageMaker pm = postSerive.getPageMaker(cri);
+		List<PostVO> list = postService.getPostList(cri);
+		List<BoardVO> boardList = postService.getBoardList();
+		PageMaker pm = postService.getPageMaker(cri);
 		log.info(pm);
 		//화면에 게시글 목록 전송
 		//매퍼의 resultType=kr.kh.spring
@@ -47,7 +50,7 @@ public class PostController {
 	@GetMapping("/post/insert")
 	public String postInsert(Model model) {
 		//등록된 게시판 리스트를 가져와서 화면에 전송
-		List<BoardVO> list = postSerive.getBoardList();
+		List<BoardVO> list = postService.getBoardList();
 		model.addAttribute("list", list);
 		return "/post/insert";
 	}
@@ -55,7 +58,7 @@ public class PostController {
 	@PostMapping("/post/insert")
 	public String postInsertPost(PostVO post, Model model, HttpSession session, MultipartFile[] fileList) {
 		MemberVO user = (MemberVO) session.getAttribute("user");	
-		if(postSerive.insertPost(post, user, fileList)) {
+		if(postService.insertPost(post, user, fileList)) {
 			model.addAttribute("url", "/post/list");
 			model.addAttribute("msg", "게시글을 등록했습니다.");
 		}else {
@@ -68,11 +71,11 @@ public class PostController {
 	@GetMapping("/post/detail/{po_num}")
 	public String postDetail(@PathVariable("po_num")int po_num, Model model) {
 		//게시글 조회수 증가
-		postSerive.updateView(po_num);
+		postService.updateView(po_num);
 		//게시글을 가져옴
-		PostVO post = postSerive.getPost(po_num);
+		PostVO post = postService.getPost(po_num);
 		//첨부파일을 가져옴
-		List<FileVO> list = postSerive.getFileList(po_num);
+		List<FileVO> list = postService.getFileList(po_num);
 		//화면에 전송
 		model.addAttribute("post", post);
 		model.addAttribute("list", list);
@@ -84,7 +87,7 @@ public class PostController {
 		//로그인한 회원 정보를 가져옴
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
-		if(postSerive.deletePost(po_num, user)) {
+		if(postService.deletePost(po_num, user)) {
 			model.addAttribute("url", "/post/list");
 			model.addAttribute("msg", "게시글을 삭제했습니다.");
 		}else {
@@ -99,7 +102,7 @@ public class PostController {
 	public String postUpdate(@PathVariable("po_num")int po_num, Model model, HttpSession session) {
 		
 		//게시글을 가져옴
-		PostVO post = postSerive.getPost(po_num);
+		PostVO post = postService.getPost(po_num);
 		//작성자인지 확인하는 작업
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
@@ -110,10 +113,10 @@ public class PostController {
 			return "/msg/msg";
 		}
 		
-		List<BoardVO> list = postSerive.getBoardList();
+		List<BoardVO> list = postService.getBoardList();
 		model.addAttribute("list", list);
 		
-		List<FileVO> fileList = postSerive.getFileList(po_num);
+		List<FileVO> fileList = postService.getFileList(po_num);
 		
 		//화면에 전송
 		model.addAttribute("post", post);
@@ -128,7 +131,7 @@ public class PostController {
 		
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
-		if(postSerive.updatePost(post, user, fileList, delNums)) {
+		if(postService.updatePost(post, user, fileList, delNums)) {
 			model.addAttribute("msg", "게시글을 수정했습니다.");
 		}else {
 			model.addAttribute("msg", "게시글을 수정하지 못했습니다.");
@@ -136,5 +139,12 @@ public class PostController {
 		model.addAttribute("url", "/post/detail/"+post.getPo_num());
 		return "/msg/msg";
 	}
+	
+	@ResponseBody	
+ 	@PostMapping("/post/like")
+ 	public int like(Model model, @RequestBody LikeVO like, HttpSession session) {
+ 		MemberVO user = (MemberVO)session.getAttribute("user");
+ 		return postService.updateLike(like, user);
+ 	}
 	
 }
