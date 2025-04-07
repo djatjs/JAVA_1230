@@ -15,4 +15,6 @@ public interface MemberDAO {
 	MemberVO selectMemberByCookie(@Param("me_cookie")String cookieId);
 	
 	void updatePw(@Param("me_id")String me_id, @Param("me_pw")String newPw);
+
+	boolean updateMember(@Param("user")MemberVO user);
 }
