@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.kh.spring.model.vo.BoardVO;
@@ -19,6 +21,7 @@ import kr.kh.spring.model.vo.MemberVO;
 import kr.kh.spring.model.vo.PostVO;
 import kr.kh.spring.pagination.PageMaker;
 import kr.kh.spring.pagination.PostCriteria;
+import kr.kh.spring.service.MemberService;
 import kr.kh.spring.service.PostService;
 
 @RestController
@@ -26,6 +29,8 @@ public class ReactController {
 
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private MemberService memberService;
 	
 	@GetMapping("/react/post/list")
 	public Map<String,Object> postList( PostCriteria cri) {
@@ -61,5 +66,9 @@ public class ReactController {
 		map.put("like", like);
 		
 		return map;
+	}
+	@PostMapping("/react/signup")
+	public boolean signupPost(@RequestBody MemberVO member) {
+		return memberService.signup(member);
 	}
 }
