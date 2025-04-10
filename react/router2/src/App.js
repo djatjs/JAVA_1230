@@ -14,8 +14,8 @@ function App() {
       <Routes>
         <Route path='/' exact element={<Main/>} />
         <Route path='/post/list/:num' element={<PostList/>} />
+        <Route path='/post/detail/:num' element={<PostDetail/>} />
         {/* <Route path='/post/insert' element={<PostInsert/>} /> */}
-        <Route path='/post/detail/:num' exact element={<PostDetail/>} />
       </Routes>
     </BrowserRouter>
   );
