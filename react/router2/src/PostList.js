@@ -54,7 +54,7 @@ function PostList(){
 									<tr key={post.po_num}>
 										<td>{post.po_num}</td>
 										<td>
-                                            <Link to={"/post.detail/"+post.po_num}>{post.po_title}</Link>
+                                            <Link to={"/post/detail/"+post.po_num}>{post.po_title}</Link>
                                         </td>
 										<td>{post.po_me_id}</td>
 										<td>{post.po_date}</td>
