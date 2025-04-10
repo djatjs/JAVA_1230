@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class PostVO {
+
 	int po_num;
 	String po_title, po_content, po_me_id;
 	Date po_date;
@@ -14,4 +15,6 @@ public class PostVO {
 	int po_bo_num;
 	String po_bo_name;
 	String po_del;
+	
+	
 }

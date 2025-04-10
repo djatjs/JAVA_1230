@@ -1,13 +1,18 @@
 package kr.kh.spring.interceptor;
 
+import java.util.Date;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import kr.kh.spring.model.vo.MemberVO;
+import kr.kh.spring.service.MemberService;
 import lombok.extern.log4j.Log4j;
 
 @Log4j

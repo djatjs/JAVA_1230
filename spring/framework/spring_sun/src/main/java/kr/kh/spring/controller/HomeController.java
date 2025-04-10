@@ -150,21 +150,21 @@ public class HomeController {
 	
 	@GetMapping("/login")
 	public String login(HttpServletRequest request) {
- 		//이전 URL을 가져옴
- 		String prevUrl = request.getHeader("Referer");
- 		//이전 URL이 있고, /login이 아니면 세션에 저장
- 		if(prevUrl != null && !prevUrl.contains("/login")) {
- 			request.getSession().setAttribute("prevUrl", prevUrl);
- 			System.out.println(prevUrl);
- 		}
- 		return "/member/login";
- 	}
+		//이전 URL을 가져옴
+		String prevUrl = request.getHeader("Referer");
+		//이전 URL이 있고, /login이 아니면 세션에 저장
+		if(prevUrl != null && !prevUrl.contains("/login")) {
+			request.getSession().setAttribute("prevUrl", prevUrl);
+			System.out.println(prevUrl);
+		}
+		return "/member/login";
+	}
 	@PostMapping("/login")
 	public String loginPost(Model model, MemberVO member) {
 		//화면에서 보낸 회원 정보와 일치하는 회원 정보를 DB에서 가져옴
 		MemberVO user = memberService.login(member);
 		if(user == null) {
-			return "redirect:/login";
+			return "redirect:/login";			
 		}
 		user.setAuto(member.isAuto());
 		//가져온 회원 정보를 인터셉터에게 전달
@@ -189,31 +189,29 @@ public class HomeController {
 	public boolean checkId(@RequestParam("id") String id){
 		return memberService.checkId(id);
 	}
-	
 	@GetMapping("/find/pw")
- 	public String findPw() {
- 		return "/member/pw";
- 	}
- 	@ResponseBody
- 	@PostMapping("/find/pw")
- 	public boolean findPwPost(@RequestParam String id) {
- 		
- 		return memberService.findPw(id);
- 	}
- 	
- 	@GetMapping("/mypage")
- 	public String mypage() {
- 		return "/member/mypage";
- 	}
- 	@PostMapping("/mypage")
- 	public String mypagePost(Model model, MemberVO member, HttpSession session) {
- 		MemberVO user = (MemberVO) session.getAttribute("user");
- 		if(memberService.updateMember(user, member)) {
- 			model.addAttribute("msg", "회원 정보를 변경했습니다.");
- 		}else {
- 			model.addAttribute("msg", "회원 정보를 변경하지 못했습니다.");
- 		}
- 		model.addAttribute("url", "/mypage");
- 		return "/msg/msg";
- 	}
+	public String findPw() {
+		return "/member/pw";
+	}
+	@ResponseBody
+	@PostMapping("/find/pw")
+	public boolean findPwPost(@RequestParam String id) {
+		
+		return memberService.findPw(id);
+	}
+	@GetMapping("/mypage")
+	public String mypage() {
+		return "/member/mypage";
+	}
+	@PostMapping("/mypage")
+	public String mypagePost(Model model, MemberVO member, HttpSession session) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		if(memberService.updateMember(user, member)) {
+			model.addAttribute("msg", "회원 정보를 변경했습니다.");
+		}else {
+			model.addAttribute("msg", "회원 정보를 변경하지 못했습니다.");
+		}
+		model.addAttribute("url", "/mypage");
+		return "/msg/msg";
+	}
 }

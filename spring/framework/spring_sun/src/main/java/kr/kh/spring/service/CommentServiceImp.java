@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.kh.spring.Pagination.Criteria;
-import kr.kh.spring.Pagination.PageMaker;
 import kr.kh.spring.dao.CommentDAO;
 import kr.kh.spring.model.vo.CommentVO;
 import kr.kh.spring.model.vo.MemberVO;
+import kr.kh.spring.pagination.Criteria;
+import kr.kh.spring.pagination.PageMaker;
 
 @Service
 public class CommentServiceImp implements CommentService {
@@ -70,13 +70,12 @@ public class CommentServiceImp implements CommentService {
 		if(comment == null || user == null) {
 			return false;
 		}
-		//작성자 확인
-		CommentVO dbcomment = commentDao.selectComment(comment.getCo_num());
 		
-		if(dbcomment == null || !dbcomment.getCo_me_id().equals(user.getMe_id())) {
+		CommentVO dbComment = commentDao.selectComment(comment.getCo_num());
+
+		if(dbComment == null || !dbComment.getCo_me_id().equals(user.getMe_id())) {
 			return false;
 		}
 		return commentDao.updateComment(comment);
-		
 	}
 }

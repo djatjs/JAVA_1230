@@ -4,15 +4,16 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.kh.spring.Pagination.Criteria;
-import kr.kh.spring.Pagination.PageMaker;
-import kr.kh.spring.Pagination.PostCriteria;
 import kr.kh.spring.model.vo.BoardVO;
 import kr.kh.spring.model.vo.FileVO;
+import kr.kh.spring.model.vo.LikeVO;
 import kr.kh.spring.model.vo.MemberVO;
 import kr.kh.spring.model.vo.PostVO;
+import kr.kh.spring.pagination.Criteria;
+import kr.kh.spring.pagination.PageMaker;
+import kr.kh.spring.pagination.PostCriteria;
 
-public interface PostSerive {
+public interface PostService {
 
 	List<PostVO> getPostList(Criteria cri);
 
@@ -30,7 +31,7 @@ public interface PostSerive {
 
 	boolean deletePost(int po_num, MemberVO user);
 
-	boolean updatePost(PostVO post, MemberVO user, MultipartFile[] filelist, int[] delNums);
+	boolean updatePost(PostVO post, MemberVO user, MultipartFile[] fileList, int[] delNums);
 
 	void updateView(int po_num);
 
@@ -38,6 +39,11 @@ public interface PostSerive {
 
 	PageMaker getPageMaker(Criteria cri);
 
+	int updateLike(LikeVO like, MemberVO user);
+
+	void updateUpDown(int li_po_num);
+
+	LikeVO getLike(int po_num, MemberVO user);
 
 	
 

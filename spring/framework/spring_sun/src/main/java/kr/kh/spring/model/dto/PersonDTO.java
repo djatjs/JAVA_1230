@@ -6,18 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor //기본 생성자
+@NoArgsConstructor
 public class PersonDTO {
+	
 	private String name;
 	private int age;
 	
-	@Override
-	public String toString() {
+	public String getTotal() {
 		return name + " : " + age;
 	}
-	public String total() {
-		return name + " : " + age;
-	}
-	
-	
 }

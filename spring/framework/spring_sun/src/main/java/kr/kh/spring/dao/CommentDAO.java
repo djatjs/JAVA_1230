@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import kr.kh.spring.Pagination.Criteria;
 import kr.kh.spring.model.vo.CommentVO;
+import kr.kh.spring.pagination.Criteria;
 
 public interface CommentDAO {
 
@@ -20,6 +20,5 @@ public interface CommentDAO {
 	int selectCountCommentList(@Param("cri")Criteria cri);
 
 	boolean updateComment(@Param("comment")CommentVO comment);
-	
 	
 }

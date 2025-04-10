@@ -8,12 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <h1>전송 확인</h1>
-    <p> 객체 : ${person}</p>
-    <p> 이름 : ${person.name}</p>
-    <p> 나이 : ${person.age}</p>
-    <!-- getter 메서드 호출 대신 필드에 직접 접근 -->
-    <p>${person.name}의 나이 : ${person.age}</p>
-    <p>${person.getName()}의 나이 : ${person.getAge()}</p>
+	<h1>전송 확인</h1>
+	<!-- 
+	서버에서 객체로 보낸 경우 객체명.필드명으로 호출하는데, 이 때 실제 필드를 가져오는 것이 아니라 getter를 호출 -->
+	<p>${person.name}의 나이 : ${person.age }</p>
+	<p>${person.getName()}의 나이 : ${person.getAge()}</p>
+	<p>${person.total}</p>
+	<p>${person}</p>
 </body>
 </html>

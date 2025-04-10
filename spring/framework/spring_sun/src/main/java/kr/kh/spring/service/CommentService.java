@@ -2,10 +2,10 @@ package kr.kh.spring.service;
 
 import java.util.List;
 
-import kr.kh.spring.Pagination.Criteria;
-import kr.kh.spring.Pagination.PageMaker;
 import kr.kh.spring.model.vo.CommentVO;
 import kr.kh.spring.model.vo.MemberVO;
+import kr.kh.spring.pagination.Criteria;
+import kr.kh.spring.pagination.PageMaker;
 
 public interface CommentService {
 

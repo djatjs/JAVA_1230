@@ -23,10 +23,8 @@ public class GuestInterceptor extends HandlerInterceptorAdapter{
 	    Object handler, 
 	    ModelAndView modelAndView)
 	    throws Exception {
-
 		
 	}
-
 	@Override
 	public boolean preHandle(HttpServletRequest request, 
 			HttpServletResponse response, 
@@ -35,11 +33,11 @@ public class GuestInterceptor extends HandlerInterceptorAdapter{
 		//세션에 있는 회원 정보를 가져옴
 		HttpSession session = request.getSession();
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		//회원 정보가 없으면(로그인을 안했다면) 가던길 가고
+		//회원 정보가 없으면
 		if(user == null) {
 			return true;
 		}
-		//아니면(로그인을 하여 회원정보가 있다면) 메인 페이지로 보냄
+		//아니면 메인 페이지로 보냄
 		messageService.sendMessage(response, request, "로그인한 회원은 접근할 수 없는 페이지입니다.", "/");
 		return false;
 	}

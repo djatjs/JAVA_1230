@@ -7,31 +7,32 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-	
+	<context:property-placeholder location="/WEB-INF/spring/config.properties" />
 	<annotation-driven />
 
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/download/**" location="file:///D:/uploads/" />
 
 	<!-- 
-	- 기본 뷰 리졸버 
-		- 디스패처에게 전달 받은 문자열을 가공해서 view를 선택함.
-		- 예외로 redirect:, forward:인 경우는 view를 선택하지 않음.
-		- prefix : 받은 문자열 앞에 붙일 문자열
-		- suffix : 받은 문자열 뒤에 붙일 문자열
-		- 기본 경로는 webapp부터 시작	
-	-->
+	- 기본 뷰 리졸버
+	  - 디스패처에게 전달 받은 문자열을 가공해서 view를 선택 함.
+	  - 예외로 redirect:, forward:인 경우는 view를 선택하지 않음
+	  - prefix : 받은 문자열 앞에 붙일 문자열
+	  - suffix : 받은 문자열 뒤에 붙일 문자열 
+	  - 기본 경로는 webapp부터 시작
+	  
+	 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-		
-	<!-- 타일즈 뷰 리졸버 -->
+	
+	<!-- 타일즈 뷰 리졸버  -->
 	<beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 	    <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	    <beans:property name="order" value="1" /><!-- 순서를 우선으로 지정 -->
 	</beans:bean>
-     
+	     
 	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 	    <beans:property name="definitions">
 	        <beans:list>
@@ -39,7 +40,6 @@
 	        </beans:list>
 	    </beans:property>
 	</beans:bean>
-	
 	
 	<context:component-scan base-package="kr.kh.spring.*" />
 	
@@ -54,15 +54,21 @@
 	<!-- 인터셉터 맵핑 -->
 	<interceptors>
 		<interceptor>
- 			<mapping path="/login"/>
- 			<beans:ref bean="prevUrlInterceptor"/>
- 		</interceptor>
+			<mapping path="/login"/>
+			<beans:ref bean="prevUrlInterceptor"/>
+		</interceptor>
 		<interceptor>
- 			<mapping path="/**"/>
- 			<beans:ref bean="autoLoginInterceptor"/>
- 		</interceptor>
+			<mapping path="/**"/>
+			<beans:ref bean="autoLoginInterceptor"/>
+		</interceptor>
 		<interceptor>
-			<!-- /login(get, post)를 갔다 올 때마다  loginInterceptor가 실행됨 -->
+			<mapping path="/post/insert"/>
+			<mapping path="/post/delete/*"/>
+			<mapping path="/post/update/*"/>
+			<beans:ref bean="memberInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<!-- /login(get, post)를 갔다 올때마다 LoginInterceptor가 실행  -->
 			<mapping path="/login"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
@@ -75,16 +81,9 @@
 			<mapping path="/signup"/>
 			<beans:ref bean="guestInterceptor"/>
 		</interceptor>
-		<interceptor>
-			<!-- *하나는 /하나임. *두개는 /2개이상 -->
-			<mapping path="/post/insert"/>
-			<mapping path="/post/update/*"/>
-			<mapping path="/post/delete/*"/>
-			<beans:ref bean="memberInterceptor"/>
-		</interceptor>
 	</interceptors>
 	
-	<!-- 업로드 파일 용량 설정 -->
+	<!-- 업로드 파일 용량 설정-->
 	<beans:bean id="multipartResolver" 
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 업로드 최대 크기 10Mb -->
@@ -92,7 +91,6 @@
 	</beans:bean>
 	<!-- 업로드할 파일 경로 -->
 	<beans:bean id="uploadPath" class="java.lang.String">
-		<beans:constructor-arg value="D:\uploads"/>
+		<beans:constructor-arg value="${file.location}"/>
 	</beans:bean>
-	
 </beans:beans>

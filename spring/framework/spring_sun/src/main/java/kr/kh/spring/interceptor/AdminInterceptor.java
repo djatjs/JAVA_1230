@@ -23,10 +23,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 	    Object handler, 
 	    ModelAndView modelAndView)
 	    throws Exception {
-
 		
 	}
-
 	@Override
 	public boolean preHandle(HttpServletRequest request, 
 			HttpServletResponse response, 
@@ -39,8 +37,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 		if(user != null && user.getMe_authority().equals("ADMIN")) {
 			return true;
 		}
-		//아니면 메인 페이지로 보냄 <- 메시지를 담아놓고 응답에 대한 실행은 스프링 내의 다른 어딘가에서 함 
 		messageService.sendMessage(response, request, "관리자만 접근할 수 있는 페이지입니다.", "/");
+		//아니면 메인 페이지로 보냄
 		return false;
 	}
 }
