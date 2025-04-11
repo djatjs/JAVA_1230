@@ -1,7 +1,9 @@
 package kr.kh.spring2.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,23 +44,29 @@ public class HomeController {
 		return "/member/login";
 	}
 	@PostMapping("/login")
-	public String loginPost(MemberVO member, Model model) {
+	public String loginPost(MemberVO member, Model model ) {
 		MemberVO user = memberService.login(member);
-		//가져온 회원 정보를 인터셉터에게 전달
 		if(user == null) {
 			return "redirect:/login";
 		}
+			
+		//화면에서 자동로그인 여부를 로그인한 회원 정보에 저장
+		user.setAuto(member.isAuto());
 		model.addAttribute("user", user);
 		return "redirect:/";
 	}
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
+		
+		//회원 정보에서 쿠키값을 null로 수정
 		MemberVO user = (MemberVO) session.getAttribute("user");
+		if(user != null) {
+			memberService.updateMemberCookie(user.getMe_id(), null, null);
+		}
+		
 		session.removeAttribute("user");
-		
 		//session.invalidate();
-		
 		return "redirect:/";
 	}
 	
