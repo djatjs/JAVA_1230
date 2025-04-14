@@ -44,7 +44,6 @@ public class MyBatisConfig {
         );
          // TypeAlias 적용
         sessionFactory.setTypeAliasesPackage("kr.kh.spring2.model.vo");  // 여기에 패키지 경로 지정
-        //sessionFactory.setTypeAliasesPackage("kr.kh.spring.model.vo.MemberVO");
         return sessionFactory.getObject();
     }
 }

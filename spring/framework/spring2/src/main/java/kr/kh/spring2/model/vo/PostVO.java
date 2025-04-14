@@ -1,4 +1,4 @@
-package kr.kh.spring.model.vo;
+package kr.kh.spring2.model.vo;
 
 import java.util.Date;
 

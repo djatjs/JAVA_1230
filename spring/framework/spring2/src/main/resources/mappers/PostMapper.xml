@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.spring2.dao.PostDAO">
+	<select id="selectBoardList" resultType="BoardVO">
+		select * from board
+	</select>
+	<select id="selectPostList" resultType="PostVO">
+		select post.*, fi_name as po_fi_name from post
+		left join file on po_num = fi_po_num 
+		where po_del ="N"
+		<if test="cri.po_bo_num !=0">
+			and po_bo_num = #{cri.po_bo_num}
+		</if>
+		group by po_num
+		order by ${cri.orderBy}
+		limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="selectCountPostList" resultType="int">
+		select count(*) from post
+		where po_del ="N"
+		<if test="cri.po_bo_num !=0">
+			and po_bo_num = #{cri.po_bo_num}
+		</if>
+	</select>
+</mapper>
