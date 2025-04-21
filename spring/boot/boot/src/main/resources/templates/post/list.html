@@ -25,13 +25,15 @@
             </thead>
             <tbody>
                 <tr th:each="post , stat : ${list}">
-                    <td th:text="${stat.count}"></td>
-                    <td th:text="${post.po_title}"></td>
-                    <td th:text="${post.po_me_id}"></td>
-                    <td th:text="${post.po_date}"></td>
-                    <td th:text="${post.po_view}"></td>
-                    <td th:text="${post.po_up} + ' / ' + ${post.po_down}"></td>
-                </tr>
+                    
+                        <td><a th:text="${stat.count}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
+                        <td><a th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
+                        <td><a th:text="${post.po_me_id}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
+                        <td><a th:text="${post.po_date}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
+                        <td><a th:text="${post.po_view}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
+                        <td><a th:text="${post.po_up} + ' / ' + ${post.po_down}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
+                    </tr>
+                </a>
             </tbody>
           </table>
 	</main>

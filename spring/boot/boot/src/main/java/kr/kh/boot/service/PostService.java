@@ -16,4 +16,8 @@ public class PostService {
     public List<PostVO> getPostList(int bo_num) {
         return postDAO.selectPostList(bo_num);
     }
+
+    public PostVO getPost(int po_num) {
+        return postDAO.selectPost(po_num);
+    }
 }

@@ -7,5 +7,7 @@ import kr.kh.boot.model.vo.PostVO;
 public interface PostDAO {
 
     List<PostVO> selectPostList(int bo_num);
+
+    PostVO selectPost(int po_num);
     
 }
