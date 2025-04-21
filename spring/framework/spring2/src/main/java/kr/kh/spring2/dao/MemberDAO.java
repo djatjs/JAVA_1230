@@ -8,9 +8,9 @@ import kr.kh.spring2.model.vo.MemberVO;
 
 public interface MemberDAO {
 
-	boolean insertMember(@Param("member") MemberVO member);
+	boolean insertMember(@Param("member")MemberVO member);
 
-	MemberVO selectMember(@Param("member") MemberVO member);
+	MemberVO selectMember(@Param("me_id")String me_id);
 
 	void updateMemberCookie(@Param("me_id")String me_id, @Param("me_cookie")String me_cookie, @Param("me_limit")Date me_limit);
 

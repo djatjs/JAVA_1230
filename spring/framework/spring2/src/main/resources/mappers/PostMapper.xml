@@ -4,13 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.spring2.dao.PostDAO">
 	<select id="selectBoardList" resultType="BoardVO">
-		select * from board
+		select * from board order by bo_num asc
 	</select>
 	<select id="selectPostList" resultType="PostVO">
-		select post.*, fi_name as po_fi_name from post
-		left join file on po_num = fi_po_num 
-		where po_del ="N"
-		<if test="cri.po_bo_num !=0">
+		select post.*, fi_name as po_fi_name from post 
+		left join file on po_num = fi_po_num
+		where po_del = "N" 
+		<if test="cri.po_bo_num != 0">
 			and po_bo_num = #{cri.po_bo_num}
 		</if>
 		group by po_num
@@ -18,10 +18,25 @@
 		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectCountPostList" resultType="int">
-		select count(*) from post
-		where po_del ="N"
-		<if test="cri.po_bo_num !=0">
+		select count(*) from post where po_del = "N" 
+		<if test="cri.po_bo_num != 0">
 			and po_bo_num = #{cri.po_bo_num}
 		</if>
 	</select>
+	<select id="selectPost" resultType="PostVO">
+		select post.*, bo_name as po_bo_name from post
+		join board on po_bo_num = bo_num 
+		where po_num = #{po_num} and po_del = "N"
+	</select>
+	<select id="selectFileList" resultType="FileVO">
+		select * from file where fi_po_num = #{po_num}
+	</select>
+	<insert id="insertPost" useGeneratedKeys="true" keyProperty="po_num">
+		insert into post(po_bo_num, po_me_id, po_title, po_content)
+		value(#{po_bo_num},#{po_me_id},#{po_title},"")
+	</insert>
+	<insert id="insertFile">
+		insert into file(fi_name, fi_ori_name, fi_po_num)
+		value(#{fi_name},#{fi_ori_name},#{fi_po_num})
+	</insert>
 </mapper>

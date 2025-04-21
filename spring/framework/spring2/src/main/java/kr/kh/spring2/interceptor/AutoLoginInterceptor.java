@@ -16,7 +16,7 @@ import kr.kh.spring2.service.MemberService;
 
 @Component
 public class AutoLoginInterceptor extends HandlerInterceptorAdapter{
-	
+
 	@Autowired
 	MemberService memberService;
 	
@@ -25,9 +25,8 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter{
 	    HttpServletRequest request, 
 	    HttpServletResponse response, 
 	    Object handler, 
-	    ModelAndView modelAndView)
+	    ModelAndView mv)
 	    throws Exception {
-		
 		
 	}
 	@Override
@@ -35,16 +34,16 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter{
 			HttpServletResponse response, 
 			Object handler)
 			throws Exception {
-		
 		HttpSession session = request.getSession();
-		MemberVO user = (MemberVO) session.getAttribute("user");
-		//로그인 했으면 true 리턴
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//로그인 했으면 true를 리턴
 		if(user != null) {
 			return true;
 		}
 		//LC 쿠키를 가져옴
 		Cookie cookie = WebUtils.getCookie(request, "LC");
-		//LC 쿠키가 없으면 true 리턴
+		//LC 쿠키가 없으면 true를 리턴
 		if(cookie == null) {
 			return true;
 		}

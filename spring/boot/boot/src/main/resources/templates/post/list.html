@@ -1,0 +1,39 @@
+<!DOCTYPE html >
+<html 
+	lang="en" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>부트</title>
+</head>
+<body>
+	<main layout:fragment="content" class="container">
+		<h1>게시글 목록</h1>
+        <table class="table table-bordered" >
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>추천/비추천</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post , stat : ${list}">
+                    <td th:text="${stat.count}"></td>
+                    <td th:text="${post.po_title}"></td>
+                    <td th:text="${post.po_me_id}"></td>
+                    <td th:text="${post.po_date}"></td>
+                    <td th:text="${post.po_view}"></td>
+                    <td th:text="${post.po_up} + ' / ' + ${post.po_down}"></td>
+                </tr>
+            </tbody>
+          </table>
+	</main>
+</body>
+</html>
