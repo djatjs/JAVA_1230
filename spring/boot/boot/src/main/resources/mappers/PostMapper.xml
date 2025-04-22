@@ -11,4 +11,7 @@
   <select id="selectPost" resultType="PostVO">
     select * from post where po_num = #{po_num}
   </select>
+  <select id="selectBoardList" resultType="BoardVO">
+    select * from board
+  </select>
 </mapper>

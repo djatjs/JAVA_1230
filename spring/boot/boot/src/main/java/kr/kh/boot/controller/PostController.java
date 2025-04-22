@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import kr.kh.boot.model.vo.BoardVO;
 import kr.kh.boot.model.vo.PostVO;
 import kr.kh.boot.service.PostService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +23,11 @@ public class PostController {
     @GetMapping("/post/list/{bo_num}")
     public String postList(@PathVariable int bo_num, Model model) {
         System.out.println(bo_num);
+        List<BoardVO> boardList = postService.getBoardList();
         List<PostVO> list= postService.getPostList(bo_num);
-        System.out.println(list);
         model.addAttribute("list", list);
         model.addAttribute("url", "/post/list");
+        model.addAttribute("boardList", boardList);
         return "post/list";
     }
 
