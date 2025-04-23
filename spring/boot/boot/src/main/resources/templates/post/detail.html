@@ -12,37 +12,38 @@
 <body>
 	<main layout:fragment="content" class="container">
 		<h1>게시글 목록</h1>
-    
-    <span th:text="${post}"></span>
-    
-      <div class="form-group mt-3">
-        <label for="title">카테고리(고치셈)</label>
-        <input class="form-control" th:attr="value=${post.po_bo_num}" readonly>
-      </div> 
-      <div class="form-group mt-3">
-        <label for="title">제목</label>
-        <input class="form-control" th:attr="value=${post.po_title}" readonly>
-      </div> 
-      <div class="form-group mt-3">
-        <label for="title">내용</label>
-        <div style="min-height: 400px;" class="form-control" readonly th:text="${post.po_content}"></div>
-      </div> 
-      <div class="form-group mt-3">
-        <label for="title">작성자</label>
-        <input class="form-control" th:attr="value=${post.po_me_id}" readonly>
-      </div> 
-      <div class="form-group mt-3">
-        <label for="title">조회수</label>
-        <input class="form-control" th:attr="value=${post.po_view}" readonly>
-      </div>
-      <!-- <div class="form-group mt-3">
-        <label for="title">추천/비추천</label>
-        <input class="form-control" th:attr="value='${post.po_up}' / '${post.po_down}'" readonly>
-      </div>  -->
-      
-      
-    
-    
+    <div class="form-group input-group mt-3">
+        <div class="form-control col-2" style="text-align: center;">카테고리</div>
+        <div class="form-control col-9" th:text="${post.po_bo_name}" >
+    </div> 
+    <div class="form-group input-group mt-3">
+        <div class="form-control col-2" style="text-align: center;">제목</div>
+        <div class="form-control" th:text="${post.po_title}">
+    </div> 
+    <div class="form-group input-group mt-3">
+        <div class="form-control col-2" style="text-align: center;">작성자</div>
+        <div class="form-control" th:text="${post.po_me_id}">
+    </div> 
+    <div class="form-group input-group mt-3">
+      <div class="col-2 form-control" style="text-align: center;">조회수</div>
+      <div class="form-control" th:text="${post.po_view}" >
+    </div>
+    <div class="form-group input-group mt-3">
+      <div class="form-control col-2" style="text-align: center;">추천/비추천</div>
+      <div class="form-control" th:text="${post.po_up} + '/' + ${post.po_down}" >
+    </div>
+    <div class="form-group input-group mt-3">
+        <div style="min-height: 400px;" class="form-control" th:utext="${post.po_content}"></div>
+    </div> 
+    <div>
+      <a class="form-group mb-2"
+        th:each="file : ${list}"
+        th:href="@{/file{num}(num=${file.fi_name})}" 
+        th:text="${file.fi_ori_name}"
+        th:attr="download=${file.fi_ori_name}">
+      </a>
+    </div>
+    <a th:href="@{/post/list/{num}(num=${post.po_bo_num})}" class="btn btn-outline-success">목록으로</a>
 	</main>
 </body>
 </html>

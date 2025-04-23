@@ -16,7 +16,9 @@
       <a th:href="@{/post/list/0}" class="btn btn-outline-success">전체</a>
       <a th:each="board : ${boardList}" th:text="${board.bo_name}" th:href="@{/post/list/{num}(num=${board.bo_num})}" class="btn btn-outline-success ml-2"></a>
     </div>
-    
+    <div>
+      <a th:href="@{/post/insert}" class="btn btn-outline-info mt-3 mb-2">게시글 등록</a>
+    </div>
     <table class="table table-bordered mt-3 mb-3" >
         <thead>
           <tr>
@@ -30,12 +32,14 @@
         </thead>
         <tbody>
             <tr th:each="post , stat : ${list}">
-                <td><a th:text="${stat.count}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
-                <td><a th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
-                <td><a th:text="${post.po_me_id}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
-                <td><a th:text="${post.po_date}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
-                <td><a th:text="${post.po_view}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
-                <td><a th:text="${post.po_up} + ' / ' + ${post.po_down}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a></td>
+                <td th:text="${stat.count}"></td>
+                <td>
+                  <a th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num =${post.po_num})}"></a>
+                </td>
+                <td th:text="${post.po_me_id}"></td>
+                <td th:text="${post.po_date}"></td>
+                <td th:text="${post.po_view}"></td>
+                <td th:text="${post.po_up} + ' / ' + ${post.po_down}"></td>
             </tr>
             <tr th:if="${list.size() == 0}">
                 <th colspan="6" class="text-center">등록된 게시글이 없습니다.</th>
