@@ -4,6 +4,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	layout:decorate="~{layout/layout.html}">
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,39 +12,44 @@
 </head>
 <body>
 	<main layout:fragment="content" class="container">
-		<h1>게시글 목록</h1>
-    <div class="form-group input-group mt-3">
-        <div class="form-control col-2" style="text-align: center;">카테고리</div>
-        <div class="form-control col-9" th:text="${post.po_bo_name}" >
-    </div> 
-    <div class="form-group input-group mt-3">
-        <div class="form-control col-2" style="text-align: center;">제목</div>
-        <div class="form-control" th:text="${post.po_title}">
-    </div> 
-    <div class="form-group input-group mt-3">
-        <div class="form-control col-2" style="text-align: center;">작성자</div>
-        <div class="form-control" th:text="${post.po_me_id}">
-    </div> 
-    <div class="form-group input-group mt-3">
-      <div class="col-2 form-control" style="text-align: center;">조회수</div>
-      <div class="form-control" th:text="${post.po_view}" >
+		<h1>게시글 상세</h1>
+		<div class="input-group form-group">
+			<div class="form-control col-3">제목</div>
+			<div class="form-control" th:text="${post.po_title}"></div>
+		</div>
+		<div class="input-group form-group">
+			<div class="form-control col-3">작성일</div>
+			<div class="form-control col-9" th:text="${post.po_date}"></div>
+		</div>
+		<div class="input-group form-group">
+			<div class="form-control col-3">작성자</div>
+			<div class="form-control" th:text="${post.po_me_id}"></div>
+		</div>
+		<div class="input-group form-group">
+			<div class="form-control col-3">조회수</div>
+			<div class="form-control" th:text="${post.po_view}"></div>
+		</div>
+		<div class="form-group">
+			<div class="form-control" th:utext="${post.po_content}" style="height: auto; min-height: 400px; "></div>
+		</div>
+		<div>
+			<a class="form-control mb-2" 
+				th:each="file : ${list}" 
+				th:href="@{/file{num}(num=${file.fi_name})}" 
+				th:text="${file.fi_ori_name}" 
+				th:attr="download=${file.fi_ori_name}"></a>
+		</div>
+    <div class="d-flex justify-content-between">
+      <a th:href="@{/post/list/{num}(num=${post.po_bo_num})}" class="btn btn-outline-success ">목록으로</a>
+      <th:block sec:authorzie="isAuthenticated()">
+        <div th:if="${#authentication.principal.member.me_id == post.po_me_id}" class="d-flex">
+          <form th:action="@{/post/delete/{num}(num=${post.po_num})}" method="post">
+            <button class="btn btn-outline-danger" >삭제</button>
+            <a th:href="@{/post/update/{num}(num=${post.po_num})}" class="btn btn-outline-info ml-2">수정</a>
+          </form>
+        </div>
+      </th:block>
     </div>
-    <div class="form-group input-group mt-3">
-      <div class="form-control col-2" style="text-align: center;">추천/비추천</div>
-      <div class="form-control" th:text="${post.po_up} + '/' + ${post.po_down}" >
-    </div>
-    <div class="form-group input-group mt-3">
-        <div style="min-height: 400px;" class="form-control" th:utext="${post.po_content}"></div>
-    </div> 
-    <div>
-      <a class="form-group mb-2"
-        th:each="file : ${list}"
-        th:href="@{/file{num}(num=${file.fi_name})}" 
-        th:text="${file.fi_ori_name}"
-        th:attr="download=${file.fi_ori_name}">
-      </a>
-    </div>
-    <a th:href="@{/post/list/{num}(num=${post.po_bo_num})}" class="btn btn-outline-success">목록으로</a>
 	</main>
 </body>
 </html>

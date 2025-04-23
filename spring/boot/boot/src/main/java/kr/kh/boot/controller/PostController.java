@@ -13,9 +13,18 @@ import kr.kh.boot.model.vo.FileVO;
 import kr.kh.boot.model.vo.MemberVO;
 import kr.kh.boot.model.vo.PostVO;
 import kr.kh.boot.service.PostService;
+import kr.kh.boot.utils.Criteria;
+import kr.kh.boot.utils.PageMaker;
+import kr.kh.boot.utils.PostCriteria;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 
 
 
@@ -26,13 +35,19 @@ public class PostController {
     PostService postService;
 
     @GetMapping("/post/list/{bo_num}")
-    public String postList(@PathVariable int bo_num, Model model) {
-        System.out.println(bo_num);
+    public String postList(@PathVariable int bo_num, Model model, PostCriteria cri) {
+        //등록된 전체 게시판 가져옴.
         List<BoardVO> boardList = postService.getBoardList();
-        List<PostVO> list= postService.getPostList(bo_num);
+        cri.setBo_num(bo_num);
+        cri.setPerPageNum(2);
+        //게시판 번호에 맞는 게시글 목록을 가져옴
+        List<PostVO> list= postService.getPostList(cri);
+        PageMaker pm = postService.getPageMaker(cri);
+
         model.addAttribute("list", list);
         model.addAttribute("url", "/post/list");
         model.addAttribute("boardList", boardList);
+        model.addAttribute("pm", pm);
         return "post/list";
     }
 
@@ -53,18 +68,59 @@ public class PostController {
         return "post/insert";
     }
     @PostMapping("/post/insert")
-	public String postInsertPost(PostVO post, @AuthenticationPrincipal CustomUser customUser) {
-		
+	public String postInsertPost(PostVO post, @AuthenticationPrincipal CustomUser customUser, MultipartFile[] fileList) {
+        
 		//로그인한 회원 정보를 가져옴
 		if(customUser != null){
 			MemberVO user = customUser.getMember();
 			post.setPo_me_id(user.getMe_id());
 		}
-		if(postService.insertPost(post)){
+		if(postService.insertPost(post, fileList)){
 			return "redirect:/post/list/" + post.getPo_bo_num();
 		}
 		return "redirect:/post/insert";
 	}
+
+    @PostMapping("/post/delete/{num}")
+	public String postDeletePost(@PathVariable int num, @AuthenticationPrincipal CustomUser customUser) {
+        System.out.println(num);
+        //로그인한 회원 정보를 가져옴
+		if(customUser == null){
+            return "redirect:/post/detail/"+num;	
+		}
+        MemberVO user = customUser.getMember();
+		if(postService.deletePost(num, user)){
+            return "redirect:/post/list/0";
+        }
+        return "redirect:/post/detail/"+num;
+	}
+
+    @GetMapping("/post/update/{po_num}")
+    public String postUpdate(@PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser, Model model) {
+        PostVO post = postService.getPost(po_num);
+        
+        if(customUser == null || post == null){
+            return "redirect:/post/detail/"+po_num;
+        }
+        // 작성자가 아닌 경우
+        MemberVO user = customUser.getMember();
+        if(!user.getMe_id().equals(post.getPo_me_id())){
+            return "redirect:/post/detail/"+po_num;
+        }
+        List<FileVO> list = postService.getFileList(po_num);
+        model.addAttribute("post", post);
+        model.addAttribute("list", list);
+        return "post/update";
+    }
+    
+    @PostMapping("/post/update/{po_num}")
+    public String postUpdatePost(@PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser, PostVO post, int[] dels, MultipartFile[] fileList) {
+        post.setPo_num(po_num);
+        postService.updatePost(post, customUser, dels, fileList);
+
+        return "redirect:/post/detail/"+po_num;
+    }
+    
     
     
 }

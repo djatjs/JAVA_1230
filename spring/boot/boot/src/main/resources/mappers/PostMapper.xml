@@ -6,7 +6,16 @@
     <if test="bo_num != 0">
       and po_bo_num = #{bo_num}
     </if>
+    <choose>
+      <when test="type==1">
+        and (po_title like concat('%', #{search}, '%') or po_content like concat('%', #{search}, '%'))
+      </when>
+      <otherwise>
+        and po_me_id = #{search}
+      </otherwise>
+    </choose>
     order by po_num desc
+    limit #{pageStart},#{perPageNum}
   </select>
   <select id="selectPost" resultType="PostVO">
     select post.*, board.bo_name as po_bo_name from post 
@@ -28,4 +37,40 @@
 		select #{co_po_num}, #{co_me_id}, #{co_content}, ifnull(max(co_num), 0) + 1, ifnull(max(co_num), 0) + 1
 		from comment
 	</insert>
+  <insert id="insertFile">
+    insert into file(fi_po_num, fi_name, fi_ori_name)
+    value(#{fi_po_num},#{fi_name},#{fi_ori_name})
+  </insert>
+  <delete id="deleteFile">
+    delete from file where fi_num = #{fi_num}
+  </delete>
+  <update id="deletePost">
+    update post 
+    set po_del = "Y"
+    where po_num = #{po_num}
+  </update>
+  <update id="updatePost">
+    update post 
+    set 
+      po_title = #{po_title},
+      po_content = #{po_content}
+    where po_num = #{po_num}
+  </update>
+  <select id="selectFile" resultType="FileVO">
+    select * from file where fi_num = ${fi_num}
+  </select>
+  <select id="selectCountPostList" resultType="int">
+    select count(*) from post where po_del = 'N'
+    <if test="bo_num != 0">
+      and po_bo_num = #{bo_num}
+    </if>
+    <choose>
+      <when test="type==1">
+        and (po_title like concat('%', #{search}, '%') or po_content like concat('%', #{search}, '%'))
+      </when>
+      <otherwise>
+        and po_me_id = #{search}
+      </otherwise>
+    </choose>
+  </select>
 </mapper>
