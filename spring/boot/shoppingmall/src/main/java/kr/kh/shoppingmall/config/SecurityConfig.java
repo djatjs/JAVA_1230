@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import kr.kh.shoppingmall.model.vo.UserRole;
 import kr.kh.shoppingmall.service.MemberDetailService;
 
 @Configuration
@@ -25,6 +26,8 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(requests->
 			requests
+				.requestMatchers("/admin/**")
+				.hasAnyAuthority(UserRole.ADMIN.name())
 				.anyRequest()
 				.permitAll()
 		)

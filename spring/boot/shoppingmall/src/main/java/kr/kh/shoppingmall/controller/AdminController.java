@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.shoppingmall.model.vo.CategoryVO;
@@ -39,10 +40,19 @@ public class AdminController {
 
     @GetMapping("/category/insert")
     @ResponseBody
-    public String categoryPost(CategoryVO category) {
+    public String categoryInsert(CategoryVO category) {
         return productService.insertCategory(category);
     }
-    
+    @GetMapping("/category/update")
+    @ResponseBody
+    public String categoryUpdate(CategoryVO category) {
+        return productService.updateCategory(category);
+    }
+    @GetMapping("/category/delete")
+    @ResponseBody
+    public String categoryDelete(@RequestParam int num) {
+        return productService.deleteCategory(num);
+    }
     
     
 }
