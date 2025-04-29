@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/admin_layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>쇼핑몰</title>
+</head>
+<body >
+	<main layout:fragment="content" class="container">
+		<h1>관리자 : 카테고리 관리</h1>
+		<div class="input-group mt-3" th:each="category : ${list}" >
+			<input type="text" name="ca_name" class="form-control col-4" placeholder="카테고리명" th:value="${category.ca_name}" style="text-align: center;">
+			<input type="text" name="ca_code" class="form-control col-4" readonly th:value="${category.ca_code}" style="text-align: center;">
+			<button class="btn btn-warning form-control col-2">수정</button>
+			<button class="btn btn-danger form-control col-2">삭제</button>
+		</div>
+
+		<form class="input-group mt-5" th:action="@{/category/insert}" method="post" id="insertForm">
+			<input type="text" name="ca_name" class="form-control col-4" placeholder="카테고리명" style="text-align: center;">
+			<input type="text" name="ca_code" class="form-control col-4" placeholder="카테고리코드" style="text-align: center;">
+			<button class="btn btn-success form-control col-4">등록</button>
+		</form>
+		<script>
+			$("#insertForm").submit(function(e){
+				e.preventDefault();
+				let $this = $(this);
+				$.ajax({
+					async : true,
+					url : "/admin/category/insert",
+					method : "get",
+					data : $this.serialize(),
+					success : function(data){
+						alert(data);
+						location.reload();
+					}
+				})
+			})
+		</script>
+	</main>
+</body>
+</html>

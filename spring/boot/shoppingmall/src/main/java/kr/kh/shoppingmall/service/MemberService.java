@@ -42,11 +42,16 @@ public class MemberService {
 		//비번 암호화
 		String encPw = passwordEncoder.encode(member.getMe_pw());
 		member.setMe_pw(encPw);
-		
+		//가입된 아이디 확인
 		if(memberDAO.selectMember(member.getMe_id()) != null){
 			return false;
 		}
-		return memberDAO.insertMember(member);
+		//이메일이나 전화번호 유니크로 설정해서 안될 가능성 있음
+		try{
+			return memberDAO.insertMember(member);
+		}catch(Exception e){
+			return false;
+		}
 	}
 
     public boolean checkId(String id) {
