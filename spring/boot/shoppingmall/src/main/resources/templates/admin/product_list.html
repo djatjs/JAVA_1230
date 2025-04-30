@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/admin_layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>쇼핑몰</title>
+</head>
+<body>
+	<main layout:fragment="content" class="container">
+		<h1 class="my-3">제품 관리</h1>
+		<div class="mb-4 d-flex justify-content-end">
+			<a th:href="@{/admin/product/insert/0}" class="btn btn-success">제품 등록</a>
+		</div>
+		<table class="table table-bordered table-hover" style="text-align: center;">
+			<thead >
+			  <tr>
+				<th>번호</th>
+				<th>제품코드</th>
+				<th>분류</th>
+				<th>썸네일</th>
+				<th>제품명</th>
+				<th>가격</th>
+				<th>수량</th>
+				<th>기능(수정/삭제)</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr th:each="product, count: ${productList}">
+				<th th:text="${count.count}"></th>
+				<td th:text="${product.pr_code}">제품코드</td>
+				<td th:text="${product.pr_ca_num}">분류</td>
+				<td >
+					<img th:src="'/file/'+${product.pr_thumb}" alt="이미지 없음" width="50" height="50">
+				</td>
+				<td th:text="${product.pr_title}">제품명</td>
+				<td th:text="${product.pr_price}">가격</td>
+				<td th:text="${product.pr_amount}">수량</td>
+				<td>기능(수정/삭제)</td>
+			  </tr>
+			</tbody>
+		</table>
+	</main>
+</body>
+</html>
