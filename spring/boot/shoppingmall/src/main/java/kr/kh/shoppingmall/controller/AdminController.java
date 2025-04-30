@@ -57,12 +57,14 @@ public class AdminController {
         return productService.deleteCategory(num);
     }
 
-    @GetMapping("/product")
-    public String product(Model model, Integer ca_num) {
-        List<ProductVO> productList = productService.getProductList(ca_num == null ? 0:ca_num);
-        model.addAttribute("productList", productList);
-        return "/admin/product_list";
-    }
+    @GetMapping("/product/{ca_num}")
+	public String product(Model model,@PathVariable int ca_num) {
+		List<ProductVO> productList = productService.getProductList(ca_num);
+		List<CategoryVO> categoryList = productService.getCategory();
+		model.addAttribute("productList", productList);
+		model.addAttribute("categoryList", categoryList);
+		return "admin/product_list";
+	}
     
     @GetMapping("/product/insert/{ca_num}")
     public String productInsert(Model model, @PathVariable int ca_num) {
@@ -73,11 +75,15 @@ public class AdminController {
     @PostMapping("/product/insert")
     public String productInsertPost(ProductVO product, MultipartFile thumb) {
         if(productService.insertProduct(product, thumb)){
-            return "redirect:/admin/product";
+            return "redirect:/admin/product/"+product.getPr_ca_num();
         }
         return "redirect:/admin/insert/"+product.getPr_ca_num();
     }
     
-    
+    @PostMapping("/product/delete/{ca_num}/{pr_code}")
+    public String productDeletePost(@PathVariable String pr_code, @PathVariable int ca_num) {
+        productService.deleteProduct(pr_code);
+        return "redirect:/admin/product/"+ca_num;
+    }
     
 }
