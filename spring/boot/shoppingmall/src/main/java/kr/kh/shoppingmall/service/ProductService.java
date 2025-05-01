@@ -176,7 +176,6 @@ public class ProductService {
         if(!res){
             return false;
         }
-        System.out.println("성공한거 아니냐?");
         setBe_num(buy.getBu_num(), buy.getList());
         productDAO.inserBuyList(buy.getList());
         for(BuyListVO bl : buy.getList()){
