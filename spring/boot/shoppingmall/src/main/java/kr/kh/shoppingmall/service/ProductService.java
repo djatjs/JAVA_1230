@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.shoppingmall.dao.ProductDAO;
+import kr.kh.shoppingmall.model.vo.BuyListVO;
+import kr.kh.shoppingmall.model.vo.BuyVO;
 import kr.kh.shoppingmall.model.vo.CategoryVO;
 import kr.kh.shoppingmall.model.vo.ProductVO;
+import kr.kh.shoppingmall.utils.CustomUser;
 import kr.kh.shoppingmall.utils.UploadFileUtils;
 
 @Service
@@ -109,6 +112,103 @@ public class ProductService {
         product.setPr_del("Y");
         productDAO.updateProduct(product);
         
+    }
+
+    public ProductVO getProduct(String pr_code, boolean isdel) {
+        ProductVO product = productDAO.selectProduct(pr_code);
+        //삭제된 제품도 검색 : isdel == true
+        if(isdel){
+            return product;
+        }
+        //삭제 안된 제품만 ok : isdel == false
+        else if(product.getPr_del().equals("N")){
+            return product;
+        }
+
+        return null;
+    }
+
+    public boolean updateProduct(ProductVO product, MultipartFile thumb) {
+        if(product == null){
+            return false;
+        }
+        //썸네일 작업
+
+        try {
+            String fileName = thumb.getOriginalFilename();
+            if(thumb !=null && fileName.length() != 0){
+                String suffix = getSuffix(fileName);
+                String newFileName = product.getPr_code()+suffix;
+                String thumbnail;
+                thumbnail = UploadFileUtils.uploadFile(uploadPath, newFileName, thumb.getBytes(), "product");
+                product.setPr_thumb(thumbnail);
+            }
+            return productDAO.updateProduct(product);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateAmount(ProductVO product) {
+        if(product == null){
+            return false;
+        }
+        ProductVO dbProduct = productDAO.selectProduct(product.getPr_code());
+        if(dbProduct == null){
+            return false;
+        }
+        if(product.getPr_amount() < 0){
+            return false;
+        }
+        dbProduct.setPr_amount(dbProduct.getPr_amount()+product.getPr_amount());
+        return productDAO.updateProduct(dbProduct);
+    }
+
+    public boolean buy(BuyVO buy, CustomUser customUser) {
+        if(customUser == null || buy == null){
+            return false;
+        }
+        int totalPrice = calculateTotalPrice(buy.getList());
+        buy.setBu_total_price(totalPrice);
+        buy.setBu_me_id(customUser.getUsername());
+        boolean res = productDAO.insertBuy(buy);
+        if(!res){
+            return false;
+        }
+        System.out.println("성공한거 아니냐?");
+        setBe_num(buy.getBu_num(), buy.getList());
+        productDAO.inserBuyList(buy.getList());
+        for(BuyListVO bl : buy.getList()){
+            productDAO.updateProductAmount(bl);
+        }
+        return true;
+
+    }
+
+    private void setBe_num(int bu_num, List<BuyListVO> list) {
+        if(list == null || list.size() ==0){
+            return;
+        }
+        for(BuyListVO bl : list){
+            bl.setBl_bu_num(bu_num);
+        }
+    }
+
+    private int calculateTotalPrice(List<BuyListVO> list) {
+        if(list == null || list.size() == 0 ){
+            return 0;
+        }
+        int total=0;
+        for(BuyListVO bl : list){
+            ProductVO product = productDAO.selectProduct(bl.getBl_pr_code());
+            if(product == null){
+                continue;
+            }
+            bl.setBl_price(product.getPr_price() * bl.getBl_amount());
+            total += bl.getBl_price();
+        }
+        return total;
     }
     
 }

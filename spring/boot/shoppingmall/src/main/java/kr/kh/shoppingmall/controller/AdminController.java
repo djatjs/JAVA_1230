@@ -85,5 +85,24 @@ public class AdminController {
         productService.deleteProduct(pr_code);
         return "redirect:/admin/product/"+ca_num;
     }
+
+    @GetMapping("/product/update/{ca_num}/{pr_code}")
+    public String productUpdate(@PathVariable String pr_code, @PathVariable int ca_num, Model model) {
+        ProductVO product = productService.getProduct(pr_code, false); //삭제 여부 확인용 boolean값
+        model.addAttribute("product", product);
+        return "admin/product_update";
+    }
+    @PostMapping("/product/update/{ca_num}")
+    public String productUpdatePost(ProductVO product, MultipartFile thumb, @PathVariable int ca_num) {
+        if(productService.updateProduct(product, thumb)){
+            return "redirect:/admin/product/"+ca_num;
+        }
+        return "redirect:/admin/insert/"+product.getPr_code();
+    }
+    @PostMapping("/product/amount")
+    @ResponseBody
+    public boolean postMethodName(@RequestBody ProductVO product) {        
+        return productService.updateAmount(product);
+    }
     
 }

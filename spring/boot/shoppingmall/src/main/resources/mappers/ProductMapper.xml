@@ -33,8 +33,15 @@
 		update product set 
 			pr_title = #{pr_title}, 
 			pr_content = #{pr_content}, 
-			pr_price = #{pr_price}, 
-			pr_thumb = #{pr_thumb}, 
+			pr_price = #{pr_price},
+			<choose>
+				<when test="pr_thumb == null">
+					pr_thumb = pr_thumb, 
+				</when>
+				<otherwise>
+					pr_thumb = #{pr_thumb}, 
+				</otherwise>
+			</choose> 
 			pr_amount = #{pr_amount}, 
 			pr_del = #{pr_del}
 		where pr_code = #{pr_code}
@@ -47,6 +54,20 @@
 	</select>
 	<select id="selectProduct" resultType="ProductVO">
 		select * from product 
-		where pr_code = #{pr_code} and pr_del = "N"
+		where pr_code = #{pr_code}
 	</select>
+	<insert id="insertBuy" useGeneratedKeys="true" keyProperty="bu_num">
+		insert into buy(bu_total_price, bu_me_id)
+		value (#{bu_total_price}, #{bu_me_id})
+	</insert>
+	<insert id="inserBuyList" parameterType="list" useGeneratedKeys="true" keyProperty="bl_num">
+		insert into buy_list(bl_bu_num, bl_amount, bl_pr_code, bl_price) values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.bl_bu_num}, #{item.bl_amount}, #{item.bl_pr_code}, #{item.bl_price})
+		</foreach>
+	</insert>
+	<update id="updateProductAmount" parameterType="list">
+		update product set pr_amount = pr_amount - #{bl_amount}
+		where pr_code = #{bl_pr_code}
+	</update>
 </mapper>
